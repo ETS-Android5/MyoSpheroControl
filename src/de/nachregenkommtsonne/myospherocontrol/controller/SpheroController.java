@@ -8,19 +8,19 @@ import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 import android.widget.Toast;
-import de.nachregenkommtsonne.myospherocontrol.MainActivity.PlaceholderFragment;
+import de.nachregenkommtsonne.myospherocontrol.ControlActivity.ControlFragment;
 import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.ISpheroCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.ISpheroEvents;
 
 public class SpheroController implements ISpheroCapabilities {
 
-	PlaceholderFragment _placeholderFragment;
+	ControlFragment _placeholderFragment;
 	ISpheroEvents _eventListener;
 	Sphero _sphero;
 	boolean _running;
 
-	public SpheroController(PlaceholderFragment placeholderFragment, ISpheroEvents eventListener) {
+	public SpheroController(ControlFragment placeholderFragment, ISpheroEvents eventListener) {
 		_placeholderFragment = placeholderFragment;
 		_eventListener = eventListener;
 		_running = false;
@@ -40,7 +40,7 @@ public class SpheroController implements ISpheroCapabilities {
 
 		boolean success = RobotProvider.getDefaultProvider().startDiscovery(_placeholderFragment.getActivity());
 		if (!success) {
-			Toast.makeText(_placeholderFragment.getActivity(), "Unable To start Discovery!", Toast.LENGTH_LONG).show();
+			Toast.makeText(_placeholderFragment.getActivity(), "Unable To start Sphero Discovery!", Toast.LENGTH_LONG).show();
 			_eventListener.spheroStateChanged(SpheroStatus.disconnected);
 		}
 		else {
@@ -53,7 +53,7 @@ public class SpheroController implements ISpheroCapabilities {
 	public void stop() {
 		if (!_running)
 			return;
-
+		
 		RobotProvider.getDefaultProvider().removeConnectionListener(_connectionListener);
 		RobotProvider.getDefaultProvider().removeDiscoveryListener(_discoveryListener);
 
@@ -61,6 +61,8 @@ public class SpheroController implements ISpheroCapabilities {
 			_sphero.stop();
 			_sphero = null;
 			RobotProvider.getDefaultProvider().disconnectControlledRobots();
+			RobotProvider.getDefaultProvider().endDiscovery();
+			RobotProvider.getDefaultProvider().shutdown();
 		} catch (Exception ex) {
 		}
 

@@ -14,7 +14,7 @@ public class MyoHandler implements IMyoEvents {
 	IGuiCapabilities _guiController;
 	ISpheroCapabilities _spheroController;
 
-	boolean state = false;
+	boolean liveControllingActive = false;
 	boolean resetRoll = true;
 	float startRoll = 0.0f;
 	float directionDelta = 0.0f;
@@ -25,25 +25,13 @@ public class MyoHandler implements IMyoEvents {
 		_spheroController = spheroController;
 	}
 
-	public void myoConnected() {
-		// _guiController.toast("Myo Connected");
-	}
-
-	public void myoDisconnected() {
-	}
-
-	public void myoUnlocked() {
-	}
-
 	public void myoControlActivated() {
-		_guiController.toast("myoPoseFist");
-		// _spheroController.move();
-		state = true;
+		liveControllingActive = true;
 	}
 
 	public void myoControlDeactivated() {
-		state = false;
-		
+		liveControllingActive = false;
+
 		_spheroController.halt();
 	}
 
@@ -65,10 +53,10 @@ public class MyoHandler implements IMyoEvents {
 		}
 
 		float rollDelta = roll - startRoll;
-		
+
 		directionDelta = rollDelta * 6.0f;
 
-		if (state) {
+		if (liveControllingActive) {
 			float direction = -(yaw + 180.f) + directionDelta;
 
 			while (direction < 0.0f || direction >= 360.0f) {
@@ -77,33 +65,30 @@ public class MyoHandler implements IMyoEvents {
 				if (direction >= 360.0f)
 					direction -= 360.0f;
 			}
-			
-			if (pitch < 0.0f){
+
+			if (pitch < 0.0f) {
 				speed = (pitch + 40.f) / 200.f;
 			}
-			else{
+			else {
 				speed = 0.2f + pitch / 90.f * 0.8f;
 			}
-			
+
 			if (speed > 1.0f)
 				speed = 1.0f;
-			
+
 			if (speed < 0.0f)
 				speed = 0.0f;
 
-			//Log.e("myo Yaw", "" + speed);
 			_spheroController.move(direction, speed);
 
 		}
 	}
 
-	public void myoSynced() {
-	}
-
-	public void myoUnsynced() {
-	}
-
 	public void myoStateChanged(MyoStatus myoStatus) {
 		_guiController.informMyoState(myoStatus);
+
+		if (myoStatus != MyoStatus.connected) {
+			_spheroController.halt();
+		}
 	}
 }

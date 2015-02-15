@@ -22,7 +22,8 @@ public class GuiHandler implements IGuiEvents {
 	}
 
 	public void startClicked() {
-		if (_guiState.isBluetoothEnabled() == BluetoothState.on) {
+		_guiController.setEnabled();
+		if (_guiState.getBluetoothState() == BluetoothState.on) {
 			_myoController.start();
 			_spheroController.start();
 		}
@@ -31,11 +32,12 @@ public class GuiHandler implements IGuiEvents {
 	public void stopClicked() {
 		_myoController.stop();
 		_spheroController.stop();
+		_guiController.setDisabled();
 	}
 
 	public void bluetoothStateChanged(BluetoothState bluetoothState) {
 
-		if (bluetoothState != BluetoothState.on) {
+		if (bluetoothState != BluetoothState.on && _guiState.isRunning()) {
 			try {
 				_myoController.stop();
 			} catch (Exception ex) {
@@ -44,6 +46,10 @@ public class GuiHandler implements IGuiEvents {
 				_spheroController.stop();
 			} catch (Exception ex) {
 			}
+		}
+		if (bluetoothState == BluetoothState.on && _guiState.isRunning()) {
+			_myoController.start();
+			_spheroController.start();
 		}
 
 		_guiController.informBluetoothState(bluetoothState);

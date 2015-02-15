@@ -13,25 +13,27 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
-import de.nachregenkommtsonne.myospherocontrol.MainActivity.PlaceholderFragment;
+import de.nachregenkommtsonne.myospherocontrol.ControlActivity.ControlFragment;
 import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoEvents;
 
 public class MyoController implements IMyoCapabilities {
 
-	PlaceholderFragment _placeholderFragment;
+	ControlFragment _placeholderFragment;
 	IMyoEvents _eventListener;
 	Myo _myo;
 	SharedPreferences _sharedPref;
 	Hub _hub;
 	boolean _running;
+	boolean _synced;
 
-	public MyoController(PlaceholderFragment placeholderFragment, IMyoEvents eventListener) {
+	public MyoController(ControlFragment placeholderFragment, IMyoEvents eventListener) {
 		_placeholderFragment = placeholderFragment;
 		_eventListener = eventListener;
 		_hub = Hub.getInstance();
 		_running = false;
+		_synced = false;
 	}
 
 	public void start() {
@@ -39,11 +41,11 @@ public class MyoController implements IMyoCapabilities {
 			return;
 
 		if (!_hub.init(_placeholderFragment.getActivity(), _placeholderFragment.getActivity().getPackageName())) {
-			Toast.makeText(_placeholderFragment.getActivity(), "Couldn't initialize Hub", Toast.LENGTH_SHORT).show();
+			Toast.makeText(_placeholderFragment.getActivity(), "Couldn't initialize Myo Hub", Toast.LENGTH_SHORT).show();
 			return;
-			// _placeholderFragment.getActivity().finish();
 		}
 
+		_hub.setSendUsageData(false);
 		_hub.addListener(mListener);
 
 		_sharedPref = _placeholderFragment.getActivity().getPreferences(
@@ -101,10 +103,13 @@ public class MyoController implements IMyoCapabilities {
 		}
 
 		public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection) {
+			_synced = true;
 			_eventListener.myoStateChanged(MyoStatus.connected);
 		}
 
 		public void onArmUnsync(Myo myo, long timestamp) {
+			_synced = false;
+			_eventListener.myoControlDeactivated();
 			_eventListener.myoStateChanged(MyoStatus.notSynced);
 		}
 

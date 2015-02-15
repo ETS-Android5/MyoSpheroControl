@@ -1,7 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-import android.bluetooth.BluetoothAdapter;
-
 public class GuiState {
 
 	private MyoStatus _myoStatus;
@@ -24,7 +22,7 @@ public class GuiState {
 		this._running = _running;
 	}
 
-	public BluetoothState isBluetoothEnabled() {
+	public BluetoothState getBluetoothState() {
 		return _bluetoothState;
 	}
 

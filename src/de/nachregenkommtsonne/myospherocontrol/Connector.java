@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import de.nachregenkommtsonne.myospherocontrol.MainActivity.PlaceholderFragment;
+import de.nachregenkommtsonne.myospherocontrol.ControlActivity.ControlFragment;
 import de.nachregenkommtsonne.myospherocontrol.controller.GuiController;
 import de.nachregenkommtsonne.myospherocontrol.controller.GuiHandler;
 import de.nachregenkommtsonne.myospherocontrol.controller.MyoController;
@@ -18,7 +18,7 @@ import de.nachregenkommtsonne.myospherocontrol.controller.SpheroHandler;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiEvents;
 
 public class Connector {
-	PlaceholderFragment _placeholderFragment;
+	ControlFragment _placeholderFragment;
 
 	GuiController _guiController;
 	MyoController _myoController;
@@ -28,7 +28,7 @@ public class Connector {
 	MyoHandler _myoHandler;
 	SpheroHandler _spheroHandler;
 
-	public Connector(PlaceholderFragment placeholderFragment) {
+	public Connector(ControlFragment placeholderFragment) {
 		_placeholderFragment = placeholderFragment;
 
 		GuiState guiState = new GuiState();
@@ -51,16 +51,19 @@ public class Connector {
 		Button startButton = (Button) rootView.findViewById(R.id.startButton);
 		startButton.setOnClickListener(new OnClickListener() {
 
-			public void onClick(View arg0) {
-				_guiHandler.startClicked();
-			}
-		});
-
-		Button stopButton = (Button) rootView.findViewById(R.id.stopButton);
-		stopButton.setOnClickListener(new OnClickListener() {
+			boolean running = false;
 
 			public void onClick(View arg0) {
-				_guiHandler.stopClicked();
+				if (!running) {
+					((Button)arg0).setText("Stop");
+					_guiHandler.startClicked();
+					running = true;
+				}
+				else{
+					((Button)arg0).setText("Start");
+					_guiHandler.stopClicked();
+					running = false;
+				}
 			}
 		});
 	}
@@ -100,14 +103,26 @@ public class Connector {
 		_placeholderFragment.getActivity().unregisterReceiver(mReceiver);
 	}
 
+	// boolean once = false;
+
 	public void onResume() {
+		_guiController.EnableView();
+
+		// if (!once) {
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		_guiController.informBluetoothState(
 				(mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
 						? BluetoothState.on
 						: BluetoothState.off);
-		
+
 		_guiController.informMyoState(MyoStatus.disconnected);
 		_guiController.informSpheroState(SpheroStatus.disconnected);
+		// once = true;
+		// }
+	}
+
+	public void onPause() {
+		_guiController.DisableView();
+		_guiHandler.stopClicked();
 	}
 }
