@@ -1,11 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
-import android.util.Log;
-
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
+import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoEvents;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.ISpheroCapabilities;
@@ -44,7 +43,8 @@ public class MyoHandler implements IMyoEvents {
 
 	public void myoControlDeactivated() {
 		state = false;
-		_spheroController.stop();
+		
+		_spheroController.halt();
 	}
 
 	public void myoOrientationDataCollected(Quaternion rotation, Myo myo) {
@@ -52,7 +52,6 @@ public class MyoHandler implements IMyoEvents {
 		float pitch = (float) Math.toDegrees(Quaternion.pitch(rotation));
 		float yaw = (float) Math.toDegrees(Quaternion.yaw(rotation));
 
-		// Adjust roll and pitch for the orientation of the Myo on the arm.
 		if (myo.getXDirection() == XDirection.TOWARD_ELBOW) {
 			roll *= -1;
 			pitch *= -1;
@@ -70,10 +69,7 @@ public class MyoHandler implements IMyoEvents {
 		directionDelta = rollDelta * 6.0f;
 
 		if (state) {
-
-			
-			
-			float direction = -(yaw + 90) + directionDelta;
+			float direction = -(yaw + 180.f) + directionDelta;
 
 			while (direction < 0.0f || direction >= 360.0f) {
 				if (direction < 0.0f)
@@ -81,13 +77,6 @@ public class MyoHandler implements IMyoEvents {
 				if (direction >= 360.0f)
 					direction -= 360.0f;
 			}
-			
-			
-			
-			//pitch [-20, 90] -> speed [0,1]
-			// -40 -> 0
-			// 0 -> 0.2
-			// 90 -> 1
 			
 			if (pitch < 0.0f){
 				speed = (pitch + 40.f) / 200.f;
@@ -102,7 +91,7 @@ public class MyoHandler implements IMyoEvents {
 			if (speed < 0.0f)
 				speed = 0.0f;
 
-			Log.e("myo Yaw", "" + speed);
+			//Log.e("myo Yaw", "" + speed);
 			_spheroController.move(direction, speed);
 
 		}
@@ -112,5 +101,9 @@ public class MyoHandler implements IMyoEvents {
 	}
 
 	public void myoUnsynced() {
+	}
+
+	public void myoStateChanged(MyoStatus myoStatus) {
+		_guiController.informMyoState(myoStatus);
 	}
 }

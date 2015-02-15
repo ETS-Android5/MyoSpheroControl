@@ -1,5 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
+import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.ISpheroEvents;
 
@@ -10,11 +12,12 @@ public class SpheroHandler implements ISpheroEvents {
 	public SpheroHandler(IGuiCapabilities guiController) {
 		_guiController = guiController;
 	}
-
-	public void spheroConnected() {
-		_guiController.toast("Sphero Connected!");
+	
+	public void bluetoothDisabled() {
+		_guiController.informBluetoothState(BluetoothState.off);
 	}
 
-	public void spheroDisconnected() {
+	public void spheroStateChanged(SpheroStatus spheroStatus) {
+		_guiController.informSpheroState(spheroStatus);
 	}
 }

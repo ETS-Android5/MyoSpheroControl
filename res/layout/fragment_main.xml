@@ -16,4 +16,37 @@
         android:layout_alignParentTop="true"
         android:text="@string/startLabel" />
 
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/startButton"
+        android:layout_marginTop="15dp"
+        android:text="@string/stopLabel" />
+
+    <TextView
+        android:id="@+id/btState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stopButton"
+        android:layout_below="@+id/stopButton"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/spheroState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btState"
+        android:layout_below="@+id/btState"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/myoState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spheroState"
+        android:layout_below="@+id/spheroState"
+        android:text="TextView" />
+
 </RelativeLayout>

@@ -45,16 +45,33 @@ public class MainActivity extends Activity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-			_connector.initialize(rootView);
+			_connector.onCreateView(rootView);
 			return rootView;
 		}
 		
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
-			// TODO Auto-generated method stub
-			
-			_connector.initialize();
 			super.onActivityCreated(savedInstanceState);
+			_connector.onActivityCreated();
+		}
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			_connector.onCreate();
+		}
+		
+		@Override
+		public void onResume() {
+			// TODO Auto-generated method stub
+			super.onResume();
+			_connector.onResume();
+		}
+		
+		@Override
+		public void onDestroy() {
+			super.onDestroy();
+			_connector.onDestroy();
 		}
 	}
 }
