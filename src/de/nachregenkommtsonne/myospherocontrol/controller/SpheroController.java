@@ -8,6 +8,7 @@ import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 import android.widget.Toast;
+import de.nachregenkommtsonne.myospherocontrol.ConnectorState;
 import de.nachregenkommtsonne.myospherocontrol.ControlActivity.ControlFragment;
 import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.ISpheroCapabilities;
@@ -17,24 +18,23 @@ public class SpheroController implements ISpheroCapabilities {
 
 	ControlFragment _placeholderFragment;
 	ISpheroEvents _eventListener;
-	Sphero _sphero;
 	boolean _running;
 
 	public SpheroController(ControlFragment placeholderFragment, ISpheroEvents eventListener) {
 		_placeholderFragment = placeholderFragment;
 		_eventListener = eventListener;
-		_running = false;
+		_running = ConnectorState.getInstance().isRunning();
 	}
 
 	public void move(float direction, float speed) {
-		if (_sphero != null && _running)
-			_sphero.drive(direction, speed);
+		if (ConnectorState.getInstance().getSphero() != null && _running)
+			ConnectorState.getInstance().getSphero().drive(direction, speed);
 	}
 
 	public void start() {
 		if (_running)
 			return;
-
+		
 		RobotProvider.getDefaultProvider().addConnectionListener(_connectionListener);
 		RobotProvider.getDefaultProvider().addDiscoveryListener(_discoveryListener);
 
@@ -58,8 +58,9 @@ public class SpheroController implements ISpheroCapabilities {
 		RobotProvider.getDefaultProvider().removeDiscoveryListener(_discoveryListener);
 
 		try {
-			_sphero.stop();
-			_sphero = null;
+			ConnectorState.getInstance().getSphero().stop();
+			ConnectorState.getInstance().setSphero(null);
+			
 			RobotProvider.getDefaultProvider().disconnectControlledRobots();
 			RobotProvider.getDefaultProvider().endDiscovery();
 			RobotProvider.getDefaultProvider().shutdown();
@@ -71,26 +72,28 @@ public class SpheroController implements ISpheroCapabilities {
 	}
 
 	public void changeColor() {
-		if (_sphero != null && _running)
-			_sphero.setColor(255, 0, 0);
+		if (ConnectorState.getInstance().getSphero() != null && _running)
+			ConnectorState.getInstance().getSphero().setColor(255, 0, 0);
 	}
 
 	ConnectionListener _connectionListener = new ConnectionListener() {
 
 		public void onConnected(Robot arg0) {
 			_eventListener.spheroStateChanged(SpheroStatus.connected);
-		}
+//			ConnectorState.getInstance().getSphero().getConfiguration().setPersistentFlag(PersistentOptionFlags.EnableVectorDrive, false);
+	}
 
 		public void onConnectionFailed(Robot arg0) {
 			_eventListener.spheroStateChanged(SpheroStatus.discovering);
+			ConnectorState.getInstance().setSphero(null);
 
-			_sphero = null;
 			RobotProvider.getDefaultProvider().startDiscovery(_placeholderFragment.getActivity());
 		}
 
 		public void onDisconnected(Robot arg0) {
 			_eventListener.spheroStateChanged(SpheroStatus.discovering);
-			_sphero = null;
+			ConnectorState.getInstance().setSphero(null);
+
 			RobotProvider.getDefaultProvider().startDiscovery(_placeholderFragment.getActivity());
 		}
 	};
@@ -104,18 +107,16 @@ public class SpheroController implements ISpheroCapabilities {
 			_eventListener.bluetoothDisabled();
 		}
 
-		public void onFound(List<Sphero> sphero) {
-			_sphero = sphero.iterator().next();
-			RobotProvider.getDefaultProvider().connect(_sphero);
+		public void onFound(List<Sphero> spheros) {
+			Sphero sphero = spheros.iterator().next();
+			ConnectorState.getInstance().setSphero(sphero);
+			RobotProvider.getDefaultProvider().connect(sphero);
 			_eventListener.spheroStateChanged(SpheroStatus.connecting);
 		}
 	};
 
-	public void initialize() {
-	}
-
 	public void halt() {
-		if (_sphero != null && _running)
-			_sphero.stop();
+		if (ConnectorState.getInstance().getSphero() != null && _running)
+			ConnectorState.getInstance().getSphero().stop();
 	}
 }

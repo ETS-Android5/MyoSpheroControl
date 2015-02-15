@@ -13,7 +13,9 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
+
 import de.nachregenkommtsonne.myospherocontrol.ControlActivity.ControlFragment;
+import de.nachregenkommtsonne.myospherocontrol.ConnectorState;
 import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoEvents;
@@ -22,31 +24,29 @@ public class MyoController implements IMyoCapabilities {
 
 	ControlFragment _placeholderFragment;
 	IMyoEvents _eventListener;
-	Myo _myo;
 	SharedPreferences _sharedPref;
-	Hub _hub;
 	boolean _running;
 	boolean _synced;
 
 	public MyoController(ControlFragment placeholderFragment, IMyoEvents eventListener) {
 		_placeholderFragment = placeholderFragment;
 		_eventListener = eventListener;
-		_hub = Hub.getInstance();
-		_running = false;
-		_synced = false;
+		ConnectorState.getInstance().setHub(Hub.getInstance());
+		_running = ConnectorState.getInstance().isRunning();
+		_synced = ConnectorState.getInstance().getMyoStatus() == MyoStatus.connected;
 	}
 
 	public void start() {
 		if (_running)
 			return;
 
-		if (!_hub.init(_placeholderFragment.getActivity(), _placeholderFragment.getActivity().getPackageName())) {
+		if (!ConnectorState.getInstance().getHub().init(_placeholderFragment.getActivity(), _placeholderFragment.getActivity().getPackageName())) {
 			Toast.makeText(_placeholderFragment.getActivity(), "Couldn't initialize Myo Hub", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
-		_hub.setSendUsageData(false);
-		_hub.addListener(mListener);
+		ConnectorState.getInstance().getHub().setSendUsageData(false);
+		ConnectorState.getInstance().getHub().addListener(mListener);
 
 		_sharedPref = _placeholderFragment.getActivity().getPreferences(
 				Context.MODE_PRIVATE);
@@ -55,11 +55,11 @@ public class MyoController implements IMyoCapabilities {
 
 		if (myomac == null) {
 			_eventListener.myoStateChanged(MyoStatus.notLinked);
-			_hub.attachToAdjacentMyo();
+			ConnectorState.getInstance().getHub().attachToAdjacentMyo();
 		}
 		else {
 			_eventListener.myoStateChanged(MyoStatus.connecting);
-			_hub.attachByMacAddress(myomac);
+			ConnectorState.getInstance().getHub().attachByMacAddress(myomac);
 		}
 
 		_running = true;
@@ -69,10 +69,10 @@ public class MyoController implements IMyoCapabilities {
 		if (!_running)
 			return;
 
-		_hub.removeListener(mListener);
+		ConnectorState.getInstance().getHub().removeListener(mListener);
 
 		try {
-			_hub.shutdown();
+			ConnectorState.getInstance().getHub().shutdown();
 		} catch (Exception ex) {
 		}
 
@@ -80,26 +80,22 @@ public class MyoController implements IMyoCapabilities {
 		_running = false;
 	}
 
-	public void initialize() {
-
-	}
-
 	private DeviceListener mListener = new AbstractDeviceListener() {
 		public void onConnect(Myo myo, long timestamp) {
 			_eventListener.myoStateChanged(MyoStatus.notSynced);
-			_myo = myo;
+			ConnectorState.getInstance().setMyo(myo);
 
 			Editor edit = _sharedPref.edit();
-			edit.putString("myomac", _myo.getMacAddress());
+			edit.putString("myomac", ConnectorState.getInstance().getMyo().getMacAddress());
 			edit.apply();
 		}
 
 		public void onDisconnect(Myo myo, long timestamp) {
 			_eventListener.myoStateChanged(MyoStatus.connecting);
-			_myo = null;
-
+			ConnectorState.getInstance().setMyo(null);
+			
 			String myomac = _sharedPref.getString("myomac", null);
-			_hub.attachByMacAddress(myomac);
+			ConnectorState.getInstance().getHub().attachByMacAddress(myomac);
 		}
 
 		public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection) {

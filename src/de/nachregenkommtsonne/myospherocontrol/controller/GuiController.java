@@ -4,7 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.GuiState;
+import de.nachregenkommtsonne.myospherocontrol.ConnectorState;
 import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.R;
@@ -15,24 +15,22 @@ import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiCapabilities;
 public class GuiController implements IGuiCapabilities {
 
 	ControlFragment _placeholderFragment;
-	GuiState _guiState;
 	GuiStateHinter _guGuiStateHinter;
 	boolean _viewActive;
 
-	public GuiController(ControlFragment placeholderFragment, GuiState guiState) {
+	public GuiController(ControlFragment placeholderFragment) {
 		_placeholderFragment = placeholderFragment;
-		_guiState = guiState;
 		_guGuiStateHinter = new GuiStateHinter();
 		_viewActive = false;
 	}
 
 	public void setDisabled() {
-		_guiState.setRunning(false);
+		ConnectorState.getInstance().setRunning(false);
 		updateUI();
 	}
 
 	public void setEnabled() {
-		_guiState.setRunning(true);
+		ConnectorState.getInstance().setRunning(true);
 		updateUI();
 	}
 
@@ -41,17 +39,17 @@ public class GuiController implements IGuiCapabilities {
 	}
 
 	public void informBluetoothState(BluetoothState bluetoothState) {
-		_guiState.setBluetoothEnabled(bluetoothState);
+		ConnectorState.getInstance().setBluetoothEnabled(bluetoothState);
 		updateUI();
 	}
 
 	public void informSpheroState(SpheroStatus spheroState) {
-		_guiState.setSpheroStatus(spheroState);
+		ConnectorState.getInstance().setSpheroStatus(spheroState);
 		updateUI();
 	}
 
 	public void informMyoState(MyoStatus myoStatus) {
-		_guiState.setMyoStatus(myoStatus);
+		ConnectorState.getInstance().setMyoStatus(myoStatus);
 		updateUI();
 	}
 
@@ -66,20 +64,22 @@ public class GuiController implements IGuiCapabilities {
 		ImageView spheroConnectedIcon = (ImageView) _placeholderFragment.getView().findViewById(R.id.spheroConnectedIcon);
 		TextView hintText = (TextView) _placeholderFragment.getView().findViewById(R.id.hintText);
 		
-		MyoStatus myoStatus = _guiState.getMyoStatus();
-		SpheroStatus spheroStatus = _guiState.getSpheroStatus();
-		String hint = _guGuiStateHinter.getHint(_guiState);
+		MyoStatus myoStatus = ConnectorState.getInstance().getMyoStatus();
+		SpheroStatus spheroStatus = ConnectorState.getInstance().getSpheroStatus();
+		String hint = _guGuiStateHinter.getHint(ConnectorState.getInstance());
 
 		myoLinkedIcon.setImageResource((myoStatus == MyoStatus.connecting || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 		myoConnectedIcon.setImageResource((myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 		myoSyncronizedIcon.setImageResource((myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 		spheroDiscoveredIcon.setImageResource((spheroStatus == SpheroStatus.connecting || spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 		spheroConnectedIcon.setImageResource((spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
+		
 		hintText.setText(hint);
 	}
 
 	public void EnableView() {
 		_viewActive = true;
+		updateUI();
 	}
 
 	public void DisableView() {

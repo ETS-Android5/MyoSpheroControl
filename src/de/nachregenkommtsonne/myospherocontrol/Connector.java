@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,38 +32,30 @@ public class Connector {
 	public Connector(ControlFragment placeholderFragment) {
 		_placeholderFragment = placeholderFragment;
 
-		GuiState guiState = new GuiState();
-
-		_guiController = new GuiController(_placeholderFragment, guiState);
+		_guiController = new GuiController(_placeholderFragment);
 		_spheroHandler = new SpheroHandler(_guiController);
 		_spheroController = new SpheroController(_placeholderFragment, _spheroHandler);
 		_myoHandler = new MyoHandler(_guiController, _spheroController);
 		_myoController = new MyoController(_placeholderFragment, _myoHandler);
-		_guiHandler = new GuiHandler(_myoController, _spheroController, _guiController, guiState);
-	}
-
-	public void onActivityCreated() {
-		_myoController.initialize();
-		_spheroController.initialize();
+		_guiHandler = new GuiHandler(_myoController, _spheroController, _guiController);
 	}
 
 	// TODO: move this
 	public void onCreateView(View rootView) {
 		Button startButton = (Button) rootView.findViewById(R.id.startButton);
+
+		startButton.setText(ConnectorState.getInstance().isRunning() ? "Stop" : "Start");
+
 		startButton.setOnClickListener(new OnClickListener() {
 
-			boolean running = false;
-
 			public void onClick(View arg0) {
-				if (!running) {
-					((Button)arg0).setText("Stop");
+				if (!ConnectorState.getInstance().isRunning()) {
 					_guiHandler.startClicked();
-					running = true;
+					((Button) arg0).setText(ConnectorState.getInstance().isRunning() ? "Stop" : "Start");
 				}
-				else{
-					((Button)arg0).setText("Start");
+				else {
 					_guiHandler.stopClicked();
-					running = false;
+					((Button) arg0).setText(ConnectorState.getInstance().isRunning() ? "Stop" : "Start");
 				}
 			}
 		});
@@ -95,34 +88,25 @@ public class Connector {
 	};
 
 	public void onCreate() {
+		Log.e("myospherocontrol", "onCreate");
 		IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
 		_placeholderFragment.getActivity().registerReceiver(mReceiver, filter);
 	}
 
 	public void onDestroy() {
+		Log.e("myospherocontrol", "onDestroy");
 		_placeholderFragment.getActivity().unregisterReceiver(mReceiver);
 	}
 
-	// boolean once = false;
+	boolean once = false;
 
 	public void onResume() {
+		Log.e("myospherocontrol", "onResume");
 		_guiController.EnableView();
-
-		// if (!once) {
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		_guiController.informBluetoothState(
-				(mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
-						? BluetoothState.on
-						: BluetoothState.off);
-
-		_guiController.informMyoState(MyoStatus.disconnected);
-		_guiController.informSpheroState(SpheroStatus.disconnected);
-		// once = true;
-		// }
 	}
 
 	public void onPause() {
+		Log.e("myospherocontrol", "onPause");
 		_guiController.DisableView();
-		_guiHandler.stopClicked();
 	}
 }

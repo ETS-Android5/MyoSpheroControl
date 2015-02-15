@@ -33,11 +33,6 @@ public class ControlActivity extends Activity {
 			return rootView;
 		}
 		
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			_connector.onActivityCreated();
-		}
-		
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			_connector.onCreate();

@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
 import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.GuiState;
+import de.nachregenkommtsonne.myospherocontrol.ConnectorState;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiCapabilities;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IGuiEvents;
 import de.nachregenkommtsonne.myospherocontrol.interfaces.IMyoCapabilities;
@@ -12,18 +12,16 @@ public class GuiHandler implements IGuiEvents {
 	IMyoCapabilities _myoController;
 	ISpheroCapabilities _spheroController;
 	IGuiCapabilities _guiController;
-	GuiState _guiState;
 
-	public GuiHandler(IMyoCapabilities myoController, ISpheroCapabilities spheroController, IGuiCapabilities guiController, GuiState guiState) {
+	public GuiHandler(IMyoCapabilities myoController, ISpheroCapabilities spheroController, IGuiCapabilities guiController) {
 		_myoController = myoController;
 		_spheroController = spheroController;
 		_guiController = guiController;
-		_guiState = guiState;
 	}
 
 	public void startClicked() {
 		_guiController.setEnabled();
-		if (_guiState.getBluetoothState() == BluetoothState.on) {
+		if (ConnectorState.getInstance().getBluetoothState() == BluetoothState.on) {
 			_myoController.start();
 			_spheroController.start();
 		}
@@ -37,7 +35,7 @@ public class GuiHandler implements IGuiEvents {
 
 	public void bluetoothStateChanged(BluetoothState bluetoothState) {
 
-		if (bluetoothState != BluetoothState.on && _guiState.isRunning()) {
+		if (bluetoothState != BluetoothState.on && ConnectorState.getInstance().isRunning()) {
 			try {
 				_myoController.stop();
 			} catch (Exception ex) {
@@ -47,7 +45,7 @@ public class GuiHandler implements IGuiEvents {
 			} catch (Exception ex) {
 			}
 		}
-		if (bluetoothState == BluetoothState.on && _guiState.isRunning()) {
+		if (bluetoothState == BluetoothState.on && ConnectorState.getInstance().isRunning()) {
 			_myoController.start();
 			_spheroController.start();
 		}

@@ -5,14 +5,13 @@ public class GuiStateHinter {
 
 	}
 
-	public String getHint(GuiState guiState) {
+	public String getHint(ConnectorState guiState) {
 
 		if (!guiState.isRunning()) {
 			return "Press Start to connect the devices.";
 		}
 
 		if (guiState.getBluetoothState() != BluetoothState.on) {
-
 			if (guiState.getBluetoothState() == BluetoothState.turningOn)
 				return "Bluetooth is turning on. Please wait...";
 
@@ -38,6 +37,10 @@ public class GuiStateHinter {
 				return "Searching for Sphero. Is your Sphero turned on?";
 		}
 
-		return "Everything is fine. Have fun.";
+		if (guiState.getSpheroStatus() == SpheroStatus.connected &&
+				guiState.getMyoStatus() == MyoStatus.connected)
+			return "Everything is fine. Have Fun!";
+		
+		return "Woops! Something is wrong. Please restart the App and if you experience connection problems reboot your phone, your myo and your sphero or have a lot of patience.";
 	}
 }
