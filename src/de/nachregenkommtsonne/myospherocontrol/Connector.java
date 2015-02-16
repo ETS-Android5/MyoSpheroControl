@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -88,25 +87,21 @@ public class Connector {
 	};
 
 	public void onCreate() {
-		Log.e("myospherocontrol", "onCreate");
 		IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
 		_placeholderFragment.getActivity().registerReceiver(mReceiver, filter);
 	}
 
 	public void onDestroy() {
-		Log.e("myospherocontrol", "onDestroy");
 		_placeholderFragment.getActivity().unregisterReceiver(mReceiver);
 	}
 
 	boolean once = false;
 
 	public void onResume() {
-		Log.e("myospherocontrol", "onResume");
 		_guiController.EnableView();
 	}
 
 	public void onPause() {
-		Log.e("myospherocontrol", "onPause");
 		_guiController.DisableView();
 	}
 }
