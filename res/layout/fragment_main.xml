@@ -35,8 +35,8 @@
             android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:text="Start" />
 
     </LinearLayout>
@@ -94,14 +94,22 @@
         </TableRow>
     </TableLayout>
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/controlUsage" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_marginRight="16dp"
             android:src="@drawable/device_myo" />
 
@@ -178,8 +186,8 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_marginRight="16dp"
             android:src="@drawable/device_sphero" />
 
