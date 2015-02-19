@@ -34,7 +34,7 @@ public class GuiStateHinter {
 				return "Sphero found. Connecting...";
 
 			if (guiState.getSpheroStatus() == SpheroStatus.discovering)
-				return "Searching for Sphero. Is your Sphero turned on?";
+				return "Searching for Sphero. Is your Sphero turned on and paired with your phone?";
 		}
 
 		if (guiState.getSpheroStatus() == SpheroStatus.connected &&
