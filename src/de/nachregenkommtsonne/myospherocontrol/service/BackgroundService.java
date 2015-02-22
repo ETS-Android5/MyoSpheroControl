@@ -10,9 +10,11 @@ import android.os.IBinder;
 public class BackgroundService extends Service {
 
 	ServiceController _serviceController;
+	private MyBinder _binder;
 	
 	public BackgroundService() {
 		super();
+		_binder = new MyBinder();
 	}
 
 	public void onCreate() {
@@ -26,9 +28,6 @@ public class BackgroundService extends Service {
 	}
 	
 	public IBinder onBind(Intent intent) {
-		if (_binder == null)
-			_binder = new MyBinder();
-		
 		return _binder;
 	}
 
@@ -36,7 +35,6 @@ public class BackgroundService extends Service {
 		super.onDestroy();
 	}
 	
-	private MyBinder _binder;
 	public class MyBinder extends Binder{
 		IBinderEvents _binderEvents;
 

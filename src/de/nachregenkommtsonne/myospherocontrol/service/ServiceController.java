@@ -107,28 +107,29 @@ public class ServiceController {
 						BluetoothAdapter.ERROR);
 				switch (state) {
 				case BluetoothAdapter.STATE_OFF:
-					//TODO: fix bug when startet with bt turned off
+					// TODO: fix bug when startet with bt turned off
 					_state.setBluetoothEnabled(BluetoothState.off);
 					break;
 				case BluetoothAdapter.STATE_TURNING_OFF:
 					_state.setControlMode(false);
 					_state.setBluetoothEnabled(BluetoothState.turningOff);
 
-					if (_state.isRunning()){
+					if (_state.isRunning()) {
 						_myoController.stop();
 						_spheroController.stop();
 					}
-					
+
 					break;
 				case BluetoothAdapter.STATE_ON:
-					//TODO: fix myo when bt turned on in background not connecting
+					// TODO: fix myo when bt turned on in background not
+					// connecting
 					_state.setBluetoothEnabled(BluetoothState.on);
-					
-					if (_state.isRunning()){
+
+					if (_state.isRunning()) {
 						_myoController.start();
 						_spheroController.start();
 					}
-					
+
 					break;
 				case BluetoothAdapter.STATE_TURNING_ON:
 					_state.setBluetoothEnabled(BluetoothState.turningOn);
@@ -145,8 +146,10 @@ public class ServiceController {
 			_spheroController.stop();
 		}
 		else {
-			_myoController.start();
-			_spheroController.start();
+			if (_state.getBluetoothState() == BluetoothState.on) {
+				_myoController.start();
+				_spheroController.start();
+			}
 		}
 
 		_state.setRunning(!_state.isRunning());
