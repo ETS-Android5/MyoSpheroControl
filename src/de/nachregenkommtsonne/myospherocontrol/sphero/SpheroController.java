@@ -78,7 +78,7 @@ public class SpheroController implements ISpheroController {
 	public void stop() {
 		_running = false;
 		RobotProvider robotProvider = getRobotProvider();
-
+		robotProvider.disconnectControlledRobots();
 		robotProvider.shutdown();
 		onSpheroStateChanged(SpheroStatus.disconnected);
 	}

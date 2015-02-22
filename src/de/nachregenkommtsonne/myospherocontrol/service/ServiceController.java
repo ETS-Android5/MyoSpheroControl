@@ -32,7 +32,8 @@ public class ServiceController {
 	private Context _context;
 	private MovementCalculator _mMovementCalculator;
 
-	public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context) {
+	public ServiceController(IMyoController myoController,
+			ISpheroController spheroController, Context context) {
 		_context = context;
 		_myoController = myoController;
 		_spheroController = spheroController;
@@ -42,11 +43,13 @@ public class ServiceController {
 		_state = new ServiceState();
 		_mMovementCalculator = new MovementCalculator();
 
-		IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+		IntentFilter filter = new IntentFilter(
+				BluetoothAdapter.ACTION_STATE_CHANGED);
 		_context.registerReceiver(_bluetoothEvents, filter);
 	}
 
-	public void setEventListener(IServiceControllerEvents serviceControllerEvents) {
+	public void setEventListener(
+			IServiceControllerEvents serviceControllerEvents) {
 		_serviceControllerEvents = serviceControllerEvents;
 	}
 
@@ -72,8 +75,10 @@ public class ServiceController {
 			if (!_state.isControlMode())
 				return;
 
-			MovementResult movementResult = _mMovementCalculator.calculate(rotation, myo.getXDirection() == XDirection.TOWARD_ELBOW);
-			_spheroController.move(movementResult.get_direction(), movementResult.get_speed());
+			MovementResult movementResult = _mMovementCalculator.calculate(
+					rotation, myo.getXDirection() == XDirection.TOWARD_ELBOW);
+			_spheroController.move(movementResult.get_direction(),
+					movementResult.get_speed());
 		}
 
 		public void myoControlDeactivated() {
@@ -103,11 +108,10 @@ public class ServiceController {
 			final String action = intent.getAction();
 
 			if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
-				final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
-						BluetoothAdapter.ERROR);
+				final int state = intent.getIntExtra(
+						BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 				switch (state) {
 				case BluetoothAdapter.STATE_OFF:
-					// TODO: fix bug when startet with bt turned off
 					_state.setBluetoothEnabled(BluetoothState.off);
 					break;
 				case BluetoothAdapter.STATE_TURNING_OFF:
@@ -115,18 +119,16 @@ public class ServiceController {
 					_state.setBluetoothEnabled(BluetoothState.turningOff);
 
 					if (_state.isRunning()) {
-						_myoController.stop();
+						_myoController.stopConnecting();
 						_spheroController.stop();
 					}
 
 					break;
 				case BluetoothAdapter.STATE_ON:
-					// TODO: fix myo when bt turned on in background not
-					// connecting
 					_state.setBluetoothEnabled(BluetoothState.on);
 
 					if (_state.isRunning()) {
-						_myoController.start();
+						_myoController.startConnecting();
 						_spheroController.start();
 					}
 
@@ -143,11 +145,14 @@ public class ServiceController {
 	public void buttonClicked() {
 		if (_state.isRunning()) {
 			_myoController.stop();
-			_spheroController.stop();
-		}
-		else {
 			if (_state.getBluetoothState() == BluetoothState.on) {
-				_myoController.start();
+				_myoController.stopConnecting();
+				_spheroController.stop();
+			}
+		} else {
+			_myoController.start();
+			if (_state.getBluetoothState() == BluetoothState.on) {
+				_myoController.startConnecting();
 				_spheroController.start();
 			}
 		}
@@ -161,26 +166,23 @@ public class ServiceController {
 
 			Intent intent = new Intent(_context, ControlActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			PendingIntent pIntent = PendingIntent.getActivity(_context, 0, intent, 0);
+			PendingIntent pIntent = PendingIntent.getActivity(_context, 0,
+					intent, 0);
 
 			Notification n = new Notification.Builder(_context)
 					.setContentTitle("Myo Sphero Control")
 					.setContentText(_state.getHint())
 					.setSmallIcon(R.drawable.ic_launcher)
-					.setContentIntent(pIntent)
-					.setAutoCancel(false)
-					.setWhen(0)
-					.setOngoing(true)
-					.build();
+					.setContentIntent(pIntent).setAutoCancel(false).setWhen(0)
+					.setOngoing(true).build();
 
-			NotificationManager notificationManager =
-					(NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+			NotificationManager notificationManager = (NotificationManager) _context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
 
 			notificationManager.notify(0, n);
-		}
-		else {
-			NotificationManager notificationManager =
-					(NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+		} else {
+			NotificationManager notificationManager = (NotificationManager) _context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
 
 			notificationManager.cancel(0);
 		}

@@ -12,6 +12,7 @@ import com.thalmic.myo.XDirection;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Handler;
 
 public class MyoController implements IMyoController {
 	private static final String MYOMAC = "MYO_MAC";
@@ -20,6 +21,7 @@ public class MyoController implements IMyoController {
 	private Context _context;
 	private SharedPreferences _sharedPref;
 	private boolean _running;
+	private boolean _connecting;
 	
 	public MyoController(Context context) {
 		_context = context;
@@ -47,9 +49,29 @@ public class MyoController implements IMyoController {
 		}
 		hub.addListener(_listenerDelegate);
 
-		connect(hub);
-
 		_running = true;
+	}
+
+	public void stop() {
+		_running = false;
+		Hub hub = getHub();
+		hub.removeListener(_listenerDelegate);
+		hub.shutdown();
+		onMyoStateChanged(MyoStatus.notLinked);
+	}
+	
+	public void startConnecting(){
+		_connecting = true;
+		
+		new Handler().post(new Runnable() {
+		    @Override
+		    public void run() {
+		    	Hub hub = getHub();
+		    	connect(hub);
+		    }
+		});
+		
+		
 	}
 
 	private void connect(Hub hub) {
@@ -63,12 +85,8 @@ public class MyoController implements IMyoController {
 		}
 	}
 
-	public void stop() {
-		_running = false;
-		Hub hub = getHub();
-		hub.removeListener(_listenerDelegate);
-		hub.shutdown();
-		onMyoStateChanged(MyoStatus.notLinked);
+	public void stopConnecting(){
+		_connecting = false;
 	}
 
 	void onMyoStateChanged(MyoStatus myoStatus) {
@@ -98,6 +116,9 @@ public class MyoController implements IMyoController {
 	}
 
 	private void connectToLinkedMyo(String mac) {
+		if (!_connecting)
+			return;
+		
 		Hub hub = getHub();
 		hub.attachByMacAddress(mac);
 
