@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.service;
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
@@ -6,7 +6,11 @@ import android.bluetooth.BluetoothAdapter;
 import com.thalmic.myo.Hub;
 import com.thalmic.myo.Myo;
 
-public class ConnectorState {
+import de.nachregenkommtsonne.myospherocontrol.gui.GuiStateHinter;
+import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
+
+public class ServiceState {
 
 	private MyoStatus _myoStatus;
 	private SpheroStatus _spheroStatus;
@@ -15,6 +19,16 @@ public class ConnectorState {
 	private Myo _myo;
 	private Hub _hub;
 	private Sphero _sphero;
+	private boolean _controlMode;
+	private GuiStateHinter _guGuiStateHinter;
+
+	public boolean isControlMode() {
+		return _controlMode;
+	}
+
+	public void setControlMode(boolean controlMode) {
+		this._controlMode = controlMode;
+	}
 
 	public Myo getMyo() {
 		return _myo;
@@ -40,30 +54,39 @@ public class ConnectorState {
 		_sphero = sphero;
 	}
 
-	private static ConnectorState _instance = null;
+	private static ServiceState OB_instance = null;
 
 	static {
-		_instance = new ConnectorState();
+		OB_instance = new ServiceState();
 
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		_instance.setBluetoothEnabled((mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
+		OB_instance.setBluetoothEnabled((mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
 						? BluetoothState.on
 						: BluetoothState.off);
 
-		_instance.setMyoStatus(MyoStatus.disconnected);
-		_instance.setSpheroStatus(SpheroStatus.disconnected);
+		OB_instance.setMyoStatus(MyoStatus.disconnected);
+		OB_instance.setSpheroStatus(SpheroStatus.disconnected);
 	}
 
-	public static ConnectorState getInstance() {
-		return _instance;
+	public static ServiceState OBgetInstance() {
+		return OB_instance;
 	}
 
-	private ConnectorState() {
+	public String getHint(){
+		return _guGuiStateHinter.getHint(this);
+	}
+	
+	public ServiceState() {
 		_myoStatus = MyoStatus.notLinked;
 		_spheroStatus = SpheroStatus.disconnected;
 		_running = false;
-		_bluetoothState = BluetoothState.off;
+		_guGuiStateHinter = new GuiStateHinter();
+		
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		_bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
+				? BluetoothState.on
+				: BluetoothState.off;
 	}
 
 	public boolean isRunning() {

@@ -1,9 +1,7 @@
-package de.nachregenkommtsonne.myospherocontrol.interfaces;
+package de.nachregenkommtsonne.myospherocontrol.myo;
 
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
-
-import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 
 public interface IMyoEvents {
 	void myoControlActivated();

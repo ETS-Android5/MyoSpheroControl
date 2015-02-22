@@ -1,11 +1,16 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.gui;
+
+import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.service.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
 public class GuiStateHinter {
 	public GuiStateHinter() {
 
 	}
 
-	public String getHint(ConnectorState guiState) {
+	public String getHint(ServiceState guiState) {
 
 		if (!guiState.isRunning()) {
 			return "Press Start to connect the devices.";

@@ -1,6 +1,5 @@
-package de.nachregenkommtsonne.myospherocontrol.interfaces;
+package de.nachregenkommtsonne.myospherocontrol.sphero;
 
-import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 
 public interface ISpheroEvents {
 	void bluetoothDisabled();
