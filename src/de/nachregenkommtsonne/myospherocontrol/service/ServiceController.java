@@ -201,4 +201,10 @@ public class ServiceController {
 			notificationManager.cancel(0);
 		}
 	}
+
+	public void unlinkClicked() {
+		_myoController.unlink();
+		
+	}
+
 }

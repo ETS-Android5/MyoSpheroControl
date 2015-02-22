@@ -53,6 +53,10 @@ public class BackgroundService extends Service {
 		public void buttonClicked() {
 			_serviceController.buttonClicked();
 		}
+		public void unlinkClicked() {
+			_serviceController.unlinkClicked();
+			
+		}
 	}
 	
 	public interface IBinderEvents{

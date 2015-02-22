@@ -1,7 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol.myo;
 
-import com.thalmic.myo.Hub;
-
 public interface IMyoController {
 	void start();
 	void stop();
@@ -9,4 +7,5 @@ public interface IMyoController {
 	public abstract void stopConnecting();
 	public abstract void startConnecting();
 	public abstract void updateDisabledState();
+	void unlink();
 }

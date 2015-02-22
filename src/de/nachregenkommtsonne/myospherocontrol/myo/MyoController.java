@@ -36,7 +36,6 @@ public class MyoController implements IMyoController {
 		return Hub.getInstance();
 	}
 
-	@Override
 	public void setEventListener(IMyoEvents eventListener) {
 		_eventListener = eventListener;
 	}
@@ -48,7 +47,6 @@ public class MyoController implements IMyoController {
 			throw new RuntimeException("Error initializing Myo hub");
 		}
 		hub.addListener(_listenerDelegate);
-
 		_running = true;
 	}
 
@@ -61,7 +59,6 @@ public class MyoController implements IMyoController {
 		updateDisabledState();
 	}
 	
-	@Override
 	public void updateDisabledState(){
 		String myoMac = getMac();
 		if (myoMac == null) {
@@ -119,6 +116,13 @@ public class MyoController implements IMyoController {
 		edit.putString(MYOMAC, mac);
 		edit.apply();
 	}
+	
+	private void deleteMac() {
+		Editor edit = _sharedPref.edit();
+		edit.remove(MYOMAC);
+		edit.apply();
+	}
+
 
 	private String getMac() {
 		return _sharedPref.getString(MYOMAC, null);
@@ -181,4 +185,9 @@ public class MyoController implements IMyoController {
 			onMyoOrientationDataCollected(myo, timestamp, rotation);
 		}
 	};
+
+	public void unlink() {
+		deleteMac();
+		updateDisabledState();
+	}
 }

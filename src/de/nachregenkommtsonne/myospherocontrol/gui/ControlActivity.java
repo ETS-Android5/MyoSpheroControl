@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ControlActivity extends Activity {
 
@@ -48,6 +49,7 @@ public class ControlActivity extends Activity {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 			Button startButton = (Button) rootView.findViewById(R.id.startButton);
+			TextView textView2 = (TextView)rootView.findViewById(R.id.textView2);
 
 			startButton.setText(ServiceState.OBgetInstance().isRunning() ? "Stop" : "Start");
 
@@ -57,12 +59,22 @@ public class ControlActivity extends Activity {
 					buttonClicked();
 				}
 			});
+			
+			textView2.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					unlinkClicked();
+				}
+			});
 
 			return rootView;
 		}
 
 		private void buttonClicked() {
 			_myBinder.buttonClicked();
+		}
+		private void unlinkClicked() {
+			_myBinder.unlinkClicked();
 		}
 
 		public void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,7 @@ public class ControlActivity extends Activity {
 			ImageView spheroConnectedIcon = (ImageView) getView().findViewById(R.id.spheroConnectedIcon);
 			TextView hintText = (TextView) getView().findViewById(R.id.hintText);
 			Button button = (Button) getView().findViewById(R.id.startButton);
+			TextView textView2 = (TextView)getView().findViewById(R.id.textView2);
 
 			MyoStatus myoStatus = serviceState.getMyoStatus();
 			SpheroStatus spheroStatus = serviceState.getSpheroStatus();
@@ -128,6 +141,7 @@ public class ControlActivity extends Activity {
 			button.setText(serviceState.isRunning() ? "Stop" : "Start");
 
 			hintText.setText(hint);
+			textView2.setVisibility(myoStatus == MyoStatus.notLinked || serviceState.isRunning() ? View.GONE : View.VISIBLE);
 		}
 
 		private MyBinder _myBinder;
