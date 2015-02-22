@@ -58,13 +58,13 @@ public class MyoController implements IMyoController {
 		hub.shutdown();
 		updateDisabledState();
 	}
-	
-	public void updateDisabledState(){
+
+	public void updateDisabledState() {
 		String myoMac = getMac();
 		if (myoMac == null) {
 			onMyoStateChanged(MyoStatus.notLinked);
 		}
-		else{
+		else {
 			onMyoStateChanged(MyoStatus.linked);
 		}
 	}
@@ -89,7 +89,7 @@ public class MyoController implements IMyoController {
 	public void stopConnecting() {
 		stop();
 		start();
-		
+
 		updateDisabledState();
 		_connecting = false;
 	}
@@ -116,13 +116,12 @@ public class MyoController implements IMyoController {
 		edit.putString(MYOMAC, mac);
 		edit.apply();
 	}
-	
+
 	private void deleteMac() {
 		Editor edit = _sharedPref.edit();
 		edit.remove(MYOMAC);
 		edit.apply();
 	}
-
 
 	private String getMac() {
 		return _sharedPref.getString(MYOMAC, null);
@@ -146,7 +145,11 @@ public class MyoController implements IMyoController {
 
 		public void onDisconnect(Myo myo, long timestamp) {
 			if (_running && _connecting) {
-				connectToLinkedMyo(getMac());
+				try {
+					connectToLinkedMyo(getMac());
+				}
+				catch (Exception ex) {
+				}
 			}
 		}
 
@@ -158,7 +161,11 @@ public class MyoController implements IMyoController {
 		public void onArmUnsync(Myo myo, long timestamp) {
 			if (_connecting) {
 				onMyoStateChanged(MyoStatus.notSynced);
-				onMyoControlDeactivated();
+				try {
+					onMyoControlDeactivated();
+				}
+				catch (Exception ex) {
+				}
 			}
 		}
 

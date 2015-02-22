@@ -1,7 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol.sphero;
 
-import orbotix.robot.base.RobotProvider;
-
 public interface ISpheroController {
 	void move(float direction, float speed);
 	void changeColor();
