@@ -12,7 +12,6 @@ import com.thalmic.myo.XDirection;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Handler;
 
 public class MyoController implements IMyoController {
 	private static final String MYOMAC = "MYO_MAC";
@@ -22,10 +21,11 @@ public class MyoController implements IMyoController {
 	private SharedPreferences _sharedPref;
 	private boolean _running;
 	private boolean _connecting;
-	
+
 	public MyoController(Context context) {
 		_context = context;
-		_sharedPref = _context.getSharedPreferences(_context.getPackageName(), Context.MODE_PRIVATE);
+		_sharedPref = _context.getSharedPreferences(_context.getPackageName(),
+				Context.MODE_PRIVATE);
 
 		Hub hub = getHub();
 
@@ -54,24 +54,29 @@ public class MyoController implements IMyoController {
 
 	public void stop() {
 		_running = false;
+		_connecting = false;
 		Hub hub = getHub();
 		hub.removeListener(_listenerDelegate);
 		hub.shutdown();
-		onMyoStateChanged(MyoStatus.notLinked);
+		updateDisabledState();
 	}
 	
-	public void startConnecting(){
+	@Override
+	public void updateDisabledState(){
+		String myoMac = getMac();
+		if (myoMac == null) {
+			onMyoStateChanged(MyoStatus.notLinked);
+		}
+		else{
+			onMyoStateChanged(MyoStatus.linked);
+		}
+	}
+
+	public void startConnecting() {
 		_connecting = true;
-		
-		new Handler().post(new Runnable() {
-		    @Override
-		    public void run() {
-		    	Hub hub = getHub();
-		    	connect(hub);
-		    }
-		});
-		
-		
+
+		Hub hub = getHub();
+		connect(hub);
 	}
 
 	private void connect(Hub hub) {
@@ -79,13 +84,16 @@ public class MyoController implements IMyoController {
 		if (myoMac == null) {
 			onMyoStateChanged(MyoStatus.notLinked);
 			hub.attachToAdjacentMyo();
-		}
-		else {
+		} else {
 			connectToLinkedMyo(myoMac);
 		}
 	}
 
-	public void stopConnecting(){
+	public void stopConnecting() {
+		stop();
+		start();
+		
+		updateDisabledState();
 		_connecting = false;
 	}
 
@@ -101,7 +109,8 @@ public class MyoController implements IMyoController {
 		_eventListener.myoControlDeactivated();
 	}
 
-	void onMyoOrientationDataCollected(Myo myo, long timestamp, Quaternion rotation) {
+	void onMyoOrientationDataCollected(Myo myo, long timestamp,
+			Quaternion rotation) {
 		_eventListener.myoOrientationDataCollected(rotation, myo);
 	}
 
@@ -118,11 +127,11 @@ public class MyoController implements IMyoController {
 	private void connectToLinkedMyo(String mac) {
 		if (!_connecting)
 			return;
-		
+
 		Hub hub = getHub();
 		hub.attachByMacAddress(mac);
 
-		onMyoStateChanged(MyoStatus.connecting);
+		onMyoStateChanged(MyoStatus.linked);
 	}
 
 	private DeviceListener _listenerDelegate = new AbstractDeviceListener() {
@@ -132,18 +141,21 @@ public class MyoController implements IMyoController {
 		}
 
 		public void onDisconnect(Myo myo, long timestamp) {
-			if (_running) {
+			if (_running && _connecting) {
 				connectToLinkedMyo(getMac());
 			}
 		}
 
-		public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection) {
+		public void onArmSync(Myo myo, long timestamp, Arm arm,
+				XDirection xDirection) {
 			onMyoStateChanged(MyoStatus.connected);
 		}
 
 		public void onArmUnsync(Myo myo, long timestamp) {
-			onMyoStateChanged(MyoStatus.notSynced);
-			onMyoControlDeactivated();
+			if (_connecting) {
+				onMyoStateChanged(MyoStatus.notSynced);
+				onMyoControlDeactivated();
+			}
 		}
 
 		public void onUnlock(Myo myo, long timestamp) {
@@ -164,7 +176,8 @@ public class MyoController implements IMyoController {
 			}
 		}
 
-		public void onOrientationData(Myo myo, long timestamp, Quaternion rotation) {
+		public void onOrientationData(Myo myo, long timestamp,
+				Quaternion rotation) {
 			onMyoOrientationDataCollected(myo, timestamp, rotation);
 		}
 	};

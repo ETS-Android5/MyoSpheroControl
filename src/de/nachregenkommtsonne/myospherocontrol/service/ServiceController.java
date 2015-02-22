@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
@@ -41,6 +42,8 @@ public class ServiceController {
 		_myoController.setEventListener(_myoEvents);
 		_spheroController.setEventListener(_spheroEvents);
 		_state = new ServiceState();
+		_myoController.updateDisabledState();
+		
 		_mMovementCalculator = new MovementCalculator();
 
 		IntentFilter filter = new IntentFilter(
@@ -120,17 +123,29 @@ public class ServiceController {
 
 					if (_state.isRunning()) {
 						_myoController.stopConnecting();
-						_spheroController.stop();
+						_spheroController.stopForBluetooth();
 					}
 
 					break;
 				case BluetoothAdapter.STATE_ON:
-					_state.setBluetoothEnabled(BluetoothState.on);
+					new Handler().post(new Runnable() {
+					    public void run() {
+					    	try {
+								Thread.sleep(1400);
+							} catch (InterruptedException e) {
+							}
+					    	
+							_state.setBluetoothEnabled(BluetoothState.on);
 
-					if (_state.isRunning()) {
-						_myoController.startConnecting();
-						_spheroController.start();
-					}
+							if (_state.isRunning()) {
+								_myoController.startConnecting();
+								_spheroController.start();
+							}
+							
+							onChanged();
+					    }
+					});
+
 
 					break;
 				case BluetoothAdapter.STATE_TURNING_ON:
@@ -144,11 +159,10 @@ public class ServiceController {
 
 	public void buttonClicked() {
 		if (_state.isRunning()) {
-			_myoController.stop();
 			if (_state.getBluetoothState() == BluetoothState.on) {
-				_myoController.stopConnecting();
 				_spheroController.stop();
 			}
+			_myoController.stop();
 		} else {
 			_myoController.start();
 			if (_state.getBluetoothState() == BluetoothState.on) {

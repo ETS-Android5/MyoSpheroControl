@@ -3,7 +3,7 @@ package de.nachregenkommtsonne.myospherocontrol.myo;
 public enum MyoStatus {
 	notLinked,
 	disconnected,
-	connecting,
+	linked,
 	notSynced, 
 	connected,
 }

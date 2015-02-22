@@ -27,7 +27,7 @@ public class GuiStateHinter {
 			if (guiState.getMyoStatus() == MyoStatus.notSynced)
 				return "Myo is not synced. Please perform the sync gesture.";
 
-			if (guiState.getMyoStatus() == MyoStatus.connecting)
+			if (guiState.getMyoStatus() == MyoStatus.linked)
 				return "Connecting to Myo. Is your Myo turned on?";
 
 			if (guiState.getMyoStatus() == MyoStatus.notLinked)

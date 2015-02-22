@@ -119,7 +119,7 @@ public class ControlActivity extends Activity {
 			SpheroStatus spheroStatus = serviceState.getSpheroStatus();
 			String hint = _guiStateHinter.getHint(serviceState);
 
-			myoLinkedIcon.setImageResource((myoStatus == MyoStatus.connecting || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
+			myoLinkedIcon.setImageResource((myoStatus == MyoStatus.linked || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 			myoConnectedIcon.setImageResource((myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 			myoSyncronizedIcon.setImageResource((myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
 			spheroDiscoveredIcon.setImageResource((spheroStatus == SpheroStatus.connecting || spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);

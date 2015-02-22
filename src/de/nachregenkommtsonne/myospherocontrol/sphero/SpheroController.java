@@ -83,6 +83,13 @@ public class SpheroController implements ISpheroController {
 		onSpheroStateChanged(SpheroStatus.disconnected);
 	}
 
+	public void stopForBluetooth(){
+		_running = false;
+		RobotProvider robotProvider = getRobotProvider();
+		robotProvider.shutdown();
+		onSpheroStateChanged(SpheroStatus.disconnected);
+	}
+	
 	ConnectionListener _connectionListener = new ConnectionListener() {
 
 		public void onDisconnected(Robot arg0) {
