@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.nachregenkommtsonne.myospherocontrol"
-    android:versionCode="3"
-    android:versionName="1.0.2" >
+    android:versionCode="4"
+    android:versionName="1.1.0" >
 
     <uses-sdk
         android:minSdkVersion="18"
         android:targetSdkVersion="21" />
-    
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-	
-	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
-	
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -21,15 +23,22 @@
         <activity
             android:name="de.nachregenkommtsonne.myospherocontrol.gui.ControlActivity"
             android:label="@string/title_activity_main"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="portrait" 
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.BackgroundService"></service>
+        <activity
+            android:name="com.thalmic.myo.scanner.ScanActivity"
+            android:label="@string/myosdk__title_activity_scan"
+            android:theme="@style/myosdk__ScanActivityTheme" />
+
+        <service android:name=".service.BackgroundService" >
+        </service>
     </application>
+
 </manifest>

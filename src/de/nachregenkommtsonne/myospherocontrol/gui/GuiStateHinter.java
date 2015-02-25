@@ -31,7 +31,7 @@ public class GuiStateHinter {
 				return "Connecting to Myo. Is your Myo turned on?";
 
 			if (guiState.getMyoStatus() == MyoStatus.notLinked)
-				return "Please touch your Myo with your Phone to link.";
+				return "Please hold your Myo near your Phone or press 'Scan for Myo' to link to your Myo.";
 		}
 
 		if (guiState.getSpheroStatus() != SpheroStatus.connected) {

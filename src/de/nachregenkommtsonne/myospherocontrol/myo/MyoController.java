@@ -8,8 +8,10 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
+import com.thalmic.myo.scanner.ScanActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -54,6 +56,7 @@ public class MyoController implements IMyoController {
 		_running = false;
 		_connecting = false;
 		Hub hub = getHub();
+		
 		hub.removeListener(_listenerDelegate);
 		hub.shutdown();
 		updateDisabledState();
@@ -92,6 +95,17 @@ public class MyoController implements IMyoController {
 
 		updateDisabledState();
 		_connecting = false;
+	}
+	
+	@Override
+	public void connectViaDialog(){
+		//stop();
+		//start();
+		
+		//onMyoStateChanged(MyoStatus.linked);
+		
+        Intent intent = new Intent(_context, ScanActivity.class);
+        _context.startActivity(intent);
 	}
 
 	void onMyoStateChanged(MyoStatus myoStatus) {
@@ -193,8 +207,13 @@ public class MyoController implements IMyoController {
 		}
 	};
 
-	public void unlink() {
-		deleteMac();
-		updateDisabledState();
+	public void connectAndUnlinkButtonClicked() {
+		if (_running){
+			//connectViaDialog();
+		}
+		else{
+			deleteMac();
+			updateDisabledState();
+		}
 	}
 }

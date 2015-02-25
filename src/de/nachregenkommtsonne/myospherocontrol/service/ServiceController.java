@@ -115,11 +115,12 @@ public class ServiceController {
 						BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 				switch (state) {
 				case BluetoothAdapter.STATE_OFF:
-					_state.setBluetoothEnabled(BluetoothState.off);
+					_state.setBluetoothState(BluetoothState.off);
 					break;
+					
 				case BluetoothAdapter.STATE_TURNING_OFF:
 					_state.setControlMode(false);
-					_state.setBluetoothEnabled(BluetoothState.turningOff);
+					_state.setBluetoothState(BluetoothState.turningOff);
 
 					if (_state.isRunning()) {
 						_myoController.stopConnecting();
@@ -127,6 +128,7 @@ public class ServiceController {
 					}
 
 					break;
+					
 				case BluetoothAdapter.STATE_ON:
 					new Handler().post(new Runnable() {
 					    public void run() {
@@ -135,7 +137,7 @@ public class ServiceController {
 							} catch (InterruptedException e) {
 							}
 					    	
-							_state.setBluetoothEnabled(BluetoothState.on);
+							_state.setBluetoothState(BluetoothState.on);
 
 							if (_state.isRunning()) {
 								_myoController.startConnecting();
@@ -145,11 +147,10 @@ public class ServiceController {
 							onChanged();
 					    }
 					});
-
-
 					break;
+					
 				case BluetoothAdapter.STATE_TURNING_ON:
-					_state.setBluetoothEnabled(BluetoothState.turningOn);
+					_state.setBluetoothState(BluetoothState.turningOn);
 					break;
 				}
 				onChanged();
@@ -203,7 +204,7 @@ public class ServiceController {
 	}
 
 	public void unlinkClicked() {
-		_myoController.unlink();
+		_myoController.connectAndUnlinkButtonClicked();
 		
 	}
 

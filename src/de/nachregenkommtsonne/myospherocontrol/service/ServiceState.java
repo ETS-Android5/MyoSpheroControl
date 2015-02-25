@@ -61,7 +61,7 @@ public class ServiceState {
 
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		OB_instance.setBluetoothEnabled((mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
+		OB_instance.setBluetoothState((mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
 						? BluetoothState.on
 						: BluetoothState.off);
 
@@ -101,7 +101,7 @@ public class ServiceState {
 		return _bluetoothState;
 	}
 
-	public void setBluetoothEnabled(BluetoothState bluetoothStatus) {
+	public void setBluetoothState(BluetoothState bluetoothStatus) {
 		_bluetoothState = bluetoothStatus;
 	}
 

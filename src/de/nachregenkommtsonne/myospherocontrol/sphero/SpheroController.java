@@ -61,10 +61,10 @@ public class SpheroController implements ISpheroController {
 
 	private void startDiscovery() {
 		RobotProvider robotProvider = getRobotProvider();
-		boolean success = robotProvider.startDiscovery(_context);
-		if (!success) {
+		/*boolean success =*/ robotProvider.startDiscovery(_context);
+		//if (!success) {
 			//throw new RuntimeException();
-		}
+		//}
 
 		onSpheroStateChanged(SpheroStatus.discovering);
 	}
@@ -126,7 +126,7 @@ public class SpheroController implements ISpheroController {
 
 		public void onFound(List<Sphero> spheros) {
 			_sphero = spheros.iterator().next();
-
+			
 			startConnecting();
 		}
 

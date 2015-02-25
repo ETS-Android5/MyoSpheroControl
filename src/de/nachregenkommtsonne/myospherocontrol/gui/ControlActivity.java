@@ -1,8 +1,11 @@
 package de.nachregenkommtsonne.myospherocontrol.gui;
 
+import com.thalmic.myo.scanner.ScanActivity;
+
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService;
+import de.nachregenkommtsonne.myospherocontrol.service.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService.IBinderEvents;
 import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService.MyBinder;
@@ -62,7 +65,13 @@ public class ControlActivity extends Activity {
 			textView2.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
-					unlinkClicked();
+					ServiceState state = _myBinder.getState();
+					if (!state.isRunning())
+						unlinkClicked();
+					else{
+				        Intent intent = new Intent(getActivity(), ScanActivity.class);
+				        getActivity().startActivity(intent);
+					}
 				}
 			});
 
@@ -129,6 +138,7 @@ public class ControlActivity extends Activity {
 
 			MyoStatus myoStatus = serviceState.getMyoStatus();
 			SpheroStatus spheroStatus = serviceState.getSpheroStatus();
+			BluetoothState bluetoothStatus = serviceState.getBluetoothState();
 			String hint = _guiStateHinter.getHint(serviceState);
 
 			myoLinkedIcon.setImageResource((myoStatus == MyoStatus.linked || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete);
@@ -140,7 +150,18 @@ public class ControlActivity extends Activity {
 			button.setText(serviceState.isRunning() ? "Stop" : "Start");
 
 			hintText.setText(hint);
-			textView2.setVisibility(myoStatus == MyoStatus.notLinked || serviceState.isRunning() ? View.GONE : View.VISIBLE);
+			
+			if (myoStatus == MyoStatus.notLinked && serviceState.isRunning() && bluetoothStatus == BluetoothState.on){
+				textView2.setText("Scan for Myo");
+				textView2.setVisibility(View.VISIBLE);
+			}
+			else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning()){
+				textView2.setText("Unlink");
+				textView2.setVisibility(View.VISIBLE);
+			}
+			else{
+				textView2.setVisibility(View.GONE);
+			}
 		}
 
 		private MyBinder _myBinder;
