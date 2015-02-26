@@ -40,17 +40,22 @@ public class SpheroController implements ISpheroController {
 	}
 
 	public void move(float direction, float speed) {
-		if (_connected)
+		if (!_connected && _sphero != null && _sphero.isConnected())
+			_connected = true;
+		
+		//if (_connected)
+		if (_sphero != null)
 			_sphero.drive(direction, speed);
 	}
 
-	public void changeColor() {
-		if (_connected)
-			_sphero.setColor(255, 0, 0);
+	public void changeColor(int red, int green, int blue) {
+		if (_connected && _sphero != null)
+			_sphero.setColor(red, green, blue);
 	}
 
 	public void halt() {
-		if (_connected)
+		if (_sphero != null)
+//		if (_connected)
 			_sphero.stop();
 	}
 

@@ -9,36 +9,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.nachregenkommtsonne.myospherocontrol.MainActivity$PlaceholderFragment" >
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/title_activity_main"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/title_activity_main"
+        android:drawableStart="@drawable/ic_launcher"
+        android:gravity="center"
+        android:text="@string/title_activity_main"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/startButton"
+            android:id="@+id/startStopButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:text="Start" />
-
+            android:text="@string/startLabel" />
     </LinearLayout>
 
     <TableLayout
@@ -52,6 +42,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="@string/doubleTap"
                 android:src="@drawable/double_tap" />
 
             <TextView
@@ -60,19 +51,20 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:gravity="center_vertical"
-                android:text="+" />
+                android:text="@string/plus" />
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="@string/fist"
                 android:src="@drawable/fist" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center_vertical"
-                android:text="Enable Control" />
+                android:text="@string/enableControl" />
         </TableRow>
 
         <TableRow
@@ -83,19 +75,19 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_span="3"
+                android:contentDescription="@string/spreadFingers"
                 android:src="@drawable/spread_fingers" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center_vertical"
-                android:text="Disable Control" />
+                android:text="@string/disableControl" />
         </TableRow>
     </TableLayout>
 
     <TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -110,7 +102,8 @@
         <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/myoDevice"
             android:src="@drawable/device_myo" />
 
         <LinearLayout
@@ -123,72 +116,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <ImageView
+                <TextView
                     android:id="@+id/myoLinkedIcon"
-                    android:layout_width="24dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginRight="4dp"
-                    android:src="@android:drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="@string/myoLinkedIcon"
+                    android:drawableStart="@android:drawable/ic_delete"
                     android:gravity="center_vertical"
-                    android:text="Linked" />
+                    android:text="@string/linked" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/linkUnlinkButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:background="#e0e0e0"
                     android:gravity="center_vertical"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="Click to Unlink" />
-
+                    android:text="@string/clickToUnlink" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/myoConnectedIcon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/myoConnectedIcon"
+                android:drawableStart="@android:drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:text="@string/connected" />
 
-                <ImageView
-                    android:id="@+id/myoConnectedIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="4dp"
-                    android:src="@android:drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Connected" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/myoSyncronizedIcon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <ImageView
-                    android:id="@+id/myoSyncronizedIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="4dp"
-                    android:src="@android:drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Syncronized" />
-
-            </LinearLayout>
-
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/myoSyncronizedIcon"
+                android:drawableStart="@android:drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:text="@string/syncronized" />
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -199,7 +168,8 @@
         <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/spheroDevice"
             android:src="@drawable/device_sphero" />
 
         <LinearLayout
@@ -208,46 +178,26 @@
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/spheroDiscoveredIcon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/spheroDiscoveredIcon"
+                android:drawableStart="@android:drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:text="@string/discovered" />
 
-                <ImageView
-                    android:id="@+id/spheroDiscoveredIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="4dp"
-                    android:src="@android:drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Discovered" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/spheroConnectedIcon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <ImageView
-                    android:id="@+id/spheroConnectedIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="4dp"
-                    android:src="@android:drawable/ic_delete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Connected" />
-
-            </LinearLayout>
-
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/spheroConnectedIcon"
+                android:drawableStart="@android:drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:text="@string/connected" />
         </LinearLayout>
-
     </LinearLayout>
 
     <TextView
@@ -255,7 +205,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

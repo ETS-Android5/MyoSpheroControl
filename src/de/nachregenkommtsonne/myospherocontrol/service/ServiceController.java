@@ -80,11 +80,18 @@ public class ServiceController {
 
 			MovementResult movementResult = _mMovementCalculator.calculate(
 					rotation, myo.getXDirection() == XDirection.TOWARD_ELBOW);
+			
 			_spheroController.move(movementResult.get_direction(),
 					movementResult.get_speed());
+			
+			_spheroController.changeColor(
+					movementResult.get_red(), 
+					movementResult.get_green(), 
+					movementResult.get_blue());
 		}
 
 		public void myoControlDeactivated() {
+			_spheroController.changeColor(0, 0, 255);
 			_state.setControlMode(false);
 			_spheroController.halt();
 		}
@@ -98,6 +105,10 @@ public class ServiceController {
 	private ISpheroEvents _spheroEvents = new ISpheroEvents() {
 
 		public void spheroStateChanged(SpheroStatus spheroStatus) {
+			if (spheroStatus == SpheroStatus.connected){
+				_spheroController.changeColor(0, 0, 255);
+			}
+			
 			_state.setSpheroStatus(spheroStatus);
 			onChanged();
 		}

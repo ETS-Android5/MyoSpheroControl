@@ -60,17 +60,38 @@ public class MovementCalculator {
 		if (_speed < 0.0f)
 			_speed = 0.0f;
 		
-		return new MovementResult(direction, _speed);
+		return new MovementResult(direction, _speed, 
+				(int) (_speed * 255), 
+				(int) (255 - (_speed * 255)), 
+				0);
 	}
 
 	class MovementResult{
 		private float _direction;
 		private float _speed;
+		private int _red;
+		private int _green;
+		private int _blue;
 		
-		public MovementResult(float _direction, float _speed) {
+		public int get_red() {
+			return _red;
+		}
+
+		public int get_green() {
+			return _green;
+		}
+
+		public int get_blue() {
+			return _blue;
+		}
+
+		public MovementResult(float direction, float speed, int red, int green, int blue) {
 			super();
-			this._direction = _direction;
-			this._speed = _speed;
+			_direction = direction;
+			_speed = speed;
+			_red = red;
+			_green = green;
+			_blue = blue;
 		}
 		
 		public float get_direction() {

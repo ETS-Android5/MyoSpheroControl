@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.sphero;
 
 public interface ISpheroController {
 	void move(float direction, float speed);
-	void changeColor();
+	void changeColor(int red, int green, int blue);
 	void halt();
 	void start();
 	void stop();
