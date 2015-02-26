@@ -196,7 +196,7 @@ public class ServiceController {
 					intent, 0);
 
 			Notification n = new Notification.Builder(_context)
-					.setContentTitle("Myo Sphero Control")
+					.setContentTitle(_context.getString(R.string.app_name))
 					.setContentText(_context.getString(_state.getHint()))
 					.setSmallIcon(R.drawable.ic_launcher)
 					.setContentIntent(pIntent).setAutoCancel(false).setWhen(0)
