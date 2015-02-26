@@ -53,7 +53,10 @@ public class ControlActivity extends Activity {
 			Button startStopButton = (Button) rootView.findViewById(R.id.startStopButton);
 			TextView linkUnlinkButton = (TextView) rootView.findViewById(R.id.linkUnlinkButton);
 
-			startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? "Stop" : "Start");
+			String startLabel = getString(R.string.startLabel);
+			String stopLabel = getString(R.string.stopLabel);
+			
+			startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
 
 			startStopButton.setOnClickListener(new OnClickListener() {
 
@@ -165,16 +168,20 @@ public class ControlActivity extends Activity {
 			Drawable spheroConnectedDrawable = resources.getDrawable(spheroConnectedDrawableResource);
 			spheroConnectedIcon.setImageDrawable(spheroConnectedDrawable);
 
-			startStopButton.setText(serviceState.isRunning() ? "Stop" : "Start");
+			String startLabel = getString(R.string.startLabel);
+			String stopLabel = getString(R.string.stopLabel);
+			startStopButton.setText(serviceState.isRunning() ? stopLabel : startLabel);
 
 			hintText.setText(hint);
 
 			if (myoStatus == MyoStatus.notLinked && serviceState.isRunning() && bluetoothStatus == BluetoothState.on) {
-				linkUnlinkButton.setText("Scan for Myo");
+				String linkLabel = getString(R.string.clickToLink);
+				linkUnlinkButton.setText(linkLabel);
 				linkUnlinkButton.setVisibility(View.VISIBLE);
 			}
 			else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning()) {
-				linkUnlinkButton.setText("Unlink");
+				String unlinkLabel = getString(R.string.clickToUnlink);
+				linkUnlinkButton.setText(unlinkLabel);
 				linkUnlinkButton.setVisibility(View.VISIBLE);
 			}
 			else {
