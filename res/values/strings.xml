@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Myo Sphero Control</string>
     <string name="title_activity_main">Myo Sphero Control</string>
-    <string name="action_settings">Settings</string>
+
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
     <string name="controlUsage">Once in Control Mode use Pitch to control speed and Roll and Yaw for the direction. Start with your arm pointing up.</string>
@@ -14,12 +14,12 @@
 	<string name="enableControl">Enable Control Mode</string>
 	<string name="disableControl">Disable Control Mode</string>
 	
-	<string name="myoDevice">Myo Device</string>
+	<string name="myoDevice">Myo</string>
 	
 	<string name="myoLinkedIcon">Myo Linked Icon</string>
 	<string name="linked">Linked</string>
-	<string name="clickToLink">Click to Link</string>
-	<string name="clickToUnlink">Click to Unlink</string>
+	<string name="clickToLink">Link</string>
+	<string name="clickToUnlink">Unlink</string>
 	
 	<string name="myoConnectedIcon">Myo Connected Icon</string>
 	<string name="connected">Connected</string>
@@ -27,7 +27,7 @@
 	<string name="myoSyncronizedIcon">Myo Syncronized Icon</string>
 	<string name="syncronized">Syncronized</string>
 	
-	<string name="spheroDevice">Sphero Device</string>
+	<string name="spheroDevice">Sphero</string>
 	
 	<string name="spheroDiscoveredIcon">Sphero Discovered Icon</string>
 	<string name="discovered">Discovered</string>
@@ -45,6 +45,6 @@
 	<string name="searchingSphero">Searching for Sphero. Is your Sphero turned on and paired with your phone?</string>
 	
 	<string name="controllerActive">Everything is fine. Have Fun!</string>
-	<string name="heavyError">Woops! Something is wrong. Please restart the App and if you experience connection problems reboot your phone, your myo and your sphero or have a lot of patience.</string>
+	<string name="heavyError">Woops! Something is wrong. Please restart the App and if you experience connection problems reboot your phone.</string>
 	
 </resources>

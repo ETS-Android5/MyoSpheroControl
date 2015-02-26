@@ -45,14 +45,13 @@ public final class R {
         public static final int spread_fingers=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000e;
         public static final int container=0x7f090000;
         public static final int hintText=0x7f090008;
         public static final int linkUnlinkButton=0x7f090003;
         public static final int myoConnectedIcon=0x7f090004;
         public static final int myoLinkedIcon=0x7f090002;
         public static final int myoSyncronizedIcon=0x7f090005;
-        public static final int myosdk__action_scan=0x7f09000f;
+        public static final int myosdk__action_scan=0x7f09000e;
         public static final int myosdk__connection_state_dot=0x7f09000c;
         public static final int myosdk__fragment_scan=0x7f090009;
         public static final int myosdk__progress=0x7f09000b;
@@ -70,50 +69,48 @@ public final class R {
         public static final int myosdk__fragment_scan=0x7f030004;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
-        public static final int myosdk__fragment_scan=0x7f080001;
+        public static final int myosdk__fragment_scan=0x7f080000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060008;
         public static final int app_name=0x7f060006;
-        public static final int bluetoothTurningOn=0x7f060020;
-        public static final int clickToLink=0x7f060015;
-        public static final int clickToUnlink=0x7f060016;
-        public static final int connected=0x7f060018;
-        public static final int connectingToMyo=0x7f060023;
-        public static final int connectingToSphero=0x7f060025;
-        public static final int controlUsage=0x7f06000b;
-        public static final int controllerActive=0x7f060027;
-        public static final int disableControl=0x7f060011;
-        public static final int discovered=0x7f06001d;
-        public static final int doubleTap=0x7f06000d;
-        public static final int enableControl=0x7f060010;
-        public static final int fist=0x7f06000e;
-        public static final int heavyError=0x7f060028;
-        public static final int linkMyo=0x7f060024;
-        public static final int linked=0x7f060014;
-        public static final int myoConnectedIcon=0x7f060017;
-        public static final int myoDevice=0x7f060012;
-        public static final int myoLinkedIcon=0x7f060013;
-        public static final int myoNotSynced=0x7f060022;
-        public static final int myoSyncronizedIcon=0x7f060019;
+        public static final int bluetoothTurningOn=0x7f06001f;
+        public static final int clickToLink=0x7f060014;
+        public static final int clickToUnlink=0x7f060015;
+        public static final int connected=0x7f060017;
+        public static final int connectingToMyo=0x7f060022;
+        public static final int connectingToSphero=0x7f060024;
+        public static final int controlUsage=0x7f06000a;
+        public static final int controllerActive=0x7f060026;
+        public static final int disableControl=0x7f060010;
+        public static final int discovered=0x7f06001c;
+        public static final int doubleTap=0x7f06000c;
+        public static final int enableControl=0x7f06000f;
+        public static final int fist=0x7f06000d;
+        public static final int heavyError=0x7f060027;
+        public static final int linkMyo=0x7f060023;
+        public static final int linked=0x7f060013;
+        public static final int myoConnectedIcon=0x7f060016;
+        public static final int myoDevice=0x7f060011;
+        public static final int myoLinkedIcon=0x7f060012;
+        public static final int myoNotSynced=0x7f060021;
+        public static final int myoSyncronizedIcon=0x7f060018;
         public static final int myosdk__action_scan=0x7f060001;
         public static final int myosdk__action_stop_scan=0x7f060002;
         public static final int myosdk__firmware_required_format=0x7f060005;
         public static final int myosdk__firmware_version_format=0x7f060004;
         public static final int myosdk__title_activity_scan=0x7f060000;
         public static final int myosdk__unknown_myo=0x7f060003;
-        public static final int pleaseEnableBluetooth=0x7f060021;
-        public static final int plus=0x7f06000c;
-        public static final int pressStart=0x7f06001f;
-        public static final int searchingSphero=0x7f060026;
-        public static final int spheroConnectedIcon=0x7f06001e;
-        public static final int spheroDevice=0x7f06001b;
-        public static final int spheroDiscoveredIcon=0x7f06001c;
-        public static final int spreadFingers=0x7f06000f;
-        public static final int startLabel=0x7f060009;
-        public static final int stopLabel=0x7f06000a;
-        public static final int syncronized=0x7f06001a;
+        public static final int pleaseEnableBluetooth=0x7f060020;
+        public static final int plus=0x7f06000b;
+        public static final int pressStart=0x7f06001e;
+        public static final int searchingSphero=0x7f060025;
+        public static final int spheroConnectedIcon=0x7f06001d;
+        public static final int spheroDevice=0x7f06001a;
+        public static final int spheroDiscoveredIcon=0x7f06001b;
+        public static final int spreadFingers=0x7f06000e;
+        public static final int startLabel=0x7f060008;
+        public static final int stopLabel=0x7f060009;
+        public static final int syncronized=0x7f060019;
         public static final int title_activity_main=0x7f060007;
     }
     public static final class style {

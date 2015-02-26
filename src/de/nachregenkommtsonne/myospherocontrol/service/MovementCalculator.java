@@ -51,7 +51,7 @@ public class MovementCalculator {
 			_speed = (pitch + 40.f) / 200.f;
 		}
 		else {
-			_speed = 0.2f + pitch / 90.f * 0.8f;
+			_speed = 0.2f + pitch / 45.f * 0.8f;
 		}
 
 		if (_speed > 1.0f)

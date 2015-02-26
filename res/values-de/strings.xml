@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Myo Sphero Control</string>
+    <string name="title_activity_main">Myo Sphero Control</string>
+
+    <string name="startLabel">Start</string>
+    <string name="stopLabel">Stop</string>
+    <string name="controlUsage">Benutze im Kontrollmodus Nicken um die Geschwindigkeit zu steuern und Rollen und Gieren für die Richtung. Starte mit dem Arm nach oben zeigend.</string>
+
+	<string name="plus">+</string>
+	<string name="doubleTap">Doppel Tippen</string>
+	<string name="fist">Faust</string>
+	<string name="spreadFingers">Finger spreizen</string>
+	<string name="enableControl">Kontrollmodus aktivieren</string>
+	<string name="disableControl">Kontrollmodus deaktivieren</string>
+	
+	<string name="myoDevice">Myo</string>
+	
+	<string name="myoLinkedIcon">Myo verknüpft Symbol</string>
+	<string name="linked">Verknüpft</string>
+	<string name="clickToLink">Verknüpfen</string>
+	<string name="clickToUnlink">Verknüpfung aufheben</string>
+	
+	<string name="myoConnectedIcon">Myo verbinden Symbol</string>
+	<string name="connected">Verbunden</string>
+	
+	<string name="myoSyncronizedIcon">Myo Syncronized Symbol</string>
+	<string name="syncronized">Syncronisiert</string>
+	
+	<string name="spheroDevice">Sphero</string>
+	
+	<string name="spheroDiscoveredIcon">Sphero gefunden Symbol</string>
+	<string name="discovered">Gefunden</string>
+		
+	<string name="spheroConnectedIcon">Sphero verbunden Symbol</string>
+	
+	<string name="pressStart">Drücke start um die Gräete zu verbinden.</string>
+	<string name="bluetoothTurningOn" tools:ignore="TypographyEllipsis">Bluetooth wird aktiviert. Bitte Warten...</string>
+	<string name="pleaseEnableBluetooth">Bitte aktiviere Bluetooth.</string>
+	<string name="myoNotSynced">Myo ist nicht syncronisiert. Please führe die Synchronisierungsgeste durch.</string>
+	<string name="connectingToMyo">Versuche Verbindung zu Myo aufzubauen. Ist dein Myo aktiv?</string>
+	<string name="linkMyo">Bitte halte dein Myo nahe an dein Smartphone oder drücke \'Verknüpfen\' um dein Myo zu verknüpfen.</string>
+	
+	<string name="connectingToSphero" tools:ignore="TypographyEllipsis">Sphero gefunden. Verbinde...</string>
+	<string name="searchingSphero">Suche nach Sphero. Ist dein Sphero aktiv und mit deinem Smartphone gepaart?</string>
+	
+	<string name="controllerActive">Alles funktioniert. Viel Spaß!</string>
+	<string name="heavyError">
+	    Woops! Irgendetwas ist falsch gelaufen. Bitte starte die App neu und wenn du Verbindungsprobleme hast starte dein Smartphone neu.</string>
+	
+</resources>
