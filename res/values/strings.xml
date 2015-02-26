@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Myo Sphero Control</string>
     <string name="title_activity_main">Myo Sphero Control</string>
     <string name="action_settings">Settings</string>
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
-    <string name="controlUsage">Once in Control Mode use Pitch to control speed and Roll and Yaw for the direction.</string>
+    <string name="controlUsage">Once in Control Mode use Pitch to control speed and Roll and Yaw for the direction. Start with your arm pointing up.</string>
 
 	<string name="plus">+</string>
 	<string name="doubleTap">Double Tap</string>
 	<string name="fist">Fist</string>
 	<string name="spreadFingers">Spread Fingers</string>
-	<string name="enableControl">Enable Control</string>
-	<string name="disableControl">Disable Control</string>
+	<string name="enableControl">Enable Control Mode</string>
+	<string name="disableControl">Disable Control Mode</string>
 	
 	<string name="myoDevice">Myo Device</string>
 	
@@ -33,4 +33,18 @@
 	<string name="discovered">Discovered</string>
 		
 	<string name="spheroConnectedIcon">Sphero Connected Icon</string>
+	
+	<string name="pressStart">Press Start to connect the devices.</string>
+	<string name="bluetoothTurningOn" tools:ignore="TypographyEllipsis">Bluetooth is turning on. Please wait...</string>
+	<string name="pleaseEnableBluetooth">Please enable Bluetooth.</string>
+	<string name="myoNotSynced">Myo is not synced. Please perform the sync gesture.</string>
+	<string name="connectingToMyo">Connecting to Myo. Is your Myo turned on?</string>
+	<string name="linkMyo">Please hold your Myo near your Phone or press \'Scan for Myo\' to link to your Myo.</string>
+	
+	<string name="connectingToSphero" tools:ignore="TypographyEllipsis">Sphero found. Connecting...</string>
+	<string name="searchingSphero">Searching for Sphero. Is your Sphero turned on and paired with your phone?</string>
+	
+	<string name="controllerActive">Everything is fine. Have Fun!</string>
+	<string name="heavyError">Woops! Something is wrong. Please restart the App and if you experience connection problems reboot your phone, your myo and your sphero or have a lot of patience.</string>
+	
 </resources>

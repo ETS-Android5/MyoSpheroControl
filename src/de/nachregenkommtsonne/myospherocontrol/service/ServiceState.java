@@ -73,7 +73,7 @@ public class ServiceState {
 		return OB_instance;
 	}
 
-	public String getHint(){
+	public int getHint(){
 		return _guGuiStateHinter.getHint(this);
 	}
 	

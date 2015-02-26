@@ -15,6 +15,8 @@ import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ControlActivity extends Activity {
@@ -48,7 +51,7 @@ public class ControlActivity extends Activity {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 			Button startStopButton = (Button) rootView.findViewById(R.id.startStopButton);
-			TextView linkUnlinkButton = (TextView)rootView.findViewById(R.id.linkUnlinkButton);
+			TextView linkUnlinkButton = (TextView) rootView.findViewById(R.id.linkUnlinkButton);
 
 			startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? "Stop" : "Start");
 
@@ -58,16 +61,16 @@ public class ControlActivity extends Activity {
 					buttonClicked();
 				}
 			});
-			
+
 			linkUnlinkButton.setOnClickListener(new OnClickListener() {
-				
+
 				public void onClick(View v) {
 					ServiceState state = _myBinder.getState();
 					if (!state.isRunning())
 						unlinkClicked();
-					else{
-				        Intent intent = new Intent(getActivity(), ScanActivity.class);
-				        getActivity().startActivity(intent);
+					else {
+						Intent intent = new Intent(getActivity(), ScanActivity.class);
+						getActivity().startActivity(intent);
 					}
 				}
 			});
@@ -78,6 +81,7 @@ public class ControlActivity extends Activity {
 		private void buttonClicked() {
 			_myBinder.buttonClicked();
 		}
+
 		private void unlinkClicked() {
 			_myBinder.unlinkClicked();
 		}
@@ -100,22 +104,22 @@ public class ControlActivity extends Activity {
 		public void onPause() {
 			super.onPause();
 
-			//TODO: stop service when not running here!
+			// TODO: stop service when not running here!
 			getActivity().unbindService(_myServiceConnection);
 		}
 
 		public void onDestroy() {
 			super.onDestroy();
 		}
-		
+
 		private void updateUiOnUiThread() {
 			final ServiceState state = _myBinder.getState();
-			
+
 			Activity activity = getActivity();
-			
+
 			if (activity == null)
 				return;
-			
+
 			activity.runOnUiThread(new Runnable() {
 				public void run() {
 					updateUI(state);
@@ -124,48 +128,56 @@ public class ControlActivity extends Activity {
 		}
 
 		private void updateUI(ServiceState serviceState) {
-			TextView myoLinkedIcon = (TextView) getView().findViewById(R.id.myoLinkedIcon);
-			TextView myoConnectedIcon = (TextView) getView().findViewById(R.id.myoConnectedIcon);
-			TextView myoSyncronizedIcon = (TextView) getView().findViewById(R.id.myoSyncronizedIcon);
-			TextView spheroDiscoveredIcon = (TextView) getView().findViewById(R.id.spheroDiscoveredIcon);
-			TextView spheroConnectedIcon = (TextView) getView().findViewById(R.id.spheroConnectedIcon);
+			ImageView myoLinkedIcon = (ImageView) getView().findViewById(R.id.myoLinkedIcon);
+			ImageView myoConnectedIcon = (ImageView) getView().findViewById(R.id.myoConnectedIcon);
+			ImageView myoSyncronizedIcon = (ImageView) getView().findViewById(R.id.myoSyncronizedIcon);
+			ImageView spheroDiscoveredIcon = (ImageView) getView().findViewById(R.id.spheroDiscoveredIcon);
+			ImageView spheroConnectedIcon = (ImageView) getView().findViewById(R.id.spheroConnectedIcon);
 			TextView hintText = (TextView) getView().findViewById(R.id.hintText);
 			Button startStopButton = (Button) getView().findViewById(R.id.startStopButton);
-			TextView linkUnlinkButton = (TextView)getView().findViewById(R.id.linkUnlinkButton);
+			TextView linkUnlinkButton = (TextView) getView().findViewById(R.id.linkUnlinkButton);
 
 			MyoStatus myoStatus = serviceState.getMyoStatus();
 			SpheroStatus spheroStatus = serviceState.getSpheroStatus();
 			BluetoothState bluetoothStatus = serviceState.getBluetoothState();
-			String hint = _guiStateHinter.getHint(serviceState);
 
-			int myoLinkedDrawable = (myoStatus == MyoStatus.linked || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
-			myoLinkedIcon.setCompoundDrawablesWithIntrinsicBounds(myoLinkedDrawable, 0, 0, 0);
+			int hintResource = _guiStateHinter.getHint(serviceState);
+			String hint = getActivity().getString(hintResource);
+			Resources resources = getActivity().getResources();
 
-			int myoConnectedDrawable = (myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
-			myoConnectedIcon.setCompoundDrawablesWithIntrinsicBounds(myoConnectedDrawable, 0, 0, 0);
-			
-			int myoSyncronizedDrawable = (myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
-			myoSyncronizedIcon.setCompoundDrawablesWithIntrinsicBounds(myoSyncronizedDrawable, 0, 0, 0);
-			
-			int spheroDiscoveredDrawable = (spheroStatus == SpheroStatus.connecting || spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
-			spheroDiscoveredIcon.setCompoundDrawablesWithIntrinsicBounds(spheroDiscoveredDrawable, 0, 0, 0);
-			
-			int spheroConnectedDrawable = (spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
-			spheroConnectedIcon.setCompoundDrawablesWithIntrinsicBounds(spheroConnectedDrawable, 0, 0, 0);
+			int myoLinkedDrawableResource = (myoStatus == MyoStatus.linked || myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
+			Drawable myoLinkedDrawable = resources.getDrawable(myoLinkedDrawableResource);
+			myoLinkedIcon.setImageDrawable(myoLinkedDrawable);
+
+			int myoConnectedDrawableResource = (myoStatus == MyoStatus.notSynced || myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
+			Drawable myoConnectedDrawable = resources.getDrawable(myoConnectedDrawableResource);
+			myoConnectedIcon.setImageDrawable(myoConnectedDrawable);
+
+			int myoSyncronizedDrawableResource = (myoStatus == MyoStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
+			Drawable myoSyncronizedDrawable = resources.getDrawable(myoSyncronizedDrawableResource);
+			myoSyncronizedIcon.setImageDrawable(myoSyncronizedDrawable);
+
+			int spheroDiscoveredDrawableResource = (spheroStatus == SpheroStatus.connecting || spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
+			Drawable spheroDiscoveredDrawable = resources.getDrawable(spheroDiscoveredDrawableResource);
+			spheroDiscoveredIcon.setImageDrawable(spheroDiscoveredDrawable);
+
+			int spheroConnectedDrawableResource = (spheroStatus == SpheroStatus.connected) ? R.drawable.ic_ok : android.R.drawable.ic_delete;
+			Drawable spheroConnectedDrawable = resources.getDrawable(spheroConnectedDrawableResource);
+			spheroConnectedIcon.setImageDrawable(spheroConnectedDrawable);
 
 			startStopButton.setText(serviceState.isRunning() ? "Stop" : "Start");
 
 			hintText.setText(hint);
-			
-			if (myoStatus == MyoStatus.notLinked && serviceState.isRunning() && bluetoothStatus == BluetoothState.on){
+
+			if (myoStatus == MyoStatus.notLinked && serviceState.isRunning() && bluetoothStatus == BluetoothState.on) {
 				linkUnlinkButton.setText("Scan for Myo");
 				linkUnlinkButton.setVisibility(View.VISIBLE);
 			}
-			else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning()){
+			else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning()) {
 				linkUnlinkButton.setText("Unlink");
 				linkUnlinkButton.setVisibility(View.VISIBLE);
 			}
-			else{
+			else {
 				linkUnlinkButton.setVisibility(View.GONE);
 			}
 		}

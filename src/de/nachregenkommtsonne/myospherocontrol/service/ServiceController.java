@@ -197,7 +197,7 @@ public class ServiceController {
 
 			Notification n = new Notification.Builder(_context)
 					.setContentTitle("Myo Sphero Control")
-					.setContentText(_state.getHint())
+					.setContentText(_context.getString(_state.getHint()))
 					.setSmallIcon(R.drawable.ic_launcher)
 					.setContentIntent(pIntent).setAutoCancel(false).setWhen(0)
 					.setOngoing(true).build();
@@ -216,7 +216,5 @@ public class ServiceController {
 
 	public void unlinkClicked() {
 		_myoController.connectAndUnlinkButtonClicked();
-		
 	}
-
 }

@@ -1,5 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.gui;
 
+import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.service.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
@@ -10,42 +11,42 @@ public class GuiStateHinter {
 
 	}
 
-	public String getHint(ServiceState guiState) {
+	public int getHint(ServiceState guiState) {
 
 		if (!guiState.isRunning()) {
-			return "Press Start to connect the devices.";
+			return R.string.pressStart;
 		}
 
 		if (guiState.getBluetoothState() != BluetoothState.on) {
 			if (guiState.getBluetoothState() == BluetoothState.turningOn)
-				return "Bluetooth is turning on. Please wait...";
+				return R.string.bluetoothTurningOn;
 
-			return "Please enable Bluetooth.";
+			return R.string.pleaseEnableBluetooth;
 		}
 
 		if (guiState.getMyoStatus() != MyoStatus.connected) {
 			if (guiState.getMyoStatus() == MyoStatus.notSynced)
-				return "Myo is not synced. Please perform the sync gesture.";
+				return R.string.myoNotSynced;
 
 			if (guiState.getMyoStatus() == MyoStatus.linked)
-				return "Connecting to Myo. Is your Myo turned on?";
+				return R.string.connectingToMyo;
 
 			if (guiState.getMyoStatus() == MyoStatus.notLinked)
-				return "Please hold your Myo near your Phone or press 'Scan for Myo' to link to your Myo.";
+				return R.string.linkMyo;
 		}
 
 		if (guiState.getSpheroStatus() != SpheroStatus.connected) {
 			if (guiState.getSpheroStatus() == SpheroStatus.connecting)
-				return "Sphero found. Connecting...";
+				return R.string.connectingToSphero;
 
 			if (guiState.getSpheroStatus() == SpheroStatus.discovering)
-				return "Searching for Sphero. Is your Sphero turned on and paired with your phone?";
+				return R.string.searchingSphero;
 		}
 
 		if (guiState.getSpheroStatus() == SpheroStatus.connected &&
 				guiState.getMyoStatus() == MyoStatus.connected)
-			return "Everything is fine. Have Fun!";
+			return R.string.controllerActive;
 		
-		return "Woops! Something is wrong. Please restart the App and if you experience connection problems reboot your phone, your myo and your sphero or have a lot of patience.";
+		return R.string.heavyError;
 	}
 }
