@@ -1,10 +1,13 @@
 package de.nachregenkommtsonne.myospherocontrol.test.service;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.thalmic.myo.Quaternion;
 
 import android.test.AndroidTestCase;
+import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.service.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.service.IServiceController;
 import de.nachregenkommtsonne.myospherocontrol.service.MovementCalculator.MovementResult;
@@ -15,7 +18,14 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroEvents;
 
 public class MyoEventsTest extends AndroidTestCase {
 	private final class ServiceControllerStub implements IServiceController {
+		private boolean onChangedCalled = false;
+		
 		public void onChanged() {
+			onChangedCalled = true;
+		}
+		
+		public boolean wasOnChangedCalled(){
+			return onChangedCalled;
 		}
 	}
 
@@ -51,22 +61,77 @@ public class MyoEventsTest extends AndroidTestCase {
 		}
 	}
 
+	private ServiceState _serviceState;
+	private MovementCalculatorStub _movementCalculator;
+	private SpheroControllerStub _spheroController;
+	private ServiceControllerStub _serviceController;
+	private MyoEvents _myoEvents;
+	
+	@Before
+	public void setUp() throws Exception {
+		_serviceState = new ServiceState();
+		_movementCalculator = new MovementCalculatorStub();
+		_spheroController = new SpheroControllerStub();
+		_serviceController = new ServiceControllerStub();
+
+		_myoEvents = new MyoEvents(_serviceState, _movementCalculator, _spheroController, _serviceController);
+	}
+
 	@Test
 	public void init() {
-		ServiceState serviceState = new ServiceState();
-		MovementCalculatorStub movementCalculator = new MovementCalculatorStub();
-		SpheroControllerStub spheroController = new SpheroControllerStub();
-		ServiceControllerStub serviceController = new ServiceControllerStub();
-		
-		MyoEvents myoEvents = new MyoEvents(
-				serviceState, 
-				movementCalculator, 
-				spheroController,
-				serviceController);
-		
-		assertSame(serviceState, myoEvents.get_state());
-		assertSame(serviceState, myoEvents.get_state());
-		assertSame(serviceState, myoEvents.get_state());
-		assertSame(serviceState, myoEvents.get_state());
+		assertSame(_serviceState, _myoEvents.get_state());
+		assertSame(_movementCalculator, _myoEvents.get_state());
+		assertSame(_spheroController, _myoEvents.get_state());
+		assertSame(_serviceController, _myoEvents.get_state());
 	}
+
+	@Test
+	public void myoStateChanged_connected() {
+		MyoStatus myoStatus = MyoStatus.connected;
+		
+		_myoEvents.myoStateChanged(myoStatus);
+		
+		assertEquals(myoStatus, _serviceState.getMyoStatus());
+		assertTrue(_serviceController.wasOnChangedCalled());
+	}
+
+	@Test
+	public void myoStateChanged_disconnected() {
+		MyoStatus myoStatus = MyoStatus.disconnected;
+		
+		_myoEvents.myoStateChanged(myoStatus);
+		
+		assertEquals(myoStatus, _serviceState.getMyoStatus());
+		assertTrue(_serviceController.wasOnChangedCalled());
+	}
+
+	@Test
+	public void myoStateChanged_linked() {
+		MyoStatus myoStatus = MyoStatus.linked;
+		
+		_myoEvents.myoStateChanged(myoStatus);
+		
+		assertEquals(myoStatus, _serviceState.getMyoStatus());
+		assertTrue(_serviceController.wasOnChangedCalled());
+	}
+
+	@Test
+	public void myoStateChanged_notLinked() {
+		MyoStatus myoStatus = MyoStatus.notLinked;
+		
+		_myoEvents.myoStateChanged(myoStatus);
+		
+		assertEquals(myoStatus, _serviceState.getMyoStatus());
+		assertTrue(_serviceController.wasOnChangedCalled());
+	}
+
+	@Test
+	public void myoStateChanged_notSynced() {
+		MyoStatus myoStatus = MyoStatus.notSynced;
+		
+		_myoEvents.myoStateChanged(myoStatus);
+		
+		assertEquals(myoStatus, _serviceState.getMyoStatus());
+		assertTrue(_serviceController.wasOnChangedCalled());
+	}	
 }
