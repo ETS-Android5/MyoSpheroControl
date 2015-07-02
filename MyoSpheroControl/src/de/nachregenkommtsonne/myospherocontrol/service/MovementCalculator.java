@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.service;
 
 import com.thalmic.myo.Quaternion;
 
-public class MovementCalculator {
+public class MovementCalculator implements IMovementCalculator {
 
 	boolean _resetRoll;
 	float _startRoll;
@@ -66,7 +66,7 @@ public class MovementCalculator {
 				0);
 	}
 
-	class MovementResult{
+	public class MovementResult{
 		private float _direction;
 		private float _speed;
 		private int _red;

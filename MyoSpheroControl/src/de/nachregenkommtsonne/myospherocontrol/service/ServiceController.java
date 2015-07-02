@@ -24,14 +24,14 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
-public class ServiceController {
+public class ServiceController implements IServiceController {
 
 	private IMyoController _myoController;
 	private ISpheroController _spheroController;
 	private IServiceControllerEvents _serviceControllerEvents;
 	private ServiceState _state;
 	private Context _context;
-	private MovementCalculator _mMovementCalculator;
+	private IMovementCalculator _mMovementCalculator;
 
 	public ServiceController(IMyoController myoController,
 			ISpheroController spheroController, Context context) {
@@ -56,7 +56,7 @@ public class ServiceController {
 		_serviceControllerEvents = serviceControllerEvents;
 	}
 
-	private void onChanged() {
+	public void onChanged() {
 		if (_serviceControllerEvents != null)
 			_serviceControllerEvents.changed();
 
