@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.R;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.MyServiceConnection;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class ControlFragment extends Fragment
 {

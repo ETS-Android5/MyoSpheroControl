@@ -1,8 +1,12 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.MyoController;
+import de.nachregenkommtsonne.myospherocontrol.MyoEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.SpheroController;
+import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class BackgroundService extends Service
 {
@@ -29,13 +33,17 @@ public class BackgroundService extends Service
   public void onCreate()
   {
     super.onCreate();
+    
     _serviceState = new ServiceState();
 
-    MyoController myoController = new MyoController(this);
     SpheroController spheroController = new SpheroController(this);
+    MyoEventHandler myoEventHandler = new MyoEventHandler(_serviceState, new MovementCalculator(), spheroController,
+        _serviceControllerStatusChangedHandler);
+
+    MyoController myoController = new MyoController(this, myoEventHandler);
 
     _serviceControllerStatusChangedHandler = new ServiceControllerStatusChangedHandler(_binder, this, _serviceState);
-    _serviceController = new ServiceController(myoController, spheroController, this, 
+    _serviceController = new ServiceController(myoController, spheroController, this,
         _serviceControllerStatusChangedHandler, _serviceState);
     _binder = new ServiceBinder(_serviceController);
   }
@@ -53,11 +61,6 @@ public class BackgroundService extends Service
   public void onDestroy()
   {
     super.onDestroy();
-  }
-
-  public interface IBinderEvents
-  {
-    void changed();
   }
 
   public void onTaskRemoved(Intent rootIntent)

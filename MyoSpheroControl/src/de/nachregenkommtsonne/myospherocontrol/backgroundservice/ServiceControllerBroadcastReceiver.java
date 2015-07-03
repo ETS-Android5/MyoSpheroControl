@@ -1,10 +1,13 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
 
 public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {

@@ -102,10 +102,7 @@ public class SpheroController implements ISpheroController
   public void startDiscovery()
   {
     RobotProvider robotProvider = getRobotProvider();
-    /* boolean success = */ robotProvider.startDiscovery(_context);
-    // if (!success) {
-    // throw new RuntimeException();
-    // }
+    robotProvider.startDiscovery(_context);
 
     onSpheroStateChanged(SpheroStatus.discovering);
   }

@@ -1,6 +1,6 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
-import de.nachregenkommtsonne.myospherocontrol.BackgroundService.IBinderEvents;
+import de.nachregenkommtsonne.myospherocontrol.ControlFragment;
 
 public class ServiceConnectionChangedListener implements IBinderEvents
 {

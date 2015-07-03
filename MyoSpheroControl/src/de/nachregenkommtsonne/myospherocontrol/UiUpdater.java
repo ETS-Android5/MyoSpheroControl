@@ -1,5 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+
 public class UiUpdater implements Runnable
 {
   private ControlFragment _controlFragment;

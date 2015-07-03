@@ -1,9 +1,12 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.IntentFilter;
-import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
+import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.SpheroEventHandler;
 
 public class ServiceController implements IServiceController
 {
@@ -24,10 +27,6 @@ public class ServiceController implements IServiceController
 
     _state = serviceState;
 
-    MyoEventHandler myoEventHandler = new MyoEventHandler(_state, new MovementCalculator(), _spheroController,
-        _serviceControllerStatusChangedHandler);
-
-    _myoController.setEventListener(myoEventHandler);
     SpheroEventHandler eventListener = new SpheroEventHandler(_serviceControllerStatusChangedHandler, _spheroController,
         _state);
     _spheroController.setEventListener(eventListener);

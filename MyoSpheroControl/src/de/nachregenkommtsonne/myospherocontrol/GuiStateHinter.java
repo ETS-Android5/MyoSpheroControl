@@ -1,6 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
 import de.nachregenkommtsonne.myospherocontrol.R;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class GuiStateHinter
 {

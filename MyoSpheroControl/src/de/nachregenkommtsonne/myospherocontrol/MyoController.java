@@ -19,13 +19,14 @@ public class MyoController implements IMyoController
   private boolean _connecting;
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
-  
-  public MyoController(Context context)
+
+  public MyoController(Context context, IMyoEvents eventListener)
   {
     _context = context;
     _settingsEditor = new SettingsEditor(context);
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
-    
+    _eventListener = eventListener;
+
     Hub hub = get_hub();
 
     hub.setSendUsageData(false);
@@ -44,11 +45,6 @@ public class MyoController implements IMyoController
   private Hub get_hub()
   {
     return Hub.getInstance();
-  }
-
-  public void setEventListener(IMyoEvents eventListener)
-  {
-    _eventListener = eventListener;
   }
 
   public void start()

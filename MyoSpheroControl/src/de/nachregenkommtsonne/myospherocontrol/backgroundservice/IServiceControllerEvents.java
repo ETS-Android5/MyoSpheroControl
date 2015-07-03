@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 public interface IServiceControllerEvents
 {

@@ -6,8 +6,6 @@ public interface IMyoController
 
   void stop();
 
-  public abstract void setEventListener(IMyoEvents eventListener);
-
   public abstract void stopConnecting();
 
   public abstract void startConnecting();

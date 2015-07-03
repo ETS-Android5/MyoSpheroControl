@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class LinkUnlinkClickListener implements OnClickListener
 {

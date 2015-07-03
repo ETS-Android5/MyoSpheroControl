@@ -1,10 +1,12 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import de.nachregenkommtsonne.myospherocontrol.ControlActivity;
+import de.nachregenkommtsonne.myospherocontrol.R;
 
 public class ServiceControllerStatusChangedHandler implements IServiceControllerStatusChangedHandler
 {
@@ -12,11 +14,11 @@ public class ServiceControllerStatusChangedHandler implements IServiceController
   private Context _context;
   private ServiceState _state;
   
-  public ServiceControllerStatusChangedHandler(ServiceBinder _binder, Context _context, ServiceState _state)
+  public ServiceControllerStatusChangedHandler(ServiceBinder binder, Context context, ServiceState state)
   {
-    this._binder = _binder;
-    this._context = _context;
-    this._state = _state;
+    _binder = binder;
+    _context = context;
+    _state = state;
   }
 
   @Override

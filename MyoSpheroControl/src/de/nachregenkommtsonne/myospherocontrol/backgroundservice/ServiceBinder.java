@@ -1,7 +1,6 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.os.Binder;
-import de.nachregenkommtsonne.myospherocontrol.BackgroundService.IBinderEvents;
 
 public class ServiceBinder extends Binder
 {

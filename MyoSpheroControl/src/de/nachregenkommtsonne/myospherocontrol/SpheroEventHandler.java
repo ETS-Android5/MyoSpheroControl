@@ -1,5 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceControllerStatusChangedHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+
 public class SpheroEventHandler implements ISpheroEvents
 {
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
