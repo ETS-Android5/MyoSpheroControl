@@ -10,114 +10,132 @@ import de.nachregenkommtsonne.myospherocontrol.gui.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
-public class ServiceState {
+public class ServiceState
+{
+  private MyoStatus _myoStatus;
+  private SpheroStatus _spheroStatus;
+  private BluetoothState _bluetoothState;
+  private boolean _running;
+  private Myo _myo;
+  private Hub _hub;
+  private Sphero _sphero;
+  private boolean _controlMode;
+  private GuiStateHinter _guGuiStateHinter;
 
-	private MyoStatus _myoStatus;
-	private SpheroStatus _spheroStatus;
-	private BluetoothState _bluetoothState;
-	private boolean _running;
-	private Myo _myo;
-	private Hub _hub;
-	private Sphero _sphero;
-	private boolean _controlMode;
-	private GuiStateHinter _guGuiStateHinter;
+  public boolean isControlMode()
+  {
+    return _controlMode;
+  }
 
-	public boolean isControlMode() {
-		return _controlMode;
-	}
+  public void setControlMode(boolean controlMode)
+  {
+    this._controlMode = controlMode;
+  }
 
-	public void setControlMode(boolean controlMode) {
-		this._controlMode = controlMode;
-	}
+  public Myo getMyo()
+  {
+    return _myo;
+  }
 
-	public Myo getMyo() {
-		return _myo;
-	}
+  public void setMyo(Myo myo)
+  {
+    _myo = myo;
+  }
 
-	public void setMyo(Myo myo) {
-		_myo = myo;
-	}
+  public Hub getHub()
+  {
+    return _hub;
+  }
 
-	public Hub getHub() {
-		return _hub;
-	}
+  public void setHub(Hub hub)
+  {
+    _hub = hub;
+  }
 
-	public void setHub(Hub hub) {
-		_hub = hub;
-	}
+  public Sphero getSphero()
+  {
+    return _sphero;
+  }
 
-	public Sphero getSphero() {
-		return _sphero;
-	}
+  public void setSphero(Sphero sphero)
+  {
+    _sphero = sphero;
+  }
 
-	public void setSphero(Sphero sphero) {
-		_sphero = sphero;
-	}
+  private static ServiceState OB_instance = null;
 
-	private static ServiceState OB_instance = null;
+  static
+  {
+    OB_instance = new ServiceState();
 
-	static {
-		OB_instance = new ServiceState();
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		
-		OB_instance.setBluetoothState((mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
-						? BluetoothState.on
-						: BluetoothState.off);
+    OB_instance.setBluetoothState(
+        (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on : BluetoothState.off);
 
-		OB_instance.setMyoStatus(MyoStatus.disconnected);
-		OB_instance.setSpheroStatus(SpheroStatus.disconnected);
-	}
+    OB_instance.setMyoStatus(MyoStatus.disconnected);
+    OB_instance.setSpheroStatus(SpheroStatus.disconnected);
+  }
 
-	public static ServiceState OBgetInstance() {
-		return OB_instance;
-	}
+  public static ServiceState OBgetInstance()
+  {
+    return OB_instance;
+  }
 
-	public int getHint(){
-		return _guGuiStateHinter.getHint(this);
-	}
-	
-	public ServiceState() {
-		_myoStatus = MyoStatus.notLinked;
-		_spheroStatus = SpheroStatus.disconnected;
-		_running = false;
-		_guGuiStateHinter = new GuiStateHinter();
-		
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		_bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())
-				? BluetoothState.on
-				: BluetoothState.off;
-	}
+  public int getHint()
+  {
+    return _guGuiStateHinter.getHint(this);
+  }
 
-	public boolean isRunning() {
-		return _running;
-	}
+  public ServiceState()
+  {
+    _myoStatus = MyoStatus.notLinked;
+    _spheroStatus = SpheroStatus.disconnected;
+    _running = false;
+    _guGuiStateHinter = new GuiStateHinter();
 
-	public void setRunning(boolean _running) {
-		this._running = _running;
-	}
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
+        : BluetoothState.off;
+  }
 
-	public BluetoothState getBluetoothState() {
-		return _bluetoothState;
-	}
+  public boolean isRunning()
+  {
+    return _running;
+  }
 
-	public void setBluetoothState(BluetoothState bluetoothStatus) {
-		_bluetoothState = bluetoothStatus;
-	}
+  public void setRunning(boolean _running)
+  {
+    this._running = _running;
+  }
 
-	public void setMyoStatus(MyoStatus myoStatus) {
-		_myoStatus = myoStatus;
-	}
+  public BluetoothState getBluetoothState()
+  {
+    return _bluetoothState;
+  }
 
-	public void setSpheroStatus(SpheroStatus spheroStatus) {
-		_spheroStatus = spheroStatus;
-	}
+  public void setBluetoothState(BluetoothState bluetoothStatus)
+  {
+    _bluetoothState = bluetoothStatus;
+  }
 
-	public MyoStatus getMyoStatus() {
-		return _myoStatus;
-	}
+  public void setMyoStatus(MyoStatus myoStatus)
+  {
+    _myoStatus = myoStatus;
+  }
 
-	public SpheroStatus getSpheroStatus() {
-		return _spheroStatus;
-	}
+  public void setSpheroStatus(SpheroStatus spheroStatus)
+  {
+    _spheroStatus = spheroStatus;
+  }
+
+  public MyoStatus getMyoStatus()
+  {
+    return _myoStatus;
+  }
+
+  public SpheroStatus getSpheroStatus()
+  {
+    return _spheroStatus;
+  }
 }

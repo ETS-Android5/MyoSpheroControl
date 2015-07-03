@@ -5,24 +5,27 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.service.MyBinder;
 
-public class MyServiceConnection implements ServiceConnection {
+public class MyServiceConnection implements ServiceConnection
+{
+  private ControlFragment _controlFragment;
+  private MyBinder _myBinder;
 
-	private ControlFragment _controlFragment;
-	private MyBinder _myBinder;
+  MyServiceConnection(ControlFragment controlFragment, MyBinder myBinder)
+  {
+    _controlFragment = controlFragment;
+    _myBinder = myBinder;
+  }
 
-	MyServiceConnection(ControlFragment controlFragment, MyBinder myBinder) {
-		_controlFragment = controlFragment;
-		_myBinder = myBinder;
-	}
+  public void onServiceConnected(ComponentName name, IBinder service)
+  {
+    _myBinder = (MyBinder) service;
+    _myBinder.setChangedListener(new ServiceConnectionChangedListener(_controlFragment));
 
-	public void onServiceConnected(ComponentName name, IBinder service) {
-		_myBinder = (MyBinder) service;
-		_myBinder.setChangedListener(new ServiceConnectionChangedListener(_controlFragment));
+    _controlFragment.updateUiOnUiThread();
+  }
 
-		_controlFragment.updateUiOnUiThread();
-	}
-
-	public void onServiceDisconnected(ComponentName name) {
-		_myBinder.setChangedListener(null);
-	}
+  public void onServiceDisconnected(ComponentName name)
+  {
+    _myBinder.setChangedListener(null);
+  }
 }

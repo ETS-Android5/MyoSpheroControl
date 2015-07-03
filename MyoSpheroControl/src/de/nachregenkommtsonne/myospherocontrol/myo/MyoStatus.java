@@ -1,6 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.myo;
 
-public enum MyoStatus {
+public enum MyoStatus
+{
 	notLinked,
 	disconnected,
 	linked,

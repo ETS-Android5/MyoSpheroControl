@@ -1,7 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol.sphero;
 
+public interface ISpheroEvents
+{
+  void bluetoothDisabled();
 
-public interface ISpheroEvents {
-	void bluetoothDisabled();
-	void spheroStateChanged(SpheroStatus spheroStatus);
+  void spheroStateChanged(SpheroStatus spheroStatus);
 }

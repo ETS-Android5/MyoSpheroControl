@@ -11,142 +11,165 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class MyoController implements IMyoController {
-	private static final String MYOMAC = "MYO_MAC";
+public class MyoController implements IMyoController
+{
+  private static final String MYOMAC = "MYO_MAC";
 
-	private IMyoEvents _eventListener;
-	private Context _context;
-	private SharedPreferences _sharedPref;
-	boolean _running;
-	boolean _connecting;
+  private IMyoEvents _eventListener;
+  private Context _context;
+  private SharedPreferences _sharedPref;
+  boolean _running;
+  boolean _connecting;
 
-	public MyoController(Context context) {
-		_context = context;
-		_sharedPref = _context.getSharedPreferences(_context.getPackageName(),
-				Context.MODE_PRIVATE);
+  public MyoController(Context context)
+  {
+    _context = context;
+    _sharedPref = _context.getSharedPreferences(_context.getPackageName(), Context.MODE_PRIVATE);
 
-		Hub hub = getHub();
+    Hub hub = getHub();
 
-		hub.setSendUsageData(false);
-	}
+    hub.setSendUsageData(false);
+  }
 
-	private Hub getHub() {
-		return Hub.getInstance();
-	}
+  private Hub getHub()
+  {
+    return Hub.getInstance();
+  }
 
-	public void setEventListener(IMyoEvents eventListener) {
-		_eventListener = eventListener;
-	}
+  public void setEventListener(IMyoEvents eventListener)
+  {
+    _eventListener = eventListener;
+  }
 
-	public void start() {
-		Hub hub = getHub();
+  public void start()
+  {
+    Hub hub = getHub();
 
-		if (!hub.init(_context, _context.getPackageName())) {
-			throw new RuntimeException("Error initializing Myo hub");
-		}
-		hub.addListener(_listenerDelegate);
-		_running = true;
-	}
+    if (!hub.init(_context, _context.getPackageName()))
+    {
+      throw new RuntimeException("Error initializing Myo hub");
+    }
+    hub.addListener(_listenerDelegate);
+    _running = true;
+  }
 
-	public void stop() {
-		_running = false;
-		_connecting = false;
-		Hub hub = getHub();
-		
-		hub.removeListener(_listenerDelegate);
-		hub.shutdown();
-		updateDisabledState();
-	}
+  public void stop()
+  {
+    _running = false;
+    _connecting = false;
+    Hub hub = getHub();
 
-	public void updateDisabledState() {
-		String myoMac = getMac();
-		if (myoMac == null) {
-			onMyoStateChanged(MyoStatus.notLinked);
-		}
-		else {
-			onMyoStateChanged(MyoStatus.linked);
-		}
-	}
+    hub.removeListener(_listenerDelegate);
+    hub.shutdown();
+    updateDisabledState();
+  }
 
-	public void startConnecting() {
-		_connecting = true;
+  public void updateDisabledState()
+  {
+    String myoMac = getMac();
+    if (myoMac == null)
+    {
+      onMyoStateChanged(MyoStatus.notLinked);
+    } else
+    {
+      onMyoStateChanged(MyoStatus.linked);
+    }
+  }
 
-		Hub hub = getHub();
-		connect(hub);
-	}
+  public void startConnecting()
+  {
+    _connecting = true;
 
-	private void connect(Hub hub) {
-		String myoMac = getMac();
-		if (myoMac == null) {
-			onMyoStateChanged(MyoStatus.notLinked);
-			hub.attachToAdjacentMyo();
-		} else {
-			connectToLinkedMyo(myoMac);
-		}
-	}
+    Hub hub = getHub();
+    connect(hub);
+  }
 
-	public void stopConnecting() {
-		stop();
-		start();
+  private void connect(Hub hub)
+  {
+    String myoMac = getMac();
+    if (myoMac == null)
+    {
+      onMyoStateChanged(MyoStatus.notLinked);
+      hub.attachToAdjacentMyo();
+    } else
+    {
+      connectToLinkedMyo(myoMac);
+    }
+  }
 
-		updateDisabledState();
-		_connecting = false;
-	}
-	
-	public void connectViaDialog(){
-        Intent intent = new Intent(_context, ScanActivity.class);
-        _context.startActivity(intent);
-	}
+  public void stopConnecting()
+  {
+    stop();
+    start();
 
-	void onMyoStateChanged(MyoStatus myoStatus) {
-		_eventListener.myoStateChanged(myoStatus);
-	}
+    updateDisabledState();
+    _connecting = false;
+  }
 
-	void onMyoControlActivated() {
-		_eventListener.myoControlActivated();
-	}
+  public void connectViaDialog()
+  {
+    Intent intent = new Intent(_context, ScanActivity.class);
+    _context.startActivity(intent);
+  }
 
-	void onMyoControlDeactivated() {
-		_eventListener.myoControlDeactivated();
-	}
+  void onMyoStateChanged(MyoStatus myoStatus)
+  {
+    _eventListener.myoStateChanged(myoStatus);
+  }
 
-	void onMyoOrientationDataCollected(Myo myo, long timestamp,
-			Quaternion rotation) {
-		_eventListener.myoOrientationDataCollected(rotation, myo);
-	}
+  void onMyoControlActivated()
+  {
+    _eventListener.myoControlActivated();
+  }
 
-	void saveMac(String mac) {
-		Editor edit = _sharedPref.edit();
-		edit.putString(MYOMAC, mac);
-		edit.apply();
-	}
+  void onMyoControlDeactivated()
+  {
+    _eventListener.myoControlDeactivated();
+  }
 
-	private void deleteMac() {
-		Editor edit = _sharedPref.edit();
-		edit.remove(MYOMAC);
-		edit.apply();
-	}
+  void onMyoOrientationDataCollected(Myo myo, long timestamp, Quaternion rotation)
+  {
+    _eventListener.myoOrientationDataCollected(rotation, myo);
+  }
 
-	String getMac() {
-		return _sharedPref.getString(MYOMAC, null);
-	}
+  void saveMac(String mac)
+  {
+    Editor edit = _sharedPref.edit();
+    edit.putString(MYOMAC, mac);
+    edit.apply();
+  }
 
-	void connectToLinkedMyo(String mac) {
-		if (!_connecting)
-			return;
+  private void deleteMac()
+  {
+    Editor edit = _sharedPref.edit();
+    edit.remove(MYOMAC);
+    edit.apply();
+  }
 
-		Hub hub = getHub();
-		hub.attachByMacAddress(mac);
+  String getMac()
+  {
+    return _sharedPref.getString(MYOMAC, null);
+  }
 
-		onMyoStateChanged(MyoStatus.linked);
-	}
+  void connectToLinkedMyo(String mac)
+  {
+    if (!_connecting)
+      return;
 
-	private DeviceListener _listenerDelegate = new MyoDeviceListener(this);
+    Hub hub = getHub();
+    hub.attachByMacAddress(mac);
 
-	public void connectAndUnlinkButtonClicked() {
-		if (!_running){
-			deleteMac();
-			updateDisabledState();
-		}
-	}
+    onMyoStateChanged(MyoStatus.linked);
+  }
+
+  private DeviceListener _listenerDelegate = new MyoDeviceListener(this);
+
+  public void connectAndUnlinkButtonClicked()
+  {
+    if (!_running)
+    {
+      deleteMac();
+      updateDisabledState();
+    }
+  }
 }
