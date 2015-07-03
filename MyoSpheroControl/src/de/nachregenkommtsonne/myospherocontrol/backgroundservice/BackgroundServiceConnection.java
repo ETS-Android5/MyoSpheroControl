@@ -5,12 +5,12 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.ControlFragment;
 
-public class MyServiceConnection implements ServiceConnection
+public class BackgroundServiceConnection implements ServiceConnection
 {
   private ControlFragment _controlFragment;
   private ServiceBinder _myBinder;
 
-  public MyServiceConnection(ControlFragment controlFragment)
+  public BackgroundServiceConnection(ControlFragment controlFragment)
   {
     _controlFragment = controlFragment;
   }

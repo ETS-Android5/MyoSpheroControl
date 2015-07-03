@@ -14,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.MyServiceConnection;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundServiceConnection;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class ControlFragment extends Fragment
 {
   private GuiStateHinter _guiStateHinter;
-  private MyServiceConnection _myServiceConnection;
+  private BackgroundServiceConnection _myServiceConnection;
 
   public ControlFragment()
   {
@@ -68,7 +68,7 @@ public class ControlFragment extends Fragment
   {
     super.onResume();
 
-    _myServiceConnection = new MyServiceConnection(this);
+    _myServiceConnection = new BackgroundServiceConnection(this);
     Activity activity = getActivity();
 
     Intent intent = new Intent(activity, BackgroundService.class);
