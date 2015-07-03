@@ -3,9 +3,9 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import de.nachregenkommtsonne.myospherocontrol.MyoController;
-import de.nachregenkommtsonne.myospherocontrol.MyoEventHandler;
-import de.nachregenkommtsonne.myospherocontrol.SpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class BackgroundService extends Service

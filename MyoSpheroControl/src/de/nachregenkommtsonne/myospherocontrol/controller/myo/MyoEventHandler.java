@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
@@ -6,6 +6,7 @@ import com.thalmic.myo.XDirection;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceControllerStatusChangedHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementResult;
 

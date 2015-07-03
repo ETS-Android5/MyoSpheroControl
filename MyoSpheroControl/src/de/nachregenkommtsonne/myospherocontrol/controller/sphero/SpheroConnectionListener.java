@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
 import orbotix.robot.base.Robot;
 import orbotix.sphero.ConnectionListener;

@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class ControlFragment extends Fragment
 {

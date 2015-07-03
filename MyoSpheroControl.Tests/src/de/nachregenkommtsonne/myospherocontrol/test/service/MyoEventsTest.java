@@ -7,12 +7,12 @@ import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import de.nachregenkommtsonne.myospherocontrol.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.IServiceController;
-import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.MovementResult;
-import de.nachregenkommtsonne.myospherocontrol.MyoEventHandler;
-import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroEvents;
 
 public class MyoEventsTest extends AndroidTestCase {
 	private final class ServiceControllerStub implements IServiceController {

@@ -1,8 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
-import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
 public class ServiceControllerStarter implements Runnable
 {
