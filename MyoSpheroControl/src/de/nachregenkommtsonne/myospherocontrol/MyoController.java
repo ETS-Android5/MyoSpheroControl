@@ -8,26 +8,24 @@ import com.thalmic.myo.scanner.ScanActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
 //TODO: check if event listener is set
 public class MyoController implements IMyoController
 {
-  private static final String MYOMAC = "MYO_MAC";
 
   private IMyoEvents _eventListener;
   private Context _context;
-  private SharedPreferences _sharedPref;
   private boolean _running;
   private boolean _connecting;
   private DeviceListener _listenerDelegate;
-
+  private SettingsEditor _settingsEditor;
+  
   public MyoController(Context context)
   {
     _context = context;
-    _sharedPref = _context.getSharedPreferences(_context.getPackageName(), Context.MODE_PRIVATE);
-    _listenerDelegate = new MyoDeviceListener(this);
+    _settingsEditor = new SettingsEditor(context);
+    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
+    
     
     Hub hub = get_hub();
 
@@ -79,7 +77,7 @@ public class MyoController implements IMyoController
 
   public void updateDisabledState()
   {
-    String myoMac = getMac();
+    String myoMac = _settingsEditor.getMac();
     if (myoMac == null)
     {
       onMyoStateChanged(MyoStatus.notLinked);
@@ -100,7 +98,7 @@ public class MyoController implements IMyoController
 
   private void connect(Hub hub)
   {
-    String myoMac = getMac();
+    String myoMac = _settingsEditor.getMac();
     if (myoMac == null)
     {
       onMyoStateChanged(MyoStatus.notLinked);
@@ -147,25 +145,6 @@ public class MyoController implements IMyoController
     _eventListener.myoOrientationDataCollected(rotation, myo);
   }
 
-  public void saveMac(String mac)
-  {
-    Editor edit = _sharedPref.edit();
-    edit.putString(MYOMAC, mac);
-    edit.apply();
-  }
-
-  private void deleteMac()
-  {
-    Editor edit = _sharedPref.edit();
-    edit.remove(MYOMAC);
-    edit.apply();
-  }
-
-  public String getMac()
-  {
-    return _sharedPref.getString(MYOMAC, null);
-  }
-
   public void connectToLinkedMyo(String mac)
   {
     if (!_connecting)
@@ -181,7 +160,7 @@ public class MyoController implements IMyoController
   {
     if (!_running)
     {
-      deleteMac();
+      _settingsEditor.deleteMac();
       updateDisabledState();
     }
   }

@@ -26,6 +26,7 @@ public class MovementResult
   public MovementResult(float direction, float speed, int red, int green, int blue)
   {
     super();
+    
     _direction = direction;
     _speed = speed;
     _red = red;

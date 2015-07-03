@@ -9,26 +9,28 @@ import com.thalmic.myo.XDirection;
 
 public class MyoDeviceListener extends AbstractDeviceListener
 {
-  private MyoController myoController;
-
-  public MyoDeviceListener(MyoController myoController)
+  private MyoController _myoController;
+  private SettingsEditor _settingsEditor;
+  
+  public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor)
   {
-    this.myoController = myoController;
+    _myoController = myoController;
+    _settingsEditor = settingsEditor;
   }
 
   public void onConnect(Myo myo, long timestamp)
   {
-    this.myoController.onMyoStateChanged(MyoStatus.notSynced);
-    this.myoController.saveMac(myo.getMacAddress());
+    _myoController.onMyoStateChanged(MyoStatus.notSynced);
+    _settingsEditor.saveMac(myo.getMacAddress());
   }
 
   public void onDisconnect(Myo myo, long timestamp)
   {
-    if (this.myoController.is_running() && this.myoController.is_connecting())
+    if (_myoController.is_running() && _myoController.is_connecting())
     {
       try
       {
-        this.myoController.connectToLinkedMyo(this.myoController.getMac());
+        _myoController.connectToLinkedMyo(_settingsEditor.getMac());
       } catch (Exception ex)
       {
       }
@@ -37,17 +39,17 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection)
   {
-    this.myoController.onMyoStateChanged(MyoStatus.connected);
+    _myoController.onMyoStateChanged(MyoStatus.connected);
   }
 
   public void onArmUnsync(Myo myo, long timestamp)
   {
-    if (this.myoController.is_connecting())
+    if (_myoController.is_connecting())
     {
-      this.myoController.onMyoStateChanged(MyoStatus.notSynced);
+      _myoController.onMyoStateChanged(MyoStatus.notSynced);
       try
       {
-        this.myoController.onMyoControlDeactivated();
+        _myoController.onMyoControlDeactivated();
       } catch (Exception ex)
       {
       }
@@ -64,10 +66,10 @@ public class MyoDeviceListener extends AbstractDeviceListener
     {
     case FIST:
       myo.unlock(Myo.UnlockType.HOLD);
-      this.myoController.onMyoControlActivated();
+      _myoController.onMyoControlActivated();
       break;
     case FINGERS_SPREAD:
-      this.myoController.onMyoControlDeactivated();
+      _myoController.onMyoControlDeactivated();
       myo.lock();
       break;
     default:
@@ -77,6 +79,6 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onOrientationData(Myo myo, long timestamp, Quaternion rotation)
   {
-    this.myoController.onMyoOrientationDataCollected(myo, timestamp, rotation);
+    _myoController.onMyoOrientationDataCollected(myo, timestamp, rotation);
   }
 }
