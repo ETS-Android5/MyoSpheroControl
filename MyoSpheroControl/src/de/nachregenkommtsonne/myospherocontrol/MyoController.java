@@ -26,7 +26,6 @@ public class MyoController implements IMyoController
     _settingsEditor = new SettingsEditor(context);
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
     
-    
     Hub hub = get_hub();
 
     hub.setSendUsageData(false);

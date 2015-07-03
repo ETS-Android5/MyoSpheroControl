@@ -36,7 +36,7 @@ public class ControlFragment extends Fragment
 
     startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
     startStopButton.setOnClickListener(new StartStopClickListener(this));
-    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
+    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection.get_myBinder().getState()));
 
     return rootView;
   }

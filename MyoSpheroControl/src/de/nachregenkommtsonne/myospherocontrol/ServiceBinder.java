@@ -5,12 +5,12 @@ import de.nachregenkommtsonne.myospherocontrol.BackgroundService.IBinderEvents;
 
 public class ServiceBinder extends Binder
 {
-  private BackgroundService _backgroundService;
   private IBinderEvents _binderEvents;
+  private ServiceController _serviceController;
 
-  public ServiceBinder(BackgroundService backgroundService)
+  public ServiceBinder(ServiceController serviceController)
   {
-    _backgroundService = backgroundService;
+    _serviceController = serviceController;
   }
 
   public void onChanged()
@@ -26,16 +26,16 @@ public class ServiceBinder extends Binder
 
   public ServiceState getState()
   {
-    return _backgroundService.get_serviceController().get_state();
+    return _serviceController.get_state();
   }
 
   public void buttonClicked()
   {
-    _backgroundService.get_serviceController().buttonClicked();
+    _serviceController.buttonClicked();
   }
 
   public void unlinkClicked()
   {
-    _backgroundService.get_serviceController().unlinkClicked();
+    _serviceController.unlinkClicked();
   }
 }

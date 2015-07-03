@@ -19,7 +19,8 @@ public class ControlActivity extends Activity
       FragmentManager fragmentManager = getFragmentManager();
       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
       
-      fragmentTransaction.add(R.id.container, new ControlFragment());
+      ControlFragment controlFragment = new ControlFragment();
+      fragmentTransaction.add(R.id.container, controlFragment);
       fragmentTransaction.commit();
     }
   }

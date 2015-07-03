@@ -13,6 +13,7 @@ public class MyoEventHandler implements IMyoEvents
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  
 //TODO: Decompose
   public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
       IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
@@ -21,21 +22,6 @@ public class MyoEventHandler implements IMyoEvents
     _mMovementCalculator = mMovementCalculator;
     _spheroController = spheroController;
     _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
-  }
-
-  public ServiceState get_state()
-  {
-    return _state;
-  }
-
-  public IMovementCalculator get_mMovementCalculator()
-  {
-    return _mMovementCalculator;
-  }
-
-  public ISpheroController get_spheroController()
-  {
-    return _spheroController;
   }
 
   public void myoStateChanged(MyoStatus myoStatus)

@@ -14,7 +14,7 @@ public class ServiceController implements IServiceController
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
 
   public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
-      ServiceBinder binder, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
       ServiceState serviceState)
   {
     _context = context;

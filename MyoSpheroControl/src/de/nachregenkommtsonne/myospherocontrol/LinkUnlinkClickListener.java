@@ -10,18 +10,18 @@ import android.view.View.OnClickListener;
 public class LinkUnlinkClickListener implements OnClickListener
 {
   private ControlFragment _controlFragment;
-  private MyServiceConnection _myServiceConnection;
-
-  public LinkUnlinkClickListener(ControlFragment controlFragment, MyServiceConnection myServiceConnection)
+  ServiceState _serviceState;
+  
+  public LinkUnlinkClickListener(ControlFragment controlFragment,
+      ServiceState serviceState)
   {
     _controlFragment = controlFragment;
-    _myServiceConnection = myServiceConnection;
+    _serviceState = serviceState;
   }
 
   public void onClick(View v)
   {
-    ServiceState state = _myServiceConnection.get_myBinder().getState();
-    if (!state.isRunning())
+    if (!_serviceState.isRunning())
     {
       _controlFragment.unlinkClicked();
     }
