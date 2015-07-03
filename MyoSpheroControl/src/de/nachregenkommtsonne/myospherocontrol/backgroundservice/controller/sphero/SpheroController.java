@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
 
 import android.content.Context;
 import orbotix.robot.base.RobotProvider;

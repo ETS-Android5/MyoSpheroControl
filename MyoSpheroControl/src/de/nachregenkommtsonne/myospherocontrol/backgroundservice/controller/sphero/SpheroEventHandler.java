@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceControllerStatusChangedHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;

@@ -2,10 +2,10 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
-import de.nachregenkommtsonne.myospherocontrol.activity.GuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.controller.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
+import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
 
 import com.thalmic.myo.Hub;
 import com.thalmic.myo.Myo;
