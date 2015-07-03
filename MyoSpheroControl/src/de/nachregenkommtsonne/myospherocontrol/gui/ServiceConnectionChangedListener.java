@@ -4,13 +4,13 @@ import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService.IBinder
 
 final class ServiceConnectionChangedListener implements IBinderEvents {
 
-	private final MyServiceConnection myServiceConnection;
+	private ControlFragment _controlFragment;
 
-	ServiceConnectionChangedListener(MyServiceConnection myServiceConnection) {
-		this.myServiceConnection = myServiceConnection;
+	ServiceConnectionChangedListener(ControlFragment controlFragment) {
+		_controlFragment = controlFragment;
 	}
 
 	public void changed() {
-		this.myServiceConnection.controlFragment.updateUiOnUiThread();
+		_controlFragment.updateUiOnUiThread();
 	}
 }

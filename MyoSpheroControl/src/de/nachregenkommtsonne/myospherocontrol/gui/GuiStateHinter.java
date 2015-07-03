@@ -7,8 +7,8 @@ import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
 public class GuiStateHinter {
+	
 	public GuiStateHinter() {
-
 	}
 
 	public int getHint(ServiceState guiState) {

@@ -22,7 +22,9 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
 public class ControlFragment extends Fragment {
 
-	GuiStateHinter _guiStateHinter;
+	private GuiStateHinter _guiStateHinter;
+	private MyBinder _myBinder;
+	private MyServiceConnection _myServiceConnection;
 
 	public ControlFragment() {
 		_guiStateHinter = new GuiStateHinter();
@@ -38,19 +40,17 @@ public class ControlFragment extends Fragment {
 		String stopLabel = getString(R.string.stopLabel);
 		
 		startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
-
 		startStopButton.setOnClickListener(new StartStopClickListener(this));
-
-		linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this));
+		linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myBinder));
 
 		return rootView;
 	}
 
-	void buttonClicked() {
+	public void buttonClicked() {
 		_myBinder.buttonClicked();
 	}
 
-	void unlinkClicked() {
+	public void unlinkClicked() {
 		_myBinder.unlinkClicked();
 	}
 
@@ -64,7 +64,7 @@ public class ControlFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		_myServiceConnection = new MyServiceConnection(this);
+		_myServiceConnection = new MyServiceConnection(this, _myBinder);
 		Intent intent = new Intent(getActivity(), BackgroundService.class);
 		getActivity().bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
 	}
@@ -80,7 +80,7 @@ public class ControlFragment extends Fragment {
 		super.onDestroy();
 	}
 
-	void updateUiOnUiThread() {
+	public void updateUiOnUiThread() {
 		final ServiceState state = _myBinder.getState();
 
 		Activity activity = getActivity();
@@ -91,7 +91,8 @@ public class ControlFragment extends Fragment {
 		activity.runOnUiThread(new UiUpdater(this, state));
 	}
 
-	void updateUI(ServiceState serviceState) {
+	@SuppressWarnings("deprecation")
+	public void updateUI(ServiceState serviceState) {
 		ImageView myoLinkedIcon = (ImageView) getView().findViewById(R.id.myoLinkedIcon);
 		ImageView myoConnectedIcon = (ImageView) getView().findViewById(R.id.myoConnectedIcon);
 		ImageView myoSyncronizedIcon = (ImageView) getView().findViewById(R.id.myoSyncronizedIcon);
@@ -149,7 +150,4 @@ public class ControlFragment extends Fragment {
 			linkUnlinkButton.setVisibility(View.GONE);
 		}
 	}
-
-	MyBinder _myBinder;
-	private MyServiceConnection _myServiceConnection;
 }
