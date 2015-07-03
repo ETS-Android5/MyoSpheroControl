@@ -3,10 +3,13 @@ package de.nachregenkommtsonne.myospherocontrol;
 public class SpheroEventHandler implements ISpheroEvents
 {
   private ServiceController _serviceController;
+  IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
 
-  public SpheroEventHandler(ServiceController serviceController)
+  public SpheroEventHandler(ServiceController serviceController,
+      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
   {
     _serviceController = serviceController;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
   }
 
   public void spheroStateChanged(SpheroStatus spheroStatus)
@@ -17,7 +20,7 @@ public class SpheroEventHandler implements ISpheroEvents
     }
 
     _serviceController.get_state().setSpheroStatus(spheroStatus);
-    _serviceController.onChanged();
+    _serviceControllerStatusChangedHandler.onChanged();
   }
 
   public void bluetoothDisabled()

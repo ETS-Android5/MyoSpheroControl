@@ -13,15 +13,16 @@ public class MyoEventHandler implements IMyoEvents
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
   private IServiceController _serviceController;
-
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
 //TODO: Decompose
   public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
-      IServiceController serviceController)
+      IServiceController serviceController, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
   {
     _state = state;
     _mMovementCalculator = mMovementCalculator;
     _spheroController = spheroController;
     _serviceController = serviceController;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
   }
 
   public ServiceState get_state()
@@ -47,7 +48,7 @@ public class MyoEventHandler implements IMyoEvents
   public void myoStateChanged(MyoStatus myoStatus)
   {
     _state.setMyoStatus(myoStatus);
-    _serviceController.onChanged();
+    _serviceControllerStatusChangedHandler.onChanged();
   }
 
   public void myoOrientationDataCollected(Quaternion rotation, Myo myo)

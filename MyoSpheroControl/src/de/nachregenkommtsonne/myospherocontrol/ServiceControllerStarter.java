@@ -1,12 +1,15 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-class ServiceControllerStarter implements Runnable
+public class ServiceControllerStarter implements Runnable
 {
   private ServiceControllerBroadcastReceiver _serviceControllerBroadcastReceiver;
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
 
-  public ServiceControllerStarter(ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
+  public ServiceControllerStarter(ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver,
+      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
   {
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
   }
 
   public void run()
@@ -27,6 +30,6 @@ class ServiceControllerStarter implements Runnable
       _serviceControllerBroadcastReceiver.get_serviceController().get_spheroController().start();
     }
 
-    _serviceControllerBroadcastReceiver.get_serviceController().onChanged();
+    _serviceControllerStatusChangedHandler.onChanged();
   }
 }

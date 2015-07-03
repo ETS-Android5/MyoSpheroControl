@@ -8,7 +8,8 @@ public class BackgroundService extends Service
 {
   private ServiceController _serviceController;
   private ServiceBinder _binder;
-
+  IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  
   public BackgroundService()
   {
     super();
@@ -29,8 +30,13 @@ public class BackgroundService extends Service
   public void onCreate()
   {
     super.onCreate();
+    ServiceState serviceState = new ServiceState();
     
-    _serviceController = new ServiceController(new MyoController(this), new SpheroController(this), this, _binder);
+    MyoController myoController = new MyoController(this);
+    SpheroController spheroController = new SpheroController(this);
+    _serviceControllerStatusChangedHandler = new ServiceControllerStatusChangedHandler(_binder, this, serviceState);
+    
+    _serviceController = new ServiceController(myoController, spheroController, this, _binder, _serviceControllerStatusChangedHandler, serviceState);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)
@@ -57,6 +63,6 @@ public class BackgroundService extends Service
   {
     super.onTaskRemoved(rootIntent);
     _serviceController.get_state().setRunning(false);
-    _serviceController.updateNotification();
+    _serviceControllerStatusChangedHandler.updateNotification();
   }
 }

@@ -1,49 +1,38 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
-import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class ServiceController implements IServiceController
 {
   private IMyoController _myoController;
   private ISpheroController _spheroController;
-  private ServiceBinder _binder;
   private ServiceState _state;
   private Context _context;
-  private IMovementCalculator _mMovementCalculator;
-  private IMyoEvents _myoEvents;
-  private ISpheroEvents _spheroEvents;
-  private BroadcastReceiver _bluetoothEvents;
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
 
   public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
-      ServiceBinder binder)
+      ServiceBinder binder, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+      ServiceState serviceState)
   {
-    _binder = binder;
     _context = context;
     _myoController = myoController;
     _spheroController = spheroController;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
 
-    _state = new ServiceState();
-    _spheroEvents = new SpheroEventHandler(this);
-    _bluetoothEvents = new ServiceControllerBroadcastReceiver(this);
-    _mMovementCalculator = new MovementCalculator();
+    _state = serviceState;
 
-    _myoEvents = new MyoEventHandler(_state, _mMovementCalculator, _spheroController, this);
+    MyoEventHandler myoEventHandler = new MyoEventHandler(_state, new MovementCalculator(), _spheroController, this,
+        _serviceControllerStatusChangedHandler);
 
-    _myoController.setEventListener(_myoEvents);
-    _spheroController.setEventListener(_spheroEvents);
+    _myoController.setEventListener(myoEventHandler);
+    _spheroController.setEventListener(new SpheroEventHandler(this, _serviceControllerStatusChangedHandler));
 
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    _context.registerReceiver(_bluetoothEvents, filter);
+    _context.registerReceiver(new ServiceControllerBroadcastReceiver(this, _serviceControllerStatusChangedHandler),
+        filter);
 
     _myoController.updateDisabledState();
   }
@@ -61,13 +50,6 @@ public class ServiceController implements IServiceController
   public ServiceState get_state()
   {
     return _state;
-  }
-
-  public void onChanged()
-  {
-    _binder.onChanged();
-
-    updateNotification();
   }
 
   public void buttonClicked()
@@ -91,34 +73,7 @@ public class ServiceController implements IServiceController
     }
 
     _state.setRunning(!_state.isRunning());
-    onChanged();
-  }
-
-  public void updateNotification()
-  {
-    if (_state.isRunning())
-    {
-
-      Intent intent = new Intent(_context, ControlActivity.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      PendingIntent pIntent = PendingIntent.getActivity(_context, 0, intent, 0);
-
-      Notification n = new Notification.Builder(_context).setContentTitle(_context.getString(R.string.app_name))
-          .setContentText(_context.getString(_state.getHint())).setSmallIcon(R.drawable.ic_launcher)
-          .setContentIntent(pIntent).setAutoCancel(false).setWhen(0).setOngoing(true).build();
-
-      NotificationManager notificationManager = (NotificationManager) _context
-          .getSystemService(Context.NOTIFICATION_SERVICE);
-
-      notificationManager.notify(0, n);
-    }
-    else
-    {
-      NotificationManager notificationManager = (NotificationManager) _context
-          .getSystemService(Context.NOTIFICATION_SERVICE);
-
-      notificationManager.cancel(0);
-    }
+    _serviceControllerStatusChangedHandler.onChanged();
   }
 
   public void unlinkClicked()
