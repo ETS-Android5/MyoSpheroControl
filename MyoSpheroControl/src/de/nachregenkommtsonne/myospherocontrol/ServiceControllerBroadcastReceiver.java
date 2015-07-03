@@ -8,18 +8,19 @@ import android.os.Handler;
 
 public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {
-  private ServiceController _serviceController;
-  IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
-  
-  public ServiceControllerBroadcastReceiver(ServiceController serviceController, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
-  {
-    _serviceController = serviceController;
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
-  }
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ServiceState _serviceState;
+  private IMyoController _myoController;
+  private ISpheroController _spheroController;
 
-  public ServiceController get_serviceController()
+  public ServiceControllerBroadcastReceiver(
+      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler, ServiceState serviceState,
+      IMyoController myoController, ISpheroController spheroController)
   {
-    return _serviceController;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _serviceState = serviceState;
+    _myoController = myoController;
+    _spheroController = spheroController;
   }
 
   public void onReceive(Context context, Intent intent)
@@ -32,27 +33,29 @@ public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
       switch (state)
       {
       case BluetoothAdapter.STATE_OFF:
-        _serviceController.get_state().setBluetoothState(BluetoothState.off);
+        _serviceState.setBluetoothState(BluetoothState.off);
         break;
 
       case BluetoothAdapter.STATE_TURNING_OFF:
-        _serviceController.get_state().setControlMode(false);
-        _serviceController.get_state().setBluetoothState(BluetoothState.turningOff);
+        _serviceState.setControlMode(false);
+        _serviceState.setBluetoothState(BluetoothState.turningOff);
 
-        if (_serviceController.get_state().isRunning())
+        if (_serviceState.isRunning())
         {
-          _serviceController.get_myoController().stopConnecting();
-          _serviceController.get_spheroController().stopForBluetooth();
+          _myoController.stopConnecting();
+          _spheroController.stopForBluetooth();
         }
 
         break;
 
       case BluetoothAdapter.STATE_ON:
-        new Handler().post(new ServiceControllerStarter(this, _serviceControllerStatusChangedHandler));
+        Handler handler = new Handler();
+        handler.post(new ServiceControllerStarter(_serviceControllerStatusChangedHandler, _serviceState, _myoController,
+            _spheroController));
         break;
 
       case BluetoothAdapter.STATE_TURNING_ON:
-        _serviceController.get_state().setBluetoothState(BluetoothState.turningOn);
+        _serviceState.setBluetoothState(BluetoothState.turningOn);
         break;
       }
       _serviceControllerStatusChangedHandler.onChanged();

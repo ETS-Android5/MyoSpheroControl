@@ -2,14 +2,18 @@ package de.nachregenkommtsonne.myospherocontrol;
 
 public class ServiceControllerStarter implements Runnable
 {
-  private ServiceControllerBroadcastReceiver _serviceControllerBroadcastReceiver;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ServiceState _serviceState;
+  private IMyoController _myoController;
+  private ISpheroController _spheroController;
 
-  public ServiceControllerStarter(ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver,
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
+  public ServiceControllerStarter(IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+      ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
   {
-    _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _serviceState = serviceState;
+    _myoController = myoController;
+    _spheroController = spheroController;
   }
 
   public void run()
@@ -22,12 +26,12 @@ public class ServiceControllerStarter implements Runnable
     {
     }
 
-    _serviceControllerBroadcastReceiver.get_serviceController().get_state().setBluetoothState(BluetoothState.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
 
-    if (_serviceControllerBroadcastReceiver.get_serviceController().get_state().isRunning())
+    if (_serviceState.isRunning())
     {
-      _serviceControllerBroadcastReceiver.get_serviceController().get_myoController().startConnecting();
-      _serviceControllerBroadcastReceiver.get_serviceController().get_spheroController().start();
+      _myoController.startConnecting();
+      _spheroController.start();
     }
 
     _serviceControllerStatusChangedHandler.onChanged();

@@ -2,24 +2,25 @@ package de.nachregenkommtsonne.myospherocontrol;
 
 public class SpheroEventHandler implements ISpheroEvents
 {
-  private ServiceController _serviceController;
-  IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
-
-  public SpheroEventHandler(ServiceController serviceController,
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ISpheroController _spheroController;
+  private ServiceState _state;
+  
+  public SpheroEventHandler(IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler, ISpheroController spheroController, ServiceState state)
   {
-    _serviceController = serviceController;
     _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _spheroController = spheroController;
+    _state = state;
   }
 
   public void spheroStateChanged(SpheroStatus spheroStatus)
   {
     if (spheroStatus == SpheroStatus.connected)
     {
-      _serviceController.get_spheroController().changeColor(0, 0, 255);
+      _spheroController.changeColor(0, 0, 255);
     }
 
-    _serviceController.get_state().setSpheroStatus(spheroStatus);
+    _state.setSpheroStatus(spheroStatus);
     _serviceControllerStatusChangedHandler.onChanged();
   }
 

@@ -24,15 +24,18 @@ public class ServiceController implements IServiceController
 
     _state = serviceState;
 
-    MyoEventHandler myoEventHandler = new MyoEventHandler(_state, new MovementCalculator(), _spheroController, this,
+    MyoEventHandler myoEventHandler = new MyoEventHandler(_state, new MovementCalculator(), _spheroController,
         _serviceControllerStatusChangedHandler);
 
     _myoController.setEventListener(myoEventHandler);
-    _spheroController.setEventListener(new SpheroEventHandler(this, _serviceControllerStatusChangedHandler));
+    SpheroEventHandler eventListener = new SpheroEventHandler(_serviceControllerStatusChangedHandler, _spheroController,
+        _state);
+    _spheroController.setEventListener(eventListener);
 
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    _context.registerReceiver(new ServiceControllerBroadcastReceiver(this, _serviceControllerStatusChangedHandler),
-        filter);
+    ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver = new ServiceControllerBroadcastReceiver(
+        _serviceControllerStatusChangedHandler, _state, _myoController, _spheroController);
+    _context.registerReceiver(serviceControllerBroadcastReceiver, filter);
 
     _myoController.updateDisabledState();
   }
