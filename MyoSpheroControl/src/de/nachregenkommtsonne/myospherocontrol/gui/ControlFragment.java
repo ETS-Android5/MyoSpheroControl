@@ -16,7 +16,6 @@ import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService;
 import de.nachregenkommtsonne.myospherocontrol.service.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.service.MyBinder;
 import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
