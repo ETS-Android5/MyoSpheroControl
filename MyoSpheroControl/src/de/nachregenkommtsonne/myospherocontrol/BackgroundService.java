@@ -8,14 +8,12 @@ public class BackgroundService extends Service
 {
   private ServiceController _serviceController;
   private ServiceBinder _binder;
-  private IServiceControllerEvents _serviceControllerEvents;
 
   public BackgroundService()
   {
     super();
     
     _binder = new ServiceBinder(this);
-    _serviceControllerEvents = new BackgroundServiceChangedListener(this);
   }
 
   public ServiceBinder get_binder()
@@ -31,8 +29,8 @@ public class BackgroundService extends Service
   public void onCreate()
   {
     super.onCreate();
-    _serviceController = new ServiceController(new MyoController(this), new SpheroController(this), this);
-    _serviceController.setEventListener(_serviceControllerEvents);
+    
+    _serviceController = new ServiceController(new MyoController(this), new SpheroController(this), this, _binder);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)

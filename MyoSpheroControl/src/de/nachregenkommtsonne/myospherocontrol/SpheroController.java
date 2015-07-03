@@ -6,6 +6,7 @@ import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 
+//TODO: Decompose
 public class SpheroController implements ISpheroController
 {
   private Context _context;

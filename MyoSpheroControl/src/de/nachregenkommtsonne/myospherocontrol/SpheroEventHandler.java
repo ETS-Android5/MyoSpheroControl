@@ -1,10 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-public class SpheroEvents implements ISpheroEvents
+public class SpheroEventHandler implements ISpheroEvents
 {
   private ServiceController _serviceController;
 
-  public SpheroEvents(ServiceController serviceController)
+  public SpheroEventHandler(ServiceController serviceController)
   {
     _serviceController = serviceController;
   }

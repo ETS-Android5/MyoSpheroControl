@@ -4,14 +4,15 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-public class MyoEvents implements IMyoEvents
+public class MyoEventHandler implements IMyoEvents
 {
   private ServiceState _state;
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
   private IServiceController _serviceController;
 
-  public MyoEvents(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
+//TODO: Decompose
+  public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
       IServiceController serviceController)
   {
     _state = state;

@@ -14,27 +14,29 @@ public class ServiceController implements IServiceController
 {
   private IMyoController _myoController;
   private ISpheroController _spheroController;
-  private IServiceControllerEvents _serviceControllerEvents;
+  private ServiceBinder _binder;
   private ServiceState _state;
   private Context _context;
   private IMovementCalculator _mMovementCalculator;
   private IMyoEvents _myoEvents;
   private ISpheroEvents _spheroEvents;
-  private  BroadcastReceiver _bluetoothEvents;
+  private BroadcastReceiver _bluetoothEvents;
 
-  public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context)
+  public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
+      ServiceBinder binder)
   {
+    _binder = binder;
     _context = context;
     _myoController = myoController;
     _spheroController = spheroController;
 
     _state = new ServiceState();
-    _spheroEvents = new SpheroEvents(this);
+    _spheroEvents = new SpheroEventHandler(this);
     _bluetoothEvents = new ServiceControllerBroadcastReceiver(this);
     _mMovementCalculator = new MovementCalculator();
-    
-    _myoEvents = new MyoEvents(_state, _mMovementCalculator, _spheroController, this);
-    
+
+    _myoEvents = new MyoEventHandler(_state, _mMovementCalculator, _spheroController, this);
+
     _myoController.setEventListener(_myoEvents);
     _spheroController.setEventListener(_spheroEvents);
 
@@ -44,34 +46,24 @@ public class ServiceController implements IServiceController
     _myoController.updateDisabledState();
   }
 
-  
   public IMyoController get_myoController()
   {
     return _myoController;
   }
-
 
   public ISpheroController get_spheroController()
   {
     return _spheroController;
   }
 
-
   public ServiceState get_state()
   {
     return _state;
   }
 
-
-  public void setEventListener(IServiceControllerEvents serviceControllerEvents)
-  {
-    _serviceControllerEvents = serviceControllerEvents;
-  }
-
   public void onChanged()
   {
-    if (_serviceControllerEvents != null)
-      _serviceControllerEvents.changed();
+    _binder.onChanged();
 
     updateNotification();
   }
@@ -90,7 +82,8 @@ public class ServiceController implements IServiceController
         _spheroController.stop();
       }
       _myoController.stop();
-    } else
+    }
+    else
     {
       _myoController.start();
       if (_state.getBluetoothState() == BluetoothState.on)
@@ -121,7 +114,8 @@ public class ServiceController implements IServiceController
           .getSystemService(Context.NOTIFICATION_SERVICE);
 
       notificationManager.notify(0, n);
-    } else
+    }
+    else
     {
       NotificationManager notificationManager = (NotificationManager) _context
           .getSystemService(Context.NOTIFICATION_SERVICE);

@@ -10,9 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 
 //TODO: check if event listener is set
+//TODO: Decompose
 public class MyoController implements IMyoController
 {
-
   private IMyoEvents _eventListener;
   private Context _context;
   private boolean _running;

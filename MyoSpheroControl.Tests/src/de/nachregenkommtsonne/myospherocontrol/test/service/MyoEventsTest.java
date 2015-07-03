@@ -10,7 +10,7 @@ import de.nachregenkommtsonne.myospherocontrol.IServiceController;
 import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.MovementResult;
-import de.nachregenkommtsonne.myospherocontrol.MyoEvents;
+import de.nachregenkommtsonne.myospherocontrol.MyoEventHandler;
 import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.ServiceState;
 
@@ -61,7 +61,7 @@ public class MyoEventsTest extends AndroidTestCase {
 	private MovementCalculatorStub _movementCalculator;
 	private SpheroControllerStub _spheroController;
 	private ServiceControllerStub _serviceController;
-	private MyoEvents _myoEvents;
+	private MyoEventHandler _myoEvents;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -70,7 +70,7 @@ public class MyoEventsTest extends AndroidTestCase {
 		_spheroController = new SpheroControllerStub();
 		_serviceController = new ServiceControllerStub();
 
-		_myoEvents = new MyoEvents(_serviceState, _movementCalculator, _spheroController, _serviceController);
+		_myoEvents = new MyoEventHandler(_serviceState, _movementCalculator, _spheroController, _serviceController);
 	}
 
 	 @SmallTest
