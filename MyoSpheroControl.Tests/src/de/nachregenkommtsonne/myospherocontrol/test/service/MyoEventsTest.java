@@ -5,14 +5,14 @@ import com.thalmic.myo.Quaternion;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.service.IMovementCalculator;
-import de.nachregenkommtsonne.myospherocontrol.service.IServiceController;
-import de.nachregenkommtsonne.myospherocontrol.service.MovementResult;
-import de.nachregenkommtsonne.myospherocontrol.service.MyoEvents;
-import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroEvents;
+import de.nachregenkommtsonne.myospherocontrol.IMovementCalculator;
+import de.nachregenkommtsonne.myospherocontrol.IServiceController;
+import de.nachregenkommtsonne.myospherocontrol.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.ISpheroEvents;
+import de.nachregenkommtsonne.myospherocontrol.MovementResult;
+import de.nachregenkommtsonne.myospherocontrol.MyoEvents;
+import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.ServiceState;
 
 public class MyoEventsTest extends AndroidTestCase {
 	private final class ServiceControllerStub implements IServiceController {

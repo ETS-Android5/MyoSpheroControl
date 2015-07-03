@@ -37,7 +37,7 @@
             android:label="@string/myosdk__title_activity_scan"
             android:theme="@style/myosdk__ScanActivityTheme" />
 
-        <service android:name=".service.BackgroundService" >
+        <service android:name="de.nachregenkommtsonne.myospherocontrol.BackgroundService" >
         </service>
     </application>
 
