@@ -8,13 +8,8 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
 public class GuiStateHinter
 {
-  public GuiStateHinter()
-  {
-  }
-
   public int getHint(ServiceState guiState)
   {
-
     if (!guiState.isRunning())
     {
       return R.string.pressStart;

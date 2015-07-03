@@ -11,19 +11,21 @@ import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 final class LinkUnlinkClickListener implements OnClickListener
 {
   private final ControlFragment _controlFragment;
-  private MyBinder _myBinder;
+  private MyServiceConnection _myServiceConnection;
 
-  LinkUnlinkClickListener(ControlFragment controlFragment, MyBinder myBinder)
+  LinkUnlinkClickListener(ControlFragment controlFragment, MyServiceConnection myServiceConnection)
   {
     _controlFragment = controlFragment;
-    _myBinder = myBinder;
+    _myServiceConnection = myServiceConnection;
   }
 
   public void onClick(View v)
   {
-    ServiceState state = _myBinder.getState();
+    ServiceState state = _myServiceConnection.get_myBinder().getState();
     if (!state.isRunning())
+    {
       _controlFragment.unlinkClicked();
+    }
     else
     {
       Intent intent = new Intent(this._controlFragment.getActivity(), ScanActivity.class);

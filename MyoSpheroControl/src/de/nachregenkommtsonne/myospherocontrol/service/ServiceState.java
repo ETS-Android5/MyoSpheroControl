@@ -12,6 +12,21 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
 public class ServiceState
 {
+  private static ServiceState OB_instance = null;
+
+  static
+  {
+    OB_instance = new ServiceState();
+
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    OB_instance.setBluetoothState(
+        (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on : BluetoothState.off);
+
+    OB_instance.setMyoStatus(MyoStatus.disconnected);
+    OB_instance.setSpheroStatus(SpheroStatus.disconnected);
+  }
+  
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
   private BluetoothState _bluetoothState;
@@ -60,21 +75,6 @@ public class ServiceState
   public void setSphero(Sphero sphero)
   {
     _sphero = sphero;
-  }
-
-  private static ServiceState OB_instance = null;
-
-  static
-  {
-    OB_instance = new ServiceState();
-
-    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-    OB_instance.setBluetoothState(
-        (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on : BluetoothState.off);
-
-    OB_instance.setMyoStatus(MyoStatus.disconnected);
-    OB_instance.setSpheroStatus(SpheroStatus.disconnected);
   }
 
   public static ServiceState OBgetInstance()

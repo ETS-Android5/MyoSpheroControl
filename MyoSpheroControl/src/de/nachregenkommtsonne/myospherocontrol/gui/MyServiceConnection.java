@@ -10,10 +10,9 @@ public class MyServiceConnection implements ServiceConnection
   private ControlFragment _controlFragment;
   private MyBinder _myBinder;
 
-  MyServiceConnection(ControlFragment controlFragment, MyBinder myBinder)
+  MyServiceConnection(ControlFragment controlFragment)
   {
     _controlFragment = controlFragment;
-    _myBinder = myBinder;
   }
 
   public void onServiceConnected(ComponentName name, IBinder service)
@@ -27,5 +26,10 @@ public class MyServiceConnection implements ServiceConnection
   public void onServiceDisconnected(ComponentName name)
   {
     _myBinder.setChangedListener(null);
+  }
+
+  public MyBinder get_myBinder()
+  {
+    return _myBinder;
   }
 }

@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.service;
 
-final class BackgroundServiceChangedListener implements IServiceControllerEvents
+class BackgroundServiceChangedListener implements IServiceControllerEvents
 {
   private final BackgroundService backgroundService;
 
@@ -12,6 +12,5 @@ final class BackgroundServiceChangedListener implements IServiceControllerEvents
   public void changed()
   {
     this.backgroundService._binder.onChanged();
-
   }
 }

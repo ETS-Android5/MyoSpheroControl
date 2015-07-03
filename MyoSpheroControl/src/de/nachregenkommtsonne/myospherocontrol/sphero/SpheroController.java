@@ -13,10 +13,15 @@ public class SpheroController implements ISpheroController
   Sphero _sphero;
   boolean _running;
   boolean _connected;
+  ConnectionListener _connectionListener;
+  DiscoveryListener _discoveryListener;
 
   public SpheroController(Context context)
   {
     _context = context;
+    
+    _connectionListener = new SpheroConnectionListener(this);
+    _discoveryListener = new SpheroDiscoveryListener(this);
 
     RobotProvider robotProvider = getRobotProvider();
 
@@ -102,8 +107,4 @@ public class SpheroController implements ISpheroController
     robotProvider.shutdown();
     onSpheroStateChanged(SpheroStatus.disconnected);
   }
-
-  ConnectionListener _connectionListener = new SpheroConnectionListener(this);
-
-  DiscoveryListener _discoveryListener = new SpheroDiscoveryListener(this);
 }

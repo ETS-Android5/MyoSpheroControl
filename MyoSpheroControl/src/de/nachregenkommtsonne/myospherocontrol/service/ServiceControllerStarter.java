@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.service;
 
-final class ServiceControllerStarter implements Runnable
+class ServiceControllerStarter implements Runnable
 {
   private final ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver;
 
@@ -14,7 +14,8 @@ final class ServiceControllerStarter implements Runnable
     try
     {
       Thread.sleep(1400);
-    } catch (InterruptedException e)
+    }
+    catch (InterruptedException e)
     {
     }
 

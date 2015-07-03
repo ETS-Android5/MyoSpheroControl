@@ -10,11 +10,14 @@ public class BackgroundService extends Service
 {
   ServiceController _serviceController;
   MyBinder _binder;
+  IServiceControllerEvents _serviceControllerEvents;
 
   public BackgroundService()
   {
     super();
+    
     _binder = new MyBinder(this);
+    _serviceControllerEvents = new BackgroundServiceChangedListener(this);
   }
 
   public void onCreate()
@@ -43,8 +46,6 @@ public class BackgroundService extends Service
   {
     void changed();
   }
-
-  IServiceControllerEvents _serviceControllerEvents = new BackgroundServiceChangedListener(this);
 
   public void onTaskRemoved(Intent rootIntent)
   {

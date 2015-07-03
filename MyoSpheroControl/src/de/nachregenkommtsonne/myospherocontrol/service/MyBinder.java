@@ -6,13 +6,12 @@ import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService.IBinder
 public class MyBinder extends Binder
 {
   private final BackgroundService backgroundService;
+  IBinderEvents _binderEvents;
 
   MyBinder(BackgroundService backgroundService)
   {
     this.backgroundService = backgroundService;
   }
-
-  IBinderEvents _binderEvents;
 
   public void onChanged()
   {

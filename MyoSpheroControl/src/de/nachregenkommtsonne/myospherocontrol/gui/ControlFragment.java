@@ -23,7 +23,6 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 public class ControlFragment extends Fragment
 {
   private GuiStateHinter _guiStateHinter;
-  private MyBinder _myBinder;
   private MyServiceConnection _myServiceConnection;
 
   public ControlFragment()
@@ -43,19 +42,19 @@ public class ControlFragment extends Fragment
 
     startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
     startStopButton.setOnClickListener(new StartStopClickListener(this));
-    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myBinder));
+    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
 
     return rootView;
   }
 
   public void buttonClicked()
   {
-    _myBinder.buttonClicked();
+    _myServiceConnection.get_myBinder().buttonClicked();
   }
 
   public void unlinkClicked()
   {
-    _myBinder.unlinkClicked();
+    _myServiceConnection.get_myBinder().unlinkClicked();
   }
 
   public void onCreate(Bundle savedInstanceState)
@@ -70,7 +69,7 @@ public class ControlFragment extends Fragment
   {
     super.onResume();
 
-    _myServiceConnection = new MyServiceConnection(this, _myBinder);
+    _myServiceConnection = new MyServiceConnection(this);
     Intent intent = new Intent(getActivity(), BackgroundService.class);
     getActivity().bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
   }
@@ -83,14 +82,9 @@ public class ControlFragment extends Fragment
     getActivity().unbindService(_myServiceConnection);
   }
 
-  public void onDestroy()
-  {
-    super.onDestroy();
-  }
-
   public void updateUiOnUiThread()
   {
-    final ServiceState state = _myBinder.getState();
+    final ServiceState state = _myServiceConnection.get_myBinder().getState();
 
     Activity activity = getActivity();
 
@@ -156,12 +150,14 @@ public class ControlFragment extends Fragment
       String linkLabel = getString(R.string.clickToLink);
       linkUnlinkButton.setText(linkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
-    } else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning())
+    }
+    else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning())
     {
       String unlinkLabel = getString(R.string.clickToUnlink);
       linkUnlinkButton.setText(unlinkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
-    } else
+    }
+    else
     {
       linkUnlinkButton.setVisibility(View.GONE);
     }

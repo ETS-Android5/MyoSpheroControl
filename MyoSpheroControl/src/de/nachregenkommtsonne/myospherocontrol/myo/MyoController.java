@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+//TODO: check if event listener is set
 public class MyoController implements IMyoController
 {
   private static final String MYOMAC = "MYO_MAC";
@@ -20,12 +21,15 @@ public class MyoController implements IMyoController
   private SharedPreferences _sharedPref;
   boolean _running;
   boolean _connecting;
+  private DeviceListener _listenerDelegate;
+
 
   public MyoController(Context context)
   {
     _context = context;
     _sharedPref = _context.getSharedPreferences(_context.getPackageName(), Context.MODE_PRIVATE);
-
+    _listenerDelegate = new MyoDeviceListener(this);
+    
     Hub hub = getHub();
 
     hub.setSendUsageData(false);
@@ -70,7 +74,8 @@ public class MyoController implements IMyoController
     if (myoMac == null)
     {
       onMyoStateChanged(MyoStatus.notLinked);
-    } else
+    }
+    else
     {
       onMyoStateChanged(MyoStatus.linked);
     }
@@ -91,7 +96,8 @@ public class MyoController implements IMyoController
     {
       onMyoStateChanged(MyoStatus.notLinked);
       hub.attachToAdjacentMyo();
-    } else
+    }
+    else
     {
       connectToLinkedMyo(myoMac);
     }
@@ -146,12 +152,12 @@ public class MyoController implements IMyoController
     edit.apply();
   }
 
-  String getMac()
+  public String getMac()
   {
     return _sharedPref.getString(MYOMAC, null);
   }
 
-  void connectToLinkedMyo(String mac)
+  public void connectToLinkedMyo(String mac)
   {
     if (!_connecting)
       return;
@@ -161,8 +167,6 @@ public class MyoController implements IMyoController
 
     onMyoStateChanged(MyoStatus.linked);
   }
-
-  private DeviceListener _listenerDelegate = new MyoDeviceListener(this);
 
   public void connectAndUnlinkButtonClicked()
   {

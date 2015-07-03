@@ -23,6 +23,9 @@ public class ServiceController implements IServiceController
   ServiceState _state;
   private Context _context;
   private IMovementCalculator _mMovementCalculator;
+  private IMyoEvents _myoEvents;
+  private ISpheroEvents _spheroEvents;
+  private  BroadcastReceiver _bluetoothEvents;
 
   public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context)
   {
@@ -30,15 +33,20 @@ public class ServiceController implements IServiceController
     _myoController = myoController;
     _spheroController = spheroController;
 
+    _state = new ServiceState();
+    _spheroEvents = new SpheroEvents(this);
+    _bluetoothEvents = new ServiceControllerBroadcastReceiver(this);
+    _mMovementCalculator = new MovementCalculator();
+    
+    _myoEvents = new MyoEvents(_state, _mMovementCalculator, _spheroController, this);
+    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+    
     _myoController.setEventListener(_myoEvents);
     _spheroController.setEventListener(_spheroEvents);
-    _state = new ServiceState();
-    _myoController.updateDisabledState();
 
-    _mMovementCalculator = new MovementCalculator();
-
-    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     _context.registerReceiver(_bluetoothEvents, filter);
+
+    _myoController.updateDisabledState();
   }
 
   public void setEventListener(IServiceControllerEvents serviceControllerEvents)
@@ -58,12 +66,6 @@ public class ServiceController implements IServiceController
   {
     return _state;
   }
-
-  private IMyoEvents _myoEvents = new MyoEvents(_state, _mMovementCalculator, _spheroController, this);
-
-  private ISpheroEvents _spheroEvents = new SpheroEvents(this);
-
-  private final BroadcastReceiver _bluetoothEvents = new ServiceControllerBroadcastReceiver(this);
 
   public void buttonClicked()
   {

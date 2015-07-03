@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
-final class ServiceControllerBroadcastReceiver extends BroadcastReceiver
+class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {
   final ServiceController serviceController;
 
