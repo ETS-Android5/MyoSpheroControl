@@ -1,9 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.sphero;
 
-import java.util.List;
-
 import android.content.Context;
-import orbotix.robot.base.Robot;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
@@ -26,7 +23,6 @@ public class SpheroController implements ISpheroController {
 		robotProvider.addDiscoveryListener(_discoveryListener);
 	}
 
-	@Override
 	public void setEventListener(ISpheroEvents eventListener) {
 		_eventListener = eventListener;
 	}
@@ -35,7 +31,7 @@ public class SpheroController implements ISpheroController {
 		return RobotProvider.getDefaultProvider();
 	}
 
-	private void onSpheroStateChanged(SpheroStatus spheroStatus) {
+	void onSpheroStateChanged(SpheroStatus spheroStatus) {
 		_eventListener.spheroStateChanged(spheroStatus);
 	}
 
@@ -64,7 +60,7 @@ public class SpheroController implements ISpheroController {
 		_running = true;
 	}
 
-	private void startDiscovery() {
+	void startDiscovery() {
 		RobotProvider robotProvider = getRobotProvider();
 		/*boolean success =*/ robotProvider.startDiscovery(_context);
 		//if (!success) {
@@ -74,7 +70,7 @@ public class SpheroController implements ISpheroController {
 		onSpheroStateChanged(SpheroStatus.discovering);
 	}
 
-	private void startConnecting() {
+	void startConnecting() {
 		RobotProvider robotProvider = getRobotProvider();
 		robotProvider.connect(_sphero);
 		onSpheroStateChanged(SpheroStatus.connecting);
@@ -95,51 +91,7 @@ public class SpheroController implements ISpheroController {
 		onSpheroStateChanged(SpheroStatus.disconnected);
 	}
 	
-	ConnectionListener _connectionListener = new ConnectionListener() {
+	ConnectionListener _connectionListener = new SpheroConnectionListener(this);
 
-		public void onDisconnected(Robot arg0) {
-			_connected = false;
-			if (!_running)
-				return;
-			
-			if (_sphero == null)
-				startDiscovery();
-			else {
-				startConnecting();
-			}
-		}
-
-		public void onConnectionFailed(Robot sphero) {
-			_connected = false;
-			if (!_running)
-				return;
-
-			if (_sphero == null)
-				startDiscovery();
-			else {
-				startConnecting();
-			}
-		}
-
-		public void onConnected(Robot arg0) {
-			onSpheroStateChanged(SpheroStatus.connected);
-			_connected = true;
-		}
-	};
-
-	DiscoveryListener _discoveryListener = new DiscoveryListener() {
-
-		public void onFound(List<Sphero> spheros) {
-			_sphero = spheros.iterator().next();
-			
-			startConnecting();
-		}
-
-		public void onBluetoothDisabled() {
-			_connected = false;
-		}
-
-		public void discoveryComplete(List<Sphero> spheros) {
-		}
-	};
+	DiscoveryListener _discoveryListener = new SpheroDiscoveryListener(this);
 }

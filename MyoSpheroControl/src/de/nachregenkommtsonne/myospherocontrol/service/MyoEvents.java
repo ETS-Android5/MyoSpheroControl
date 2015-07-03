@@ -6,7 +6,6 @@ import com.thalmic.myo.XDirection;
 
 import de.nachregenkommtsonne.myospherocontrol.myo.IMyoEvents;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.service.MovementCalculator.MovementResult;
 import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroController;
 
 public class MyoEvents implements IMyoEvents {

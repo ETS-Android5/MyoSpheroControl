@@ -1,13 +1,9 @@
 package de.nachregenkommtsonne.myospherocontrol.myo;
 
-import com.thalmic.myo.AbstractDeviceListener;
-import com.thalmic.myo.Arm;
 import com.thalmic.myo.DeviceListener;
 import com.thalmic.myo.Hub;
 import com.thalmic.myo.Myo;
-import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
-import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
 import android.content.Context;
@@ -21,8 +17,8 @@ public class MyoController implements IMyoController {
 	private IMyoEvents _eventListener;
 	private Context _context;
 	private SharedPreferences _sharedPref;
-	private boolean _running;
-	private boolean _connecting;
+	boolean _running;
+	boolean _connecting;
 
 	public MyoController(Context context) {
 		_context = context;
@@ -97,13 +93,7 @@ public class MyoController implements IMyoController {
 		_connecting = false;
 	}
 	
-	@Override
 	public void connectViaDialog(){
-		//stop();
-		//start();
-		
-		//onMyoStateChanged(MyoStatus.linked);
-		
         Intent intent = new Intent(_context, ScanActivity.class);
         _context.startActivity(intent);
 	}
@@ -125,7 +115,7 @@ public class MyoController implements IMyoController {
 		_eventListener.myoOrientationDataCollected(rotation, myo);
 	}
 
-	private void saveMac(String mac) {
+	void saveMac(String mac) {
 		Editor edit = _sharedPref.edit();
 		edit.putString(MYOMAC, mac);
 		edit.apply();
@@ -137,11 +127,11 @@ public class MyoController implements IMyoController {
 		edit.apply();
 	}
 
-	private String getMac() {
+	String getMac() {
 		return _sharedPref.getString(MYOMAC, null);
 	}
 
-	private void connectToLinkedMyo(String mac) {
+	void connectToLinkedMyo(String mac) {
 		if (!_connecting)
 			return;
 
@@ -151,67 +141,10 @@ public class MyoController implements IMyoController {
 		onMyoStateChanged(MyoStatus.linked);
 	}
 
-	private DeviceListener _listenerDelegate = new AbstractDeviceListener() {
-		public void onConnect(Myo myo, long timestamp) {
-			onMyoStateChanged(MyoStatus.notSynced);
-			saveMac(myo.getMacAddress());
-		}
-
-		public void onDisconnect(Myo myo, long timestamp) {
-			if (_running && _connecting) {
-				try {
-					connectToLinkedMyo(getMac());
-				}
-				catch (Exception ex) {
-				}
-			}
-		}
-
-		public void onArmSync(Myo myo, long timestamp, Arm arm,
-				XDirection xDirection) {
-			onMyoStateChanged(MyoStatus.connected);
-		}
-
-		public void onArmUnsync(Myo myo, long timestamp) {
-			if (_connecting) {
-				onMyoStateChanged(MyoStatus.notSynced);
-				try {
-					onMyoControlDeactivated();
-				}
-				catch (Exception ex) {
-				}
-			}
-		}
-
-		public void onUnlock(Myo myo, long timestamp) {
-		}
-
-		public void onPose(Myo myo, long timestamp, Pose pose) {
-			switch (pose) {
-			case FIST:
-				myo.unlock(Myo.UnlockType.HOLD);
-				onMyoControlActivated();
-				break;
-			case FINGERS_SPREAD:
-				onMyoControlDeactivated();
-				myo.lock();
-				break;
-			default:
-				break;
-			}
-		}
-
-		public void onOrientationData(Myo myo, long timestamp,
-				Quaternion rotation) {
-			onMyoOrientationDataCollected(myo, timestamp, rotation);
-		}
-	};
+	private DeviceListener _listenerDelegate = new MyoDeviceListener(this);
 
 	public void connectAndUnlinkButtonClicked() {
-		if (_running){
-			//connectViaDialog();
-		}
-		else{
+		if (!_running){
 			deleteMac();
 			updateDisabledState();
 		}

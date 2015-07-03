@@ -4,17 +4,16 @@ import de.nachregenkommtsonne.myospherocontrol.myo.MyoController;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroController;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
 
 public class BackgroundService extends Service {
 
 	ServiceController _serviceController;
-	private MyBinder _binder;
+	MyBinder _binder;
 	
 	public BackgroundService() {
 		super();
-		_binder = new MyBinder();
+		_binder = new MyBinder(this);
 	}
 
 	public void onCreate() {
@@ -35,41 +34,11 @@ public class BackgroundService extends Service {
 		super.onDestroy();
 	}
 	
-	public class MyBinder extends Binder{
-		IBinderEvents _binderEvents;
-
-		public void onChanged(){
-			if (_binderEvents != null)
-				_binderEvents.changed();
-		}
-		public void setChangedListener(IBinderEvents binderEvents){
-			_binderEvents = binderEvents;
-		}
-		
-		public ServiceState getState(){
-			return _serviceController.getState();
-		}
-
-		public void buttonClicked() {
-			_serviceController.buttonClicked();
-		}
-		public void unlinkClicked() {
-			_serviceController.unlinkClicked();
-			
-		}
-	}
-	
 	public interface IBinderEvents{
 		void changed();
 	}
 	
-	IServiceControllerEvents _serviceControllerEvents = new IServiceControllerEvents() {
-
-		public void changed() {
-			_binder.onChanged();
-			
-		}
-	};
+	IServiceControllerEvents _serviceControllerEvents = new BackgroundServiceChangedListener(this);
 	
 	public void onTaskRemoved(Intent rootIntent) {
 		super.onTaskRemoved(rootIntent);

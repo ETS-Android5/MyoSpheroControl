@@ -1,16 +1,14 @@
 package de.nachregenkommtsonne.myospherocontrol.test.service;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-
 import com.thalmic.myo.Quaternion;
 
 import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.SmallTest;
 import de.nachregenkommtsonne.myospherocontrol.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.service.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.service.IServiceController;
-import de.nachregenkommtsonne.myospherocontrol.service.MovementCalculator.MovementResult;
+import de.nachregenkommtsonne.myospherocontrol.service.MovementResult;
 import de.nachregenkommtsonne.myospherocontrol.service.MyoEvents;
 import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroController;
@@ -28,7 +26,6 @@ public class MyoEventsTest extends AndroidTestCase {
 			return onChangedCalled;
 		}
 	}
-
 	private final class SpheroControllerStub implements ISpheroController {
 		public void stopForBluetooth() {
 		}
@@ -51,7 +48,6 @@ public class MyoEventsTest extends AndroidTestCase {
 		public void changeColor(int red, int green, int blue) {
 		}
 	}
-
 	private final class MovementCalculatorStub implements IMovementCalculator {
 		public void resetRoll() {
 		}
@@ -77,15 +73,16 @@ public class MyoEventsTest extends AndroidTestCase {
 		_myoEvents = new MyoEvents(_serviceState, _movementCalculator, _spheroController, _serviceController);
 	}
 
-	@Test
-	public void init() {
+	 @SmallTest
+	 public void init() {
+		
+		assertTrue(false);
 		assertSame(_serviceState, _myoEvents.get_state());
 		assertSame(_movementCalculator, _myoEvents.get_state());
 		assertSame(_spheroController, _myoEvents.get_state());
 		assertSame(_serviceController, _myoEvents.get_state());
 	}
 
-	@Test
 	public void myoStateChanged_connected() {
 		MyoStatus myoStatus = MyoStatus.connected;
 		
@@ -95,7 +92,6 @@ public class MyoEventsTest extends AndroidTestCase {
 		assertTrue(_serviceController.wasOnChangedCalled());
 	}
 
-	@Test
 	public void myoStateChanged_disconnected() {
 		MyoStatus myoStatus = MyoStatus.disconnected;
 		
@@ -105,7 +101,6 @@ public class MyoEventsTest extends AndroidTestCase {
 		assertTrue(_serviceController.wasOnChangedCalled());
 	}
 
-	@Test
 	public void myoStateChanged_linked() {
 		MyoStatus myoStatus = MyoStatus.linked;
 		
@@ -115,7 +110,6 @@ public class MyoEventsTest extends AndroidTestCase {
 		assertTrue(_serviceController.wasOnChangedCalled());
 	}
 
-	@Test
 	public void myoStateChanged_notLinked() {
 		MyoStatus myoStatus = MyoStatus.notLinked;
 		
@@ -125,7 +119,6 @@ public class MyoEventsTest extends AndroidTestCase {
 		assertTrue(_serviceController.wasOnChangedCalled());
 	}
 
-	@Test
 	public void myoStateChanged_notSynced() {
 		MyoStatus myoStatus = MyoStatus.notSynced;
 		
