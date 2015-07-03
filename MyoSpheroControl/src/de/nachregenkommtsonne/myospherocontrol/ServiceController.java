@@ -12,10 +12,10 @@ import de.nachregenkommtsonne.myospherocontrol.R;
 
 public class ServiceController implements IServiceController
 {
-  public IMyoController _myoController;
-  public ISpheroController _spheroController;
+  private IMyoController _myoController;
+  private ISpheroController _spheroController;
   private IServiceControllerEvents _serviceControllerEvents;
-  public ServiceState _state;
+  private ServiceState _state;
   private Context _context;
   private IMovementCalculator _mMovementCalculator;
   private IMyoEvents _myoEvents;
@@ -43,6 +43,25 @@ public class ServiceController implements IServiceController
 
     _myoController.updateDisabledState();
   }
+
+  
+  public IMyoController get_myoController()
+  {
+    return _myoController;
+  }
+
+
+  public ISpheroController get_spheroController()
+  {
+    return _spheroController;
+  }
+
+
+  public ServiceState get_state()
+  {
+    return _state;
+  }
+
 
   public void setEventListener(IServiceControllerEvents serviceControllerEvents)
   {

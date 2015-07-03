@@ -14,11 +14,11 @@ public class SpheroConnectionListener implements ConnectionListener
 
   public void onDisconnected(Robot arg0)
   {
-    _spheroController._connected = false;
-    if (!_spheroController._running)
+    _spheroController.set_connected(false);
+    if (!_spheroController.is_running())
       return;
 
-    if (_spheroController._sphero == null)
+    if (_spheroController.get_sphero() == null)
       _spheroController.startDiscovery();
     else
     {
@@ -28,11 +28,11 @@ public class SpheroConnectionListener implements ConnectionListener
 
   public void onConnectionFailed(Robot sphero)
   {
-    _spheroController._connected = false;
-    if (!_spheroController._running)
+    _spheroController.set_connected(false);
+    if (!_spheroController.is_running())
       return;
 
-    if (_spheroController._sphero == null)
+    if (_spheroController.get_sphero() == null)
       _spheroController.startDiscovery();
     else
     {
@@ -43,6 +43,6 @@ public class SpheroConnectionListener implements ConnectionListener
   public void onConnected(Robot arg0)
   {
     _spheroController.onSpheroStateChanged(SpheroStatus.connected);
-    _spheroController._connected = true;
+    _spheroController.set_connected(true);
   }
 }

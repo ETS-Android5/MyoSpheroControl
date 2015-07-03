@@ -13,10 +13,10 @@ public class SpheroEvents implements ISpheroEvents
   {
     if (spheroStatus == SpheroStatus.connected)
     {
-      _serviceController._spheroController.changeColor(0, 0, 255);
+      _serviceController.get_spheroController().changeColor(0, 0, 255);
     }
 
-    _serviceController._state.setSpheroStatus(spheroStatus);
+    _serviceController.get_state().setSpheroStatus(spheroStatus);
     _serviceController.onChanged();
   }
 

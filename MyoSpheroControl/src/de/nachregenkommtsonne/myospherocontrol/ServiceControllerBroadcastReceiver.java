@@ -8,11 +8,16 @@ import android.os.Handler;
 
 public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {
-  public ServiceController _serviceController;
+  private ServiceController _serviceController;
 
   public ServiceControllerBroadcastReceiver(ServiceController serviceController)
   {
     _serviceController = serviceController;
+  }
+
+  public ServiceController get_serviceController()
+  {
+    return _serviceController;
   }
 
   public void onReceive(Context context, Intent intent)
@@ -25,17 +30,17 @@ public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
       switch (state)
       {
       case BluetoothAdapter.STATE_OFF:
-        _serviceController._state.setBluetoothState(BluetoothState.off);
+        _serviceController.get_state().setBluetoothState(BluetoothState.off);
         break;
 
       case BluetoothAdapter.STATE_TURNING_OFF:
-        _serviceController._state.setControlMode(false);
-        _serviceController._state.setBluetoothState(BluetoothState.turningOff);
+        _serviceController.get_state().setControlMode(false);
+        _serviceController.get_state().setBluetoothState(BluetoothState.turningOff);
 
-        if (_serviceController._state.isRunning())
+        if (_serviceController.get_state().isRunning())
         {
-          _serviceController._myoController.stopConnecting();
-          _serviceController._spheroController.stopForBluetooth();
+          _serviceController.get_myoController().stopConnecting();
+          _serviceController.get_spheroController().stopForBluetooth();
         }
 
         break;
@@ -45,7 +50,7 @@ public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
         break;
 
       case BluetoothAdapter.STATE_TURNING_ON:
-        _serviceController._state.setBluetoothState(BluetoothState.turningOn);
+        _serviceController.get_state().setBluetoothState(BluetoothState.turningOn);
         break;
       }
       _serviceController.onChanged();

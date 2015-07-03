@@ -16,14 +16,14 @@ public class SpheroDiscoveryListener implements DiscoveryListener
 
   public void onFound(List<Sphero> spheros)
   {
-    _spheroController._sphero = spheros.iterator().next();
+    _spheroController.set_sphero(spheros.iterator().next());
 
     _spheroController.startConnecting();
   }
 
   public void onBluetoothDisabled()
   {
-    _spheroController._connected = false;
+    _spheroController.set_connected(false);
   }
 
   public void discoveryComplete(List<Sphero> spheros)

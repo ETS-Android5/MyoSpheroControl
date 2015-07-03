@@ -19,8 +19,8 @@ public class MyoController implements IMyoController
   private IMyoEvents _eventListener;
   private Context _context;
   private SharedPreferences _sharedPref;
-  public boolean _running;
-  public boolean _connecting;
+  private boolean _running;
+  private boolean _connecting;
   private DeviceListener _listenerDelegate;
 
   public MyoController(Context context)
@@ -29,12 +29,22 @@ public class MyoController implements IMyoController
     _sharedPref = _context.getSharedPreferences(_context.getPackageName(), Context.MODE_PRIVATE);
     _listenerDelegate = new MyoDeviceListener(this);
     
-    Hub hub = getHub();
+    Hub hub = get_hub();
 
     hub.setSendUsageData(false);
   }
 
-  private Hub getHub()
+  public boolean is_running()
+  {
+    return _running;
+  }
+
+  public boolean is_connecting()
+  {
+    return _connecting;
+  }
+
+  private Hub get_hub()
   {
     return Hub.getInstance();
   }
@@ -46,7 +56,7 @@ public class MyoController implements IMyoController
 
   public void start()
   {
-    Hub hub = getHub();
+    Hub hub = get_hub();
 
     if (!hub.init(_context, _context.getPackageName()))
     {
@@ -60,7 +70,7 @@ public class MyoController implements IMyoController
   {
     _running = false;
     _connecting = false;
-    Hub hub = getHub();
+    Hub hub = get_hub();
 
     hub.removeListener(_listenerDelegate);
     hub.shutdown();
@@ -84,7 +94,7 @@ public class MyoController implements IMyoController
   {
     _connecting = true;
 
-    Hub hub = getHub();
+    Hub hub = get_hub();
     connect(hub);
   }
 
@@ -161,7 +171,7 @@ public class MyoController implements IMyoController
     if (!_connecting)
       return;
 
-    Hub hub = getHub();
+    Hub hub = get_hub();
     hub.attachByMacAddress(mac);
 
     onMyoStateChanged(MyoStatus.linked);

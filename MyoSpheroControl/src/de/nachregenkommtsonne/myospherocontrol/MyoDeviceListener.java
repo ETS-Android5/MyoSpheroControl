@@ -24,7 +24,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onDisconnect(Myo myo, long timestamp)
   {
-    if (this.myoController._running && this.myoController._connecting)
+    if (this.myoController.is_running() && this.myoController.is_connecting())
     {
       try
       {
@@ -42,7 +42,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onArmUnsync(Myo myo, long timestamp)
   {
-    if (this.myoController._connecting)
+    if (this.myoController.is_connecting())
     {
       this.myoController.onMyoStateChanged(MyoStatus.notSynced);
       try

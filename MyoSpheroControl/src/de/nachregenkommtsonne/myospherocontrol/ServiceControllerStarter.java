@@ -19,14 +19,14 @@ class ServiceControllerStarter implements Runnable
     {
     }
 
-    _serviceControllerBroadcastReceiver._serviceController._state.setBluetoothState(BluetoothState.on);
+    _serviceControllerBroadcastReceiver.get_serviceController().get_state().setBluetoothState(BluetoothState.on);
 
-    if (_serviceControllerBroadcastReceiver._serviceController._state.isRunning())
+    if (_serviceControllerBroadcastReceiver.get_serviceController().get_state().isRunning())
     {
-      _serviceControllerBroadcastReceiver._serviceController._myoController.startConnecting();
-      _serviceControllerBroadcastReceiver._serviceController._spheroController.start();
+      _serviceControllerBroadcastReceiver.get_serviceController().get_myoController().startConnecting();
+      _serviceControllerBroadcastReceiver.get_serviceController().get_spheroController().start();
     }
 
-    _serviceControllerBroadcastReceiver._serviceController.onChanged();
+    _serviceControllerBroadcastReceiver.get_serviceController().onChanged();
   }
 }

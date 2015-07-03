@@ -26,16 +26,16 @@ public class ServiceBinder extends Binder
 
   public ServiceState getState()
   {
-    return _backgroundService._serviceController.getState();
+    return _backgroundService.get_serviceController().getState();
   }
 
   public void buttonClicked()
   {
-    _backgroundService._serviceController.buttonClicked();
+    _backgroundService.get_serviceController().buttonClicked();
   }
 
   public void unlinkClicked()
   {
-    _backgroundService._serviceController.unlinkClicked();
+    _backgroundService.get_serviceController().unlinkClicked();
   }
 }

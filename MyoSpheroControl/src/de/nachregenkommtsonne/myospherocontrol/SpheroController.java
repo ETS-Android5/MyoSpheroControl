@@ -10,9 +10,9 @@ public class SpheroController implements ISpheroController
 {
   private Context _context;
   private ISpheroEvents _eventListener;
-  public Sphero _sphero;
-  public boolean _running;
-  public boolean _connected;
+  private Sphero _sphero;
+  private boolean _running;
+  private boolean _connected;
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
 
@@ -27,6 +27,31 @@ public class SpheroController implements ISpheroController
 
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
+  }
+  
+  public Sphero get_sphero()
+  {
+    return _sphero;
+  }
+
+  public boolean is_running()
+  {
+    return _running;
+  }
+
+  public boolean is_connected()
+  {
+    return _connected;
+  }
+
+  public void set_sphero(Sphero _sphero)
+  {
+    this._sphero = _sphero;
+  }
+
+  public void set_connected(boolean _connected)
+  {
+    this._connected = _connected;
   }
 
   public void setEventListener(ISpheroEvents eventListener)

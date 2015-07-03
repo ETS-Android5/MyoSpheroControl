@@ -11,6 +11,6 @@ public class BackgroundServiceChangedListener implements IServiceControllerEvent
 
   public void changed()
   {
-    _backgroundService._binder.onChanged();
+    _backgroundService.get_binder().onChanged();
   }
 }

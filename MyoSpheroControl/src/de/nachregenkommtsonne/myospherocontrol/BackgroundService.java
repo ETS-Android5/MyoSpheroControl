@@ -6,8 +6,8 @@ import android.os.IBinder;
 
 public class BackgroundService extends Service
 {
-  public ServiceController _serviceController;
-  public ServiceBinder _binder;
+  private ServiceController _serviceController;
+  private ServiceBinder _binder;
   private IServiceControllerEvents _serviceControllerEvents;
 
   public BackgroundService()
@@ -16,6 +16,16 @@ public class BackgroundService extends Service
     
     _binder = new ServiceBinder(this);
     _serviceControllerEvents = new BackgroundServiceChangedListener(this);
+  }
+
+  public ServiceBinder get_binder()
+  {
+    return _binder;
+  }
+
+  public ServiceController get_serviceController()
+  {
+    return _serviceController;
   }
 
   public void onCreate()
