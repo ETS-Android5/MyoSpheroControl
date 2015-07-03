@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.nachregenkommtsonne.myospherocontrol.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.R;
+import de.nachregenkommtsonne.myospherocontrol.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundServiceConnection;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class ControlFragment extends Fragment

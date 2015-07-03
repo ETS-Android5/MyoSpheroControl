@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.activity;
 
 import com.thalmic.myo.scanner.ScanActivity;
 

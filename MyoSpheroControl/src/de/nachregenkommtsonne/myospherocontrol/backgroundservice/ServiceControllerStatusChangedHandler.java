@@ -5,8 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import de.nachregenkommtsonne.myospherocontrol.ControlActivity;
 import de.nachregenkommtsonne.myospherocontrol.R;
+import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
 
 public class ServiceControllerStatusChangedHandler implements IServiceControllerStatusChangedHandler
 {

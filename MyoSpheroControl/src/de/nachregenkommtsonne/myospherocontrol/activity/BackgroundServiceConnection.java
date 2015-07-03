@@ -1,9 +1,9 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.activity;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import de.nachregenkommtsonne.myospherocontrol.ControlFragment;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
 
 public class BackgroundServiceConnection implements ServiceConnection
 {
