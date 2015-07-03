@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import de.nachregenkommtsonne.myospherocontrol.R;
+import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
+import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class ServiceController implements IServiceController
 {
@@ -66,11 +68,6 @@ public class ServiceController implements IServiceController
     _binder.onChanged();
 
     updateNotification();
-  }
-
-  public ServiceState getState()
-  {
-    return _state;
   }
 
   public void buttonClicked()

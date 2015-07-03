@@ -56,7 +56,7 @@ public class BackgroundService extends Service
   public void onTaskRemoved(Intent rootIntent)
   {
     super.onTaskRemoved(rootIntent);
-    _serviceController.getState().setRunning(false);
+    _serviceController.get_state().setRunning(false);
     _serviceController.updateNotification();
   }
 }

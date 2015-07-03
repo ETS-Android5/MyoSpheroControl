@@ -4,6 +4,9 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
+import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
+import de.nachregenkommtsonne.myospherocontrol.movement.MovementResult;
+
 public class MyoEventHandler implements IMyoEvents
 {
   private ServiceState _state;

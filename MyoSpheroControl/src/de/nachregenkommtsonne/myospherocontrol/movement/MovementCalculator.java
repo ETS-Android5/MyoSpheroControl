@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol;
+package de.nachregenkommtsonne.myospherocontrol.movement;
 
 import com.thalmic.myo.Quaternion;
 
