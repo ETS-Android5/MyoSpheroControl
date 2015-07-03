@@ -4,10 +4,10 @@ import com.thalmic.myo.Quaternion;
 
 public class MovementCalculator implements IMovementCalculator
 {
-  boolean _resetRoll;
-  float _startRoll;
-  float _directionDelta;
-  float _speed;
+  public boolean _resetRoll;
+  public float _startRoll;
+  public float _directionDelta;
+  public float _speed;
 
   public MovementCalculator()
   {

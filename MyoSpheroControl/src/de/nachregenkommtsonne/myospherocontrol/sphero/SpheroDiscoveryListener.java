@@ -5,25 +5,25 @@ import java.util.List;
 import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 
-final class SpheroDiscoveryListener implements DiscoveryListener
+public class SpheroDiscoveryListener implements DiscoveryListener
 {
-  private final SpheroController spheroController;
+  private SpheroController _spheroController;
 
-  SpheroDiscoveryListener(SpheroController spheroController)
+  public SpheroDiscoveryListener(SpheroController spheroController)
   {
-    this.spheroController = spheroController;
+    _spheroController = spheroController;
   }
 
   public void onFound(List<Sphero> spheros)
   {
-    this.spheroController._sphero = spheros.iterator().next();
+    _spheroController._sphero = spheros.iterator().next();
 
-    this.spheroController.startConnecting();
+    _spheroController.startConnecting();
   }
 
   public void onBluetoothDisabled()
   {
-    this.spheroController._connected = false;
+    _spheroController._connected = false;
   }
 
   public void discoveryComplete(List<Sphero> spheros)

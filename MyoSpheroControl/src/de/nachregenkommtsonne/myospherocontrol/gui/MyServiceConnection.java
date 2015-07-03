@@ -3,22 +3,24 @@ package de.nachregenkommtsonne.myospherocontrol.gui;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import de.nachregenkommtsonne.myospherocontrol.service.MyBinder;
+import de.nachregenkommtsonne.myospherocontrol.service.ServiceBinder;
 
 public class MyServiceConnection implements ServiceConnection
 {
   private ControlFragment _controlFragment;
-  private MyBinder _myBinder;
+  private ServiceBinder _myBinder;
 
-  MyServiceConnection(ControlFragment controlFragment)
+  public MyServiceConnection(ControlFragment controlFragment)
   {
     _controlFragment = controlFragment;
   }
 
   public void onServiceConnected(ComponentName name, IBinder service)
   {
-    _myBinder = (MyBinder) service;
-    _myBinder.setChangedListener(new ServiceConnectionChangedListener(_controlFragment));
+    ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_controlFragment);
+    
+    _myBinder = (ServiceBinder) service;
+    _myBinder.setChangedListener(binderEvents);
 
     _controlFragment.updateUiOnUiThread();
   }
@@ -28,7 +30,7 @@ public class MyServiceConnection implements ServiceConnection
     _myBinder.setChangedListener(null);
   }
 
-  public MyBinder get_myBinder()
+  public ServiceBinder get_myBinder()
   {
     return _myBinder;
   }

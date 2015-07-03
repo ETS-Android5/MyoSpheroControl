@@ -19,10 +19,9 @@ public class MyoController implements IMyoController
   private IMyoEvents _eventListener;
   private Context _context;
   private SharedPreferences _sharedPref;
-  boolean _running;
-  boolean _connecting;
+  public boolean _running;
+  public boolean _connecting;
   private DeviceListener _listenerDelegate;
-
 
   public MyoController(Context context)
   {
@@ -118,27 +117,27 @@ public class MyoController implements IMyoController
     _context.startActivity(intent);
   }
 
-  void onMyoStateChanged(MyoStatus myoStatus)
+  public void onMyoStateChanged(MyoStatus myoStatus)
   {
     _eventListener.myoStateChanged(myoStatus);
   }
 
-  void onMyoControlActivated()
+  public void onMyoControlActivated()
   {
     _eventListener.myoControlActivated();
   }
 
-  void onMyoControlDeactivated()
+  public void onMyoControlDeactivated()
   {
     _eventListener.myoControlDeactivated();
   }
 
-  void onMyoOrientationDataCollected(Myo myo, long timestamp, Quaternion rotation)
+  public void onMyoOrientationDataCollected(Myo myo, long timestamp, Quaternion rotation)
   {
     _eventListener.myoOrientationDataCollected(rotation, myo);
   }
 
-  void saveMac(String mac)
+  public void saveMac(String mac)
   {
     Editor edit = _sharedPref.edit();
     edit.putString(MYOMAC, mac);

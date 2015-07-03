@@ -37,6 +37,18 @@ public class ServiceState
   private boolean _controlMode;
   private GuiStateHinter _guGuiStateHinter;
 
+  public ServiceState()
+  {
+    _myoStatus = MyoStatus.notLinked;
+    _spheroStatus = SpheroStatus.disconnected;
+    _running = false;
+    _guGuiStateHinter = new GuiStateHinter();
+
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
+        : BluetoothState.off;
+  }
+  
   public boolean isControlMode()
   {
     return _controlMode;
@@ -44,7 +56,7 @@ public class ServiceState
 
   public void setControlMode(boolean controlMode)
   {
-    this._controlMode = controlMode;
+    _controlMode = controlMode;
   }
 
   public Myo getMyo()
@@ -85,18 +97,6 @@ public class ServiceState
   public int getHint()
   {
     return _guGuiStateHinter.getHint(this);
-  }
-
-  public ServiceState()
-  {
-    _myoStatus = MyoStatus.notLinked;
-    _spheroStatus = SpheroStatus.disconnected;
-    _running = false;
-    _guGuiStateHinter = new GuiStateHinter();
-
-    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
-        : BluetoothState.off;
   }
 
   public boolean isRunning()

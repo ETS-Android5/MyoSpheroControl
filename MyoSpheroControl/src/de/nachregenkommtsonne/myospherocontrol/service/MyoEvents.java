@@ -15,13 +15,13 @@ public class MyoEvents implements IMyoEvents
   private ISpheroController _spheroController;
   private IServiceController _serviceController;
 
-  public MyoEvents(ServiceState _state, IMovementCalculator _mMovementCalculator, ISpheroController _spheroController,
-      IServiceController _serviceController)
+  public MyoEvents(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
+      IServiceController serviceController)
   {
-    this._state = _state;
-    this._mMovementCalculator = _mMovementCalculator;
-    this._spheroController = _spheroController;
-    this._serviceController = _serviceController;
+    _state = state;
+    _mMovementCalculator = mMovementCalculator;
+    _spheroController = spheroController;
+    _serviceController = serviceController;
   }
 
   public ServiceState get_state()

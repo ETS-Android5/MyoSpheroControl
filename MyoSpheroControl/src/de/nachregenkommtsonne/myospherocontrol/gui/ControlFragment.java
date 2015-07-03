@@ -60,8 +60,10 @@ public class ControlFragment extends Fragment
   {
     super.onCreate(savedInstanceState);
 
-    Intent intent = new Intent(ControlFragment.this.getActivity(), BackgroundService.class);
-    ControlFragment.this.getActivity().startService(intent);
+    Activity activity = getActivity();
+
+    Intent intent = new Intent(activity, BackgroundService.class);
+    activity.startService(intent);
   }
 
   public void onResume()
@@ -69,8 +71,10 @@ public class ControlFragment extends Fragment
     super.onResume();
 
     _myServiceConnection = new MyServiceConnection(this);
-    Intent intent = new Intent(getActivity(), BackgroundService.class);
-    getActivity().bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
+    Activity activity = getActivity();
+
+    Intent intent = new Intent(activity, BackgroundService.class);
+    activity.bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
   }
 
   public void onPause()
@@ -90,7 +94,8 @@ public class ControlFragment extends Fragment
     if (activity == null)
       return;
 
-    activity.runOnUiThread(new UiUpdater(this, state));
+    UiUpdater uiUpdater = new UiUpdater(this, state);
+    activity.runOnUiThread(uiUpdater);
   }
 
   @SuppressWarnings("deprecation")

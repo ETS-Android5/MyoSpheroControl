@@ -2,17 +2,18 @@ package de.nachregenkommtsonne.myospherocontrol.gui;
 
 import com.thalmic.myo.scanner.ScanActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import de.nachregenkommtsonne.myospherocontrol.service.ServiceState;
 
-final class LinkUnlinkClickListener implements OnClickListener
+public class LinkUnlinkClickListener implements OnClickListener
 {
-  private final ControlFragment _controlFragment;
+  private ControlFragment _controlFragment;
   private MyServiceConnection _myServiceConnection;
 
-  LinkUnlinkClickListener(ControlFragment controlFragment, MyServiceConnection myServiceConnection)
+  public LinkUnlinkClickListener(ControlFragment controlFragment, MyServiceConnection myServiceConnection)
   {
     _controlFragment = controlFragment;
     _myServiceConnection = myServiceConnection;
@@ -27,8 +28,10 @@ final class LinkUnlinkClickListener implements OnClickListener
     }
     else
     {
-      Intent intent = new Intent(this._controlFragment.getActivity(), ScanActivity.class);
-      _controlFragment.getActivity().startActivity(intent);
+      Activity activity = _controlFragment.getActivity();
+      Intent intent = new Intent(activity, ScanActivity.class);
+
+      activity.startActivity(intent);
     }
   }
 }

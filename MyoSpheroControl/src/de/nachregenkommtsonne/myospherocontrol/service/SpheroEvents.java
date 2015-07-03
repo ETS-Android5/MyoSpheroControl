@@ -3,24 +3,24 @@ package de.nachregenkommtsonne.myospherocontrol.service;
 import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.sphero.SpheroStatus;
 
-final class SpheroEvents implements ISpheroEvents
+public class SpheroEvents implements ISpheroEvents
 {
-  private final ServiceController serviceController;
+  private ServiceController _serviceController;
 
-  SpheroEvents(ServiceController serviceController)
+  public SpheroEvents(ServiceController serviceController)
   {
-    this.serviceController = serviceController;
+    _serviceController = serviceController;
   }
 
   public void spheroStateChanged(SpheroStatus spheroStatus)
   {
     if (spheroStatus == SpheroStatus.connected)
     {
-      this.serviceController._spheroController.changeColor(0, 0, 255);
+      _serviceController._spheroController.changeColor(0, 0, 255);
     }
 
-    this.serviceController._state.setSpheroStatus(spheroStatus);
-    this.serviceController.onChanged();
+    _serviceController._state.setSpheroStatus(spheroStatus);
+    _serviceController.onChanged();
   }
 
   public void bluetoothDisabled()

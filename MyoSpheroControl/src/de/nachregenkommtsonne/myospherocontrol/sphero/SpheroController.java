@@ -8,13 +8,13 @@ import orbotix.sphero.Sphero;
 
 public class SpheroController implements ISpheroController
 {
-  Context _context;
-  ISpheroEvents _eventListener;
-  Sphero _sphero;
-  boolean _running;
-  boolean _connected;
-  ConnectionListener _connectionListener;
-  DiscoveryListener _discoveryListener;
+  private Context _context;
+  private ISpheroEvents _eventListener;
+  public Sphero _sphero;
+  public boolean _running;
+  public boolean _connected;
+  private ConnectionListener _connectionListener;
+  private DiscoveryListener _discoveryListener;
 
   public SpheroController(Context context)
   {
@@ -39,7 +39,7 @@ public class SpheroController implements ISpheroController
     return RobotProvider.getDefaultProvider();
   }
 
-  void onSpheroStateChanged(SpheroStatus spheroStatus)
+  public void onSpheroStateChanged(SpheroStatus spheroStatus)
   {
     _eventListener.spheroStateChanged(spheroStatus);
   }
@@ -73,7 +73,7 @@ public class SpheroController implements ISpheroController
     _running = true;
   }
 
-  void startDiscovery()
+  public void startDiscovery()
   {
     RobotProvider robotProvider = getRobotProvider();
     /* boolean success = */ robotProvider.startDiscovery(_context);
@@ -84,7 +84,7 @@ public class SpheroController implements ISpheroController
     onSpheroStateChanged(SpheroStatus.discovering);
   }
 
-  void startConnecting()
+  public void startConnecting()
   {
     RobotProvider robotProvider = getRobotProvider();
     robotProvider.connect(_sphero);

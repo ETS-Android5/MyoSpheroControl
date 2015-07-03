@@ -7,9 +7,9 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-class MyoDeviceListener extends AbstractDeviceListener
+public class MyoDeviceListener extends AbstractDeviceListener
 {
-  private final MyoController myoController;
+  private MyoController myoController;
 
   public MyoDeviceListener(MyoController myoController)
   {

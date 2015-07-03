@@ -8,15 +8,15 @@ import android.os.IBinder;
 
 public class BackgroundService extends Service
 {
-  ServiceController _serviceController;
-  MyBinder _binder;
-  IServiceControllerEvents _serviceControllerEvents;
+  public ServiceController _serviceController;
+  public ServiceBinder _binder;
+  private IServiceControllerEvents _serviceControllerEvents;
 
   public BackgroundService()
   {
     super();
     
-    _binder = new MyBinder(this);
+    _binder = new ServiceBinder(this);
     _serviceControllerEvents = new BackgroundServiceChangedListener(this);
   }
 

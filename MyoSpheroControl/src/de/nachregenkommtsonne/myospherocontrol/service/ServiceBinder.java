@@ -3,14 +3,14 @@ package de.nachregenkommtsonne.myospherocontrol.service;
 import android.os.Binder;
 import de.nachregenkommtsonne.myospherocontrol.service.BackgroundService.IBinderEvents;
 
-public class MyBinder extends Binder
+public class ServiceBinder extends Binder
 {
-  private final BackgroundService backgroundService;
-  IBinderEvents _binderEvents;
+  private BackgroundService _backgroundService;
+  private IBinderEvents _binderEvents;
 
-  MyBinder(BackgroundService backgroundService)
+  public ServiceBinder(BackgroundService backgroundService)
   {
-    this.backgroundService = backgroundService;
+    _backgroundService = backgroundService;
   }
 
   public void onChanged()
@@ -26,17 +26,16 @@ public class MyBinder extends Binder
 
   public ServiceState getState()
   {
-    return this.backgroundService._serviceController.getState();
+    return _backgroundService._serviceController.getState();
   }
 
   public void buttonClicked()
   {
-    this.backgroundService._serviceController.buttonClicked();
+    _backgroundService._serviceController.buttonClicked();
   }
 
   public void unlinkClicked()
   {
-    this.backgroundService._serviceController.unlinkClicked();
-
+    _backgroundService._serviceController.unlinkClicked();
   }
 }

@@ -3,46 +3,46 @@ package de.nachregenkommtsonne.myospherocontrol.sphero;
 import orbotix.robot.base.Robot;
 import orbotix.sphero.ConnectionListener;
 
-final class SpheroConnectionListener implements ConnectionListener
+public class SpheroConnectionListener implements ConnectionListener
 {
-  private final SpheroController spheroController;
+  private SpheroController _spheroController;
 
-  SpheroConnectionListener(SpheroController spheroController)
+  public SpheroConnectionListener(SpheroController spheroController)
   {
-    this.spheroController = spheroController;
+    _spheroController = spheroController;
   }
 
   public void onDisconnected(Robot arg0)
   {
-    this.spheroController._connected = false;
-    if (!this.spheroController._running)
+    _spheroController._connected = false;
+    if (!_spheroController._running)
       return;
 
-    if (this.spheroController._sphero == null)
-      this.spheroController.startDiscovery();
+    if (_spheroController._sphero == null)
+      _spheroController.startDiscovery();
     else
     {
-      this.spheroController.startConnecting();
+      _spheroController.startConnecting();
     }
   }
 
   public void onConnectionFailed(Robot sphero)
   {
-    this.spheroController._connected = false;
-    if (!this.spheroController._running)
+    _spheroController._connected = false;
+    if (!_spheroController._running)
       return;
 
-    if (this.spheroController._sphero == null)
-      this.spheroController.startDiscovery();
+    if (_spheroController._sphero == null)
+      _spheroController.startDiscovery();
     else
     {
-      this.spheroController.startConnecting();
+      _spheroController.startConnecting();
     }
   }
 
   public void onConnected(Robot arg0)
   {
-    this.spheroController.onSpheroStateChanged(SpheroStatus.connected);
-    this.spheroController._connected = true;
+    _spheroController.onSpheroStateChanged(SpheroStatus.connected);
+    _spheroController._connected = true;
   }
 }

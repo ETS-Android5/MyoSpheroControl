@@ -17,10 +17,10 @@ import de.nachregenkommtsonne.myospherocontrol.sphero.ISpheroEvents;
 
 public class ServiceController implements IServiceController
 {
-  IMyoController _myoController;
-  ISpheroController _spheroController;
+  public IMyoController _myoController;
+  public ISpheroController _spheroController;
   private IServiceControllerEvents _serviceControllerEvents;
-  ServiceState _state;
+  public ServiceState _state;
   private Context _context;
   private IMovementCalculator _mMovementCalculator;
   private IMyoEvents _myoEvents;
@@ -39,11 +39,11 @@ public class ServiceController implements IServiceController
     _mMovementCalculator = new MovementCalculator();
     
     _myoEvents = new MyoEvents(_state, _mMovementCalculator, _spheroController, this);
-    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     
     _myoController.setEventListener(_myoEvents);
     _spheroController.setEventListener(_spheroEvents);
 
+    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     _context.registerReceiver(_bluetoothEvents, filter);
 
     _myoController.updateDisabledState();

@@ -3,17 +3,17 @@ package de.nachregenkommtsonne.myospherocontrol.gui;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-final class StartStopClickListener implements OnClickListener
+public class StartStopClickListener implements OnClickListener
 {
-  private final ControlFragment controlFragment;
+  private ControlFragment _controlFragment;
 
-  StartStopClickListener(ControlFragment controlFragment)
+  public StartStopClickListener(ControlFragment controlFragment)
   {
-    this.controlFragment = controlFragment;
+    _controlFragment = controlFragment;
   }
 
   public void onClick(View arg0)
   {
-    this.controlFragment.buttonClicked();
+    _controlFragment.buttonClicked();
   }
 }

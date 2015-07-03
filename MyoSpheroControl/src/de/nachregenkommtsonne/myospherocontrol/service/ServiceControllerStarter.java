@@ -2,11 +2,11 @@ package de.nachregenkommtsonne.myospherocontrol.service;
 
 class ServiceControllerStarter implements Runnable
 {
-  private final ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver;
+  private ServiceControllerBroadcastReceiver _serviceControllerBroadcastReceiver;
 
-  ServiceControllerStarter(ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
+  public ServiceControllerStarter(ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
   {
-    this.serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
+    _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
   }
 
   public void run()
@@ -19,14 +19,14 @@ class ServiceControllerStarter implements Runnable
     {
     }
 
-    this.serviceControllerBroadcastReceiver.serviceController._state.setBluetoothState(BluetoothState.on);
+    _serviceControllerBroadcastReceiver._serviceController._state.setBluetoothState(BluetoothState.on);
 
-    if (this.serviceControllerBroadcastReceiver.serviceController._state.isRunning())
+    if (_serviceControllerBroadcastReceiver._serviceController._state.isRunning())
     {
-      this.serviceControllerBroadcastReceiver.serviceController._myoController.startConnecting();
-      this.serviceControllerBroadcastReceiver.serviceController._spheroController.start();
+      _serviceControllerBroadcastReceiver._serviceController._myoController.startConnecting();
+      _serviceControllerBroadcastReceiver._serviceController._spheroController.start();
     }
 
-    this.serviceControllerBroadcastReceiver.serviceController.onChanged();
+    _serviceControllerBroadcastReceiver._serviceController.onChanged();
   }
 }
