@@ -8,8 +8,6 @@ public class ChangedNotifier
   public ChangedNotifier(IServiceControllerStatusChangedHandler serviceControllerNotificationUpdater,
       ServiceBinder binder)
   {
-    super();
-    
     _serviceControllerNotificationUpdater = serviceControllerNotificationUpdater;
     _binder = binder;
   }

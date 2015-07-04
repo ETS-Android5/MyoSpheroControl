@@ -10,7 +10,6 @@ import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
 
 public class ServiceControllerNotificationUpdater implements IServiceControllerStatusChangedHandler
 {
-  
   private Context _context;
   private ServiceState _state;
   
