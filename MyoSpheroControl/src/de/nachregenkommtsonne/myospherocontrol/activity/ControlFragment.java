@@ -31,7 +31,8 @@ public class ControlFragment extends Fragment
     _guiStateHinter = new GuiStateHinter();
     _myServiceConnection = new BackgroundServiceConnection(this);
   }
-
+  
+  //TODO: extract controller
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -45,20 +46,10 @@ public class ControlFragment extends Fragment
     //ServiceState state = _myServiceConnection.get_myBinder().getState();
     //startStopButton.setText(state.isRunning() ? stopLabel : startLabel);
     
-    startStopButton.setOnClickListener(new StartStopClickListener(this));
+    startStopButton.setOnClickListener(new StartStopClickListener(_myServiceConnection));
     linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
 
     return rootView;
-  }
-
-  public void buttonClicked()
-  {
-    _myServiceConnection.get_myBinder().buttonClicked();
-  }
-
-  public void unlinkClicked()
-  {
-    _myServiceConnection.get_myBinder().unlinkClicked();
   }
 
   public void onCreate(Bundle savedInstanceState)
@@ -89,6 +80,7 @@ public class ControlFragment extends Fragment
     getActivity().unbindService(_myServiceConnection);
   }
 
+  //TODO: move to uiUpdater and caller
   public void updateUiOnUiThread()
   {
     ServiceState state = _myServiceConnection.get_myBinder().getState();
@@ -102,6 +94,7 @@ public class ControlFragment extends Fragment
     activity.runOnUiThread(uiUpdater);
   }
 
+  //TODO: move to uiUpdater
   @SuppressWarnings("deprecation")
   public void updateUI(ServiceState serviceState)
   {

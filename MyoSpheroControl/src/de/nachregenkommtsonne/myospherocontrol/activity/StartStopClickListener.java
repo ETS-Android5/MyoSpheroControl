@@ -5,15 +5,15 @@ import android.view.View.OnClickListener;
 
 public class StartStopClickListener implements OnClickListener
 {
-  private ControlFragment _controlFragment;
+  private BackgroundServiceConnection _myServiceConnection;
 
-  public StartStopClickListener(ControlFragment controlFragment)
+  public StartStopClickListener(BackgroundServiceConnection myServiceConnection)
   {
-    _controlFragment = controlFragment;
+    _myServiceConnection = myServiceConnection;
   }
 
   public void onClick(View arg0)
   {
-    _controlFragment.buttonClicked();
+    _myServiceConnection.get_myBinder().buttonClicked();
   }
 }

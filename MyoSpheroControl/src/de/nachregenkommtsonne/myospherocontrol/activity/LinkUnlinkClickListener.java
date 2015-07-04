@@ -11,9 +11,8 @@ public class LinkUnlinkClickListener implements OnClickListener
 {
   private ControlFragment _controlFragment;
   BackgroundServiceConnection _serviceConnection;
-  
-  public LinkUnlinkClickListener(ControlFragment controlFragment,
-      BackgroundServiceConnection serviceConnection)
+
+  public LinkUnlinkClickListener(ControlFragment controlFragment, BackgroundServiceConnection serviceConnection)
   {
     _controlFragment = controlFragment;
     _serviceConnection = serviceConnection;
@@ -23,7 +22,7 @@ public class LinkUnlinkClickListener implements OnClickListener
   {
     if (!_serviceConnection.get_myBinder().getState().isRunning())
     {
-      _controlFragment.unlinkClicked();
+      _serviceConnection.get_myBinder().unlinkClicked();
     }
     else
     {
