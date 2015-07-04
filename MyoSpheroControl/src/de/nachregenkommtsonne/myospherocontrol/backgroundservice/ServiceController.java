@@ -16,9 +16,17 @@ public class ServiceController implements IServiceController
   private Context _context;
   private ChangedNotifier _changedNotifier;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
-  
-  public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
-      ChangedNotifier changedNotifier, ServiceState serviceState, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
+  private ServiceBinder _binder;
+
+  public ServiceController(
+      IMyoController myoController,
+      ISpheroController spheroController,
+      Context context,
+      ChangedNotifier changedNotifier,
+      ServiceState serviceState,
+      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+      SpheroEventHandler eventListener,
+      ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
   {
     _context = context;
     _myoController = myoController;
@@ -28,16 +36,21 @@ public class ServiceController implements IServiceController
     _state = serviceState;
     _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
 
-    SpheroEventHandler eventListener = new SpheroEventHandler(changedNotifier, _spheroController,
-        _state);
     _spheroController.setEventListener(eventListener);
 
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver = new ServiceControllerBroadcastReceiver(
-        _changedNotifier, _state, _myoController, _spheroController);
+    
     _context.registerReceiver(serviceControllerBroadcastReceiver, filter);
 
     _myoController.updateDisabledState();
+
+    _binder = new ServiceBinder(this, serviceState);
+    _changedNotifier.setServiceBinder(_binder);
+  }
+
+  public ServiceBinder get_binder()
+  {
+    return _binder;
   }
 
   public ServiceState get_state()
@@ -73,10 +86,10 @@ public class ServiceController implements IServiceController
   {
     _myoController.connectAndUnlinkButtonClicked();
   }
-  
-  public void serviceStopped(){
+
+  public void serviceStopped()
+  {
     _state.setRunning(false);
     _serviceControllerStatusChangedHandler.updateNotification();
-
   }
 }
