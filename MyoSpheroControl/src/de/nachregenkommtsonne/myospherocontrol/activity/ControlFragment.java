@@ -18,19 +18,17 @@ public class ControlFragment extends Fragment
 {
   private IGuiStateHinter _guiStateHinter;
   private BackgroundServiceConnection _myServiceConnection;
-  ControlFragmentUpdateUI _controlFragmentUpdateUI;
-  private UiOnUiThreadUpdater _uiOnUiThreadUpdater;
   private ViewAccessor _viewAccessor;
 
   public ControlFragment()
   {
     _guiStateHinter = new GuiStateHinter();
     _viewAccessor = new ViewAccessor(this);
-    
-    _uiOnUiThreadUpdater = new UiOnUiThreadUpdater(this);
-    _myServiceConnection = new BackgroundServiceConnection(_uiOnUiThreadUpdater);
 
-    _controlFragmentUpdateUI = new ControlFragmentUpdateUI(this, _guiStateHinter);
+    ControlFragmentUpdateUI controlFragmentUpdateUI = new ControlFragmentUpdateUI(_viewAccessor, _guiStateHinter);
+    UiOnUiThreadUpdater uiOnUiThreadUpdater = new UiOnUiThreadUpdater(controlFragmentUpdateUI, _viewAccessor);
+
+    _myServiceConnection = new BackgroundServiceConnection(uiOnUiThreadUpdater);
   }
 
   // TODO: extract controller
@@ -42,7 +40,7 @@ public class ControlFragment extends Fragment
     TextView linkUnlinkButton = (TextView) rootView.findViewById(R.id.linkUnlinkButton);
 
     startStopButton.setOnClickListener(new StartStopClickListener(_myServiceConnection));
-    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
+    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(_viewAccessor, _myServiceConnection));
 
     return rootView;
   }

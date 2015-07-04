@@ -16,12 +16,12 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroll
 
 public class ControlFragmentUpdateUI
 {
-  private ControlFragment controlFragment;
+  private ViewAccessor _viewAccessor;
   private IGuiStateHinter _guiStateHinter;
 
-  public ControlFragmentUpdateUI(ControlFragment controlFragment, IGuiStateHinter guiStateHinter)
+  public ControlFragmentUpdateUI(ViewAccessor viewAccessor, IGuiStateHinter guiStateHinter)
   {
-    this.controlFragment = controlFragment;
+    _viewAccessor = viewAccessor;
     _guiStateHinter = guiStateHinter;
   }
   
@@ -70,21 +70,21 @@ public class ControlFragmentUpdateUI
     Drawable spheroConnectedDrawable = resources.getDrawable(spheroConnectedDrawableResource);
     spheroConnectedIcon.setImageDrawable(spheroConnectedDrawable);
 
-    String startLabel = this.controlFragment.getString(R.string.startLabel);
-    String stopLabel = this.controlFragment.getString(R.string.stopLabel);
+    String startLabel = _viewAccessor.getString(R.string.startLabel);
+    String stopLabel = _viewAccessor.getString(R.string.stopLabel);
     startStopButton.setText(serviceState.isRunning() ? stopLabel : startLabel);
 
     hintText.setText(hint);
 
     if (myoStatus == MyoStatus.notLinked && serviceState.isRunning() && bluetoothStatus == BluetoothState.on)
     {
-      String linkLabel = this.controlFragment.getString(R.string.clickToLink);
+      String linkLabel = _viewAccessor.getString(R.string.clickToLink);
       linkUnlinkButton.setText(linkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
     }
     else if (myoStatus != MyoStatus.notLinked && !serviceState.isRunning())
     {
-      String unlinkLabel = this.controlFragment.getString(R.string.clickToUnlink);
+      String unlinkLabel = _viewAccessor.getString(R.string.clickToUnlink);
       linkUnlinkButton.setText(unlinkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
     }

@@ -9,12 +9,12 @@ import android.view.View.OnClickListener;
 
 public class LinkUnlinkClickListener implements OnClickListener
 {
-  private ControlFragment _controlFragment;
+  private ViewAccessor _viewAccessor;
   BackgroundServiceConnection _serviceConnection;
 
-  public LinkUnlinkClickListener(ControlFragment controlFragment, BackgroundServiceConnection serviceConnection)
+  public LinkUnlinkClickListener(ViewAccessor viewAccessor, BackgroundServiceConnection serviceConnection)
   {
-    _controlFragment = controlFragment;
+    _viewAccessor = viewAccessor;
     _serviceConnection = serviceConnection;
   }
 
@@ -26,7 +26,7 @@ public class LinkUnlinkClickListener implements OnClickListener
     }
     else
     {
-      Activity activity = _controlFragment.getActivity();
+      Activity activity = _viewAccessor.getActivity();
       Intent intent = new Intent(activity, ScanActivity.class);
 
       activity.startActivity(intent);
