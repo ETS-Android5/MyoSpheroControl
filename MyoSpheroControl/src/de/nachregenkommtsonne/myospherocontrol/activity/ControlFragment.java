@@ -38,10 +38,12 @@ public class ControlFragment extends Fragment
     Button startStopButton = (Button) rootView.findViewById(R.id.startStopButton);
     TextView linkUnlinkButton = (TextView) rootView.findViewById(R.id.linkUnlinkButton);
 
-    String startLabel = getString(R.string.startLabel);
-    String stopLabel = getString(R.string.stopLabel);
+    //String startLabel = getString(R.string.startLabel);
+    //String stopLabel = getString(R.string.stopLabel);
 
-    startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
+    //ServiceState state = _myServiceConnection.get_myBinder().getState();
+    //startStopButton.setText(state.isRunning() ? stopLabel : startLabel);
+    
     startStopButton.setOnClickListener(new StartStopClickListener(this));
     linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
 
@@ -88,7 +90,7 @@ public class ControlFragment extends Fragment
 
   public void updateUiOnUiThread()
   {
-    final ServiceState state = _myServiceConnection.get_myBinder().getState();
+    ServiceState state = _myServiceConnection.get_myBinder().getState();
 
     Activity activity = getActivity();
 

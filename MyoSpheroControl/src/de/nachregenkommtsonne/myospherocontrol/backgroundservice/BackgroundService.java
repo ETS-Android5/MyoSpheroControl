@@ -1,7 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
@@ -24,9 +23,7 @@ public class BackgroundService extends Service
   {
     super.onCreate();
 
-    Context context = this;
-    
-    _serviceController.onCreate(context);
+    _serviceController.onCreate(this);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)

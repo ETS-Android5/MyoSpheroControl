@@ -1,7 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.SettingsEditor;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;

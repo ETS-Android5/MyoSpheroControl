@@ -12,7 +12,7 @@ import com.thalmic.myo.Myo;
 
 public class ServiceState
 {
-  private static ServiceState OB_instance = null;
+  /*private static ServiceState OB_instance = null;
 
   static
   {
@@ -25,7 +25,7 @@ public class ServiceState
 
     OB_instance.setMyoStatus(MyoStatus.disconnected);
     OB_instance.setSpheroStatus(SpheroStatus.disconnected);
-  }
+  }*/
   
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
@@ -90,10 +90,10 @@ public class ServiceState
     _sphero = sphero;
   }
 
-  public static ServiceState OBgetInstance()
+  /*public static ServiceState OBgetInstance()
   {
     return OB_instance;
-  }
+  }*/
 
   public int getHint()
   {

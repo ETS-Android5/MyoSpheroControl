@@ -8,7 +8,7 @@ import com.thalmic.myo.scanner.ScanActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import de.nachregenkommtsonne.myospherocontrol.SettingsEditor;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.SettingsEditor;
 
 //TODO: check if event listener is set
 //TODO: Decompose
