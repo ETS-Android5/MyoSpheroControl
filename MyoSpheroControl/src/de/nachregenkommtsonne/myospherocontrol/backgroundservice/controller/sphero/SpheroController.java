@@ -19,17 +19,20 @@ public class SpheroController implements ISpheroController
 
   public SpheroController(Context context)
   {
-    _context = context;
     
     _connectionListener = new SpheroConnectionListener(this);
     _discoveryListener = new SpheroDiscoveryListener(this);
+  }
+
+  public void onCreate(Context context)
+  {
+    _context = context;
 
     RobotProvider robotProvider = getRobotProvider();
-
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
   }
-  
+
   public Sphero get_sphero()
   {
     return _sphero;

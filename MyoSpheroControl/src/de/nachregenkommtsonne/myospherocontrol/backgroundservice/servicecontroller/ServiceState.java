@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
@@ -44,6 +44,7 @@ public class ServiceState
     _running = false;
     _guGuiStateHinter = new GuiStateHinter();
 
+    //move to onCreate
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
         : BluetoothState.off;

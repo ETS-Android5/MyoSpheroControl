@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
 public interface IServiceControllerStatusChangedHandler
 {

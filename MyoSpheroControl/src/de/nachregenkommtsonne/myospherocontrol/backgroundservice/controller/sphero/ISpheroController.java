@@ -1,5 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
 
+import android.content.Context;
+
 public interface ISpheroController
 {
   void move(float direction, float speed);
@@ -15,4 +17,6 @@ public interface ISpheroController
   public abstract void setEventListener(ISpheroEvents eventListener);
 
   public abstract void stopForBluetooth();
+
+  void onCreate(Context context);
 }

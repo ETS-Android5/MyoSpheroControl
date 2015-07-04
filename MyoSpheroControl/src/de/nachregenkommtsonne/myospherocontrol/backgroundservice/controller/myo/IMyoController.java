@@ -1,5 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
 
+import android.content.Context;
+
 public interface IMyoController
 {
   void start();
@@ -15,4 +17,6 @@ public interface IMyoController
   void connectAndUnlinkButtonClicked();
 
   public abstract void connectViaDialog();
+
+  void onCreate(Context context);
 }

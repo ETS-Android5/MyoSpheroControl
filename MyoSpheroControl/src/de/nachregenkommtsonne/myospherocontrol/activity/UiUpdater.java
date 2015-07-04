@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.activity;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class UiUpdater implements Runnable
 {

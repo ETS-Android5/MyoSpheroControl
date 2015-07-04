@@ -4,16 +4,20 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerFactory;
 
 public class BackgroundService extends Service
 {
+  private ServiceControllerFactory _serviceControllerFactory;
   private ServiceController _serviceController;
 
   public BackgroundService()
   {
     super();
-    
+
+    _serviceControllerFactory = new ServiceControllerFactory(this);
+    _serviceController = _serviceControllerFactory.createServiceController();
   }
   
   public void onCreate()
@@ -22,7 +26,6 @@ public class BackgroundService extends Service
 
     Context context = this;
     
-    _serviceController = new ServiceControllerFactory().createServiceController(this);
     _serviceController.onCreate(context);
   }
 

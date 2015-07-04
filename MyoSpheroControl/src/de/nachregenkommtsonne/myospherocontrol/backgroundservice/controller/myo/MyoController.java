@@ -21,16 +21,22 @@ public class MyoController implements IMyoController
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
 
-  public MyoController(Context context, IMyoEvents eventListener)
+  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor)
   {
     _context = context;
-    _settingsEditor = new SettingsEditor(context);
+    _settingsEditor = settingsEditor;
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
     _eventListener = eventListener;
+  }
 
+  public void onCreate(Context context)
+  {
     Hub hub = get_hub();
 
     hub.setSendUsageData(false);
+    
+    _settingsEditor.onCreate(context);
+    updateDisabledState();
   }
 
   public boolean is_running()

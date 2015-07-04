@@ -10,12 +10,16 @@ public class SettingsEditor
 
   private SharedPreferences _sharedPref;
 
-  public SettingsEditor(Context context){
-    
+  public SettingsEditor()
+  {
+  }
+  
+  public void onCreate(Context context)
+  {
     String packageName = context.getPackageName();
     _sharedPref = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
   }
-  
+
   public void saveMac(String mac)
   {
     Editor edit = _sharedPref.edit();
