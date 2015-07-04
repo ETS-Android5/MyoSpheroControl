@@ -20,13 +20,16 @@ public class ControlFragment extends Fragment
   private IGuiStateHinter _guiStateHinter;
   private BackgroundServiceConnection _myServiceConnection;
   private ControlFragmentUpdateUI _controlFragmentUpdateUI;
+  UiOnUiThreadUpdater _uiOnUiThreadUpdater;
   
+
   public ControlFragment()
   {
     _guiStateHinter = new GuiStateHinter();
     _myServiceConnection = new BackgroundServiceConnection(this);
     _controlFragmentUpdateUI = new ControlFragmentUpdateUI(this, _guiStateHinter);
- }
+    _uiOnUiThreadUpdater = new UiOnUiThreadUpdater(_myServiceConnection);
+  }
 
   // TODO: extract controller
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -70,17 +73,32 @@ public class ControlFragment extends Fragment
     getActivity().unbindService(_myServiceConnection);
   }
 
+  public class UiOnUiThreadUpdater
+  {
+    private BackgroundServiceConnection _myServiceConnection;
+    
+    public UiOnUiThreadUpdater(BackgroundServiceConnection myServiceConnection)
+    {
+      _myServiceConnection = myServiceConnection;
+    }
+    
+    public void updateUiOnUiThread(ControlFragment controlFragment)
+    {
+      ServiceState state = _myServiceConnection.get_myBinder().getState();
+
+      Activity activity = controlFragment.getActivity();
+
+      if (activity == null)
+        return;
+
+      UiUpdater uiUpdater = new UiUpdater(state, _controlFragmentUpdateUI, controlFragment.getView(), activity);
+      activity.runOnUiThread(uiUpdater);
+    }
+  }
+
   // TODO: move to uiUpdater and caller
   public void updateUiOnUiThread()
   {
-    ServiceState state = _myServiceConnection.get_myBinder().getState();
-
-    Activity activity = getActivity();
-
-    if (activity == null)
-      return;
-
-    UiUpdater uiUpdater = new UiUpdater(state, _controlFragmentUpdateUI, getView(), getActivity());
-    activity.runOnUiThread(uiUpdater);
+    _uiOnUiThreadUpdater.updateUiOnUiThread(this);
   }
 }
