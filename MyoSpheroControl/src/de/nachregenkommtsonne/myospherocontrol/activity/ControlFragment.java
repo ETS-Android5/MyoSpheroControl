@@ -28,6 +28,7 @@ public class ControlFragment extends Fragment
   public ControlFragment()
   {
     _guiStateHinter = new GuiStateHinter();
+    _myServiceConnection = new BackgroundServiceConnection(this);
   }
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -42,7 +43,7 @@ public class ControlFragment extends Fragment
 
     startStopButton.setText(ServiceState.OBgetInstance().isRunning() ? stopLabel : startLabel);
     startStopButton.setOnClickListener(new StartStopClickListener(this));
-    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection.get_myBinder().getState()));
+    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(this, _myServiceConnection));
 
     return rootView;
   }
@@ -71,7 +72,6 @@ public class ControlFragment extends Fragment
   {
     super.onResume();
 
-    _myServiceConnection = new BackgroundServiceConnection(this);
     Activity activity = getActivity();
 
     Intent intent = new Intent(activity, BackgroundService.class);

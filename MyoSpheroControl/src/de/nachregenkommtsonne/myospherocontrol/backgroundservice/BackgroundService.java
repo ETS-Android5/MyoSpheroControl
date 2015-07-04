@@ -1,6 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;
@@ -10,19 +11,14 @@ import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class BackgroundService extends Service
 {
-  private ServiceController _serviceController;
   private ServiceBinder _binder;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
   private ServiceState _serviceState;
-
+  private ServiceController _serviceController;
+  
   public BackgroundService()
   {
     super();
-  }
-
-  public ServiceController get_serviceController()
-  {
-    return _serviceController;
   }
 
   public void onCreate()
@@ -31,20 +27,24 @@ public class BackgroundService extends Service
 
     _serviceState = new ServiceState();
 
-    ChangedNotifier changedNotifier = new ChangedNotifier(_serviceControllerStatusChangedHandler, _binder);
+    Context context = this;
+    
+    SpheroController spheroController = new SpheroController(context);
 
-    SpheroController spheroController = new SpheroController(this);
-    MyoEventHandler myoEventHandler = new MyoEventHandler(_serviceState, new MovementCalculator(), spheroController,
-        changedNotifier);
+    MovementCalculator mMovementCalculator = new MovementCalculator();
 
-    MyoController myoController = new MyoController(this, myoEventHandler);
-
-    _serviceControllerStatusChangedHandler = new ServiceControllerNotificationUpdater(this, _serviceState);
-
-    _serviceController = new ServiceController(myoController, spheroController, this,
-        changedNotifier, _serviceState);
-
-    _binder = new ServiceBinder(_serviceController);
+    _serviceControllerStatusChangedHandler = new ServiceControllerNotificationUpdater(context, _serviceState);
+    
+    ChangedNotifier changedNotifier = new ChangedNotifier(_serviceControllerStatusChangedHandler);
+ 
+    MyoEventHandler myoEventHandler = new MyoEventHandler(_serviceState, mMovementCalculator, spheroController, changedNotifier);
+    MyoController myoController = new MyoController(context, myoEventHandler);
+    
+    _serviceController = new ServiceController(myoController, spheroController, context, changedNotifier, _serviceState, _serviceControllerStatusChangedHandler);
+    
+    _binder = new ServiceBinder(_serviceController, _serviceState);
+    
+    changedNotifier.setServiceBinder(_binder);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)
@@ -57,15 +57,10 @@ public class BackgroundService extends Service
     return _binder;
   }
 
-  public void onDestroy()
-  {
-    super.onDestroy();
-  }
-
   public void onTaskRemoved(Intent rootIntent)
   {
     super.onTaskRemoved(rootIntent);
-    _serviceState.setRunning(false);
-    _serviceControllerStatusChangedHandler.updateNotification();
-  }
+
+    _serviceController.serviceStopped();
+   }
 }

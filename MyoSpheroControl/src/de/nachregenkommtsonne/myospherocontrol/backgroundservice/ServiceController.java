@@ -15,9 +15,10 @@ public class ServiceController implements IServiceController
   private ServiceState _state;
   private Context _context;
   private ChangedNotifier _changedNotifier;
-
+  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  
   public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
-      ChangedNotifier changedNotifier, ServiceState serviceState)
+      ChangedNotifier changedNotifier, ServiceState serviceState, IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
   {
     _context = context;
     _myoController = myoController;
@@ -25,6 +26,7 @@ public class ServiceController implements IServiceController
     _changedNotifier = changedNotifier;
 
     _state = serviceState;
+    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
 
     SpheroEventHandler eventListener = new SpheroEventHandler(changedNotifier, _spheroController,
         _state);
@@ -70,5 +72,11 @@ public class ServiceController implements IServiceController
   public void unlinkClicked()
   {
     _myoController.connectAndUnlinkButtonClicked();
+  }
+  
+  public void serviceStopped(){
+    _state.setRunning(false);
+    _serviceControllerStatusChangedHandler.updateNotification();
+
   }
 }

@@ -18,7 +18,7 @@ public class BackgroundServiceConnection implements ServiceConnection
   public void onServiceConnected(ComponentName name, IBinder service)
   {
     ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_controlFragment);
-    
+
     _myBinder = (ServiceBinder) service;
     _myBinder.setChangedListener(binderEvents);
 

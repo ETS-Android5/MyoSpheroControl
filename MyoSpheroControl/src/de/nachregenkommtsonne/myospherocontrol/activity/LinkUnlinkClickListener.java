@@ -6,23 +6,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class LinkUnlinkClickListener implements OnClickListener
 {
   private ControlFragment _controlFragment;
-  ServiceState _serviceState;
+  BackgroundServiceConnection _serviceConnection;
   
   public LinkUnlinkClickListener(ControlFragment controlFragment,
-      ServiceState serviceState)
+      BackgroundServiceConnection serviceConnection)
   {
     _controlFragment = controlFragment;
-    _serviceState = serviceState;
+    _serviceConnection = serviceConnection;
   }
 
   public void onClick(View v)
   {
-    if (!_serviceState.isRunning())
+    if (!_serviceConnection.get_myBinder().getState().isRunning())
     {
       _controlFragment.unlinkClicked();
     }
