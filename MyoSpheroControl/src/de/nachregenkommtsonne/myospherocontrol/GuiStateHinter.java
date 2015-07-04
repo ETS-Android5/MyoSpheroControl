@@ -6,7 +6,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
-public class GuiStateHinter
+public class GuiStateHinter implements IGuiStateHinter
 {
   public int getHint(ServiceState guiState)
   {

@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.IServiceControllerStatusChangedHandler;
 
-public class ChangedNotifier
+public class ChangedNotifier implements IChangedNotifier
 {
   private IServiceControllerStatusChangedHandler _serviceControllerNotificationUpdater;
   private ServiceBinder _binder;

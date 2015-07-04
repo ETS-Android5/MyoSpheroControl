@@ -2,7 +2,8 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontrol
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
-import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
+import android.content.Context;
+import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
@@ -12,21 +13,6 @@ import com.thalmic.myo.Myo;
 
 public class ServiceState
 {
-  /*private static ServiceState OB_instance = null;
-
-  static
-  {
-    OB_instance = new ServiceState();
-
-    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-    OB_instance.setBluetoothState(
-        (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on : BluetoothState.off);
-
-    OB_instance.setMyoStatus(MyoStatus.disconnected);
-    OB_instance.setSpheroStatus(SpheroStatus.disconnected);
-  }*/
-  
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
   private BluetoothState _bluetoothState;
@@ -35,21 +21,24 @@ public class ServiceState
   private Hub _hub;
   private Sphero _sphero;
   private boolean _controlMode;
-  private GuiStateHinter _guGuiStateHinter;
+  private IGuiStateHinter _guiStateHinter;
 
-  public ServiceState()
+  public ServiceState(IGuiStateHinter guiStateHinter)
   {
     _myoStatus = MyoStatus.notLinked;
     _spheroStatus = SpheroStatus.disconnected;
     _running = false;
-    _guGuiStateHinter = new GuiStateHinter();
+    _guiStateHinter = guiStateHinter;
+    _bluetoothState = BluetoothState.off;
+  }
 
-    //move to onCreate
+  public void onCreate(Context context)
+  {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
         : BluetoothState.off;
   }
-  
+
   public boolean isControlMode()
   {
     return _controlMode;
@@ -90,14 +79,9 @@ public class ServiceState
     _sphero = sphero;
   }
 
-  /*public static ServiceState OBgetInstance()
-  {
-    return OB_instance;
-  }*/
-
   public int getHint()
   {
-    return _guGuiStateHinter.getHint(this);
+    return _guiStateHinter.getHint(this);
   }
 
   public boolean isRunning()

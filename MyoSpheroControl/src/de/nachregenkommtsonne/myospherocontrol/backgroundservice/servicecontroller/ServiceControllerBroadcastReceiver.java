@@ -5,20 +5,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 
 public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {
-  private ChangedNotifier _changedNotifier;
+  private IChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
   public ServiceControllerBroadcastReceiver(
-      ChangedNotifier changedNotifier, ServiceState serviceState,
+      IChangedNotifier changedNotifier, ServiceState serviceState,
       IMyoController myoController, ISpheroController spheroController)
   {
     _changedNotifier = changedNotifier;

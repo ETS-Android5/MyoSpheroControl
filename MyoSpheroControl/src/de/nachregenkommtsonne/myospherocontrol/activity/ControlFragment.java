@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
+import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
@@ -22,7 +23,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroll
 
 public class ControlFragment extends Fragment
 {
-  private GuiStateHinter _guiStateHinter;
+  private IGuiStateHinter _guiStateHinter;
   private BackgroundServiceConnection _myServiceConnection;
 
   public ControlFragment()

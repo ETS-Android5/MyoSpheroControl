@@ -4,7 +4,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
@@ -15,10 +15,10 @@ public class MyoEventHandler implements IMyoEvents
   private ServiceState _state;
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
-  private ChangedNotifier _changedNotifier;
+  private IChangedNotifier _changedNotifier;
 
   public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator,
-      ISpheroController spheroController, ChangedNotifier changedNotifier)
+      ISpheroController spheroController, IChangedNotifier changedNotifier)
   {
     _state = state;
     _mMovementCalculator = mMovementCalculator;

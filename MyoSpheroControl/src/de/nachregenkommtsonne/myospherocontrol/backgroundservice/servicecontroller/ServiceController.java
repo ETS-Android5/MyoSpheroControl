@@ -1,33 +1,34 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroEvents;
 
 public class ServiceController implements IServiceController
 {
   private IMyoController _myoController;
   private ISpheroController _spheroController;
   private ServiceState _state;
-  private ChangedNotifier _changedNotifier;
+  private IChangedNotifier _changedNotifier;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
-  private ServiceControllerBroadcastReceiver _serviceControllerBroadcastReceiver;
+  private BroadcastReceiver _serviceControllerBroadcastReceiver;
   private ServiceBinder _binder;
 
   public ServiceController(
       IMyoController myoController,
       ISpheroController spheroController,
-      ChangedNotifier changedNotifier,
+      IChangedNotifier changedNotifier,
       ServiceState serviceState,
       IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
-      SpheroEventHandler eventListener,
-      ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
+      ISpheroEvents eventListener,
+      BroadcastReceiver serviceControllerBroadcastReceiver)
   {
     _myoController = myoController;
     _spheroController = spheroController;
@@ -45,6 +46,7 @@ public class ServiceController implements IServiceController
   {
     _spheroController.onCreate(context);
     _myoController.onCreate(context);
+    _state.onCreate(context);
     
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     context.registerReceiver(_serviceControllerBroadcastReceiver, filter);

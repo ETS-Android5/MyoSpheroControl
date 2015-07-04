@@ -1,18 +1,18 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 
 public class ServiceControllerStarter implements Runnable
 {
-  private ChangedNotifier _changedNotifier;
+  private IChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
-  public ServiceControllerStarter(ChangedNotifier changedNotifier,
+  public ServiceControllerStarter(IChangedNotifier changedNotifier,
       ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
   {
     _changedNotifier = changedNotifier;
