@@ -47,7 +47,6 @@ public class ServiceControllerFactory
     return new ServiceController(
         myoController,
         spheroController,
-        context,
         changedNotifier,
         serviceState,
         serviceControllerStatusChangedHandler,

@@ -10,13 +10,20 @@ public class BackgroundService extends Service
 {
   private ServiceController _serviceController;
 
+  public BackgroundService()
+  {
+    super();
+    
+  }
+  
   public void onCreate()
   {
     super.onCreate();
 
     Context context = this;
     
-    _serviceController = new ServiceControllerFactory().createServiceController(context);
+    _serviceController = new ServiceControllerFactory().createServiceController(this);
+    _serviceController.onCreate(context);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)

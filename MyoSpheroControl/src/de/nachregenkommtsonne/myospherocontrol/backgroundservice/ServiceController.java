@@ -13,39 +13,38 @@ public class ServiceController implements IServiceController
   private IMyoController _myoController;
   private ISpheroController _spheroController;
   private ServiceState _state;
-  private Context _context;
   private ChangedNotifier _changedNotifier;
   private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ServiceControllerBroadcastReceiver _serviceControllerBroadcastReceiver;
   private ServiceBinder _binder;
 
   public ServiceController(
       IMyoController myoController,
       ISpheroController spheroController,
-      Context context,
       ChangedNotifier changedNotifier,
       ServiceState serviceState,
       IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
       SpheroEventHandler eventListener,
       ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver)
   {
-    _context = context;
     _myoController = myoController;
     _spheroController = spheroController;
     _changedNotifier = changedNotifier;
-
     _state = serviceState;
     _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
-
+    _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _spheroController.setEventListener(eventListener);
-
-    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    
-    _context.registerReceiver(serviceControllerBroadcastReceiver, filter);
-
-    _myoController.updateDisabledState();
 
     _binder = new ServiceBinder(this, serviceState);
     _changedNotifier.setServiceBinder(_binder);
+
+    _myoController.updateDisabledState();
+  }
+
+  public void onCreate(Context context)
+  {
+    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+    context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
   }
 
   public ServiceBinder get_binder()
