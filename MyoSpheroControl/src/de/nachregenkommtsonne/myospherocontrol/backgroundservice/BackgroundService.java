@@ -20,11 +20,6 @@ public class BackgroundService extends Service
     super();
   }
 
-  public ServiceBinder get_binder()
-  {
-    return _binder;
-  }
-
   public ServiceController get_serviceController()
   {
     return _serviceController;
@@ -33,18 +28,22 @@ public class BackgroundService extends Service
   public void onCreate()
   {
     super.onCreate();
-    
+
     _serviceState = new ServiceState();
+
+    ChangedNotifier changedNotifier = new ChangedNotifier(_serviceControllerStatusChangedHandler, _binder);
 
     SpheroController spheroController = new SpheroController(this);
     MyoEventHandler myoEventHandler = new MyoEventHandler(_serviceState, new MovementCalculator(), spheroController,
-        _serviceControllerStatusChangedHandler);
+        changedNotifier);
 
     MyoController myoController = new MyoController(this, myoEventHandler);
 
-    _serviceControllerStatusChangedHandler = new ServiceControllerStatusChangedHandler(_binder, this, _serviceState);
+    _serviceControllerStatusChangedHandler = new ServiceControllerNotificationUpdater(this, _serviceState);
+
     _serviceController = new ServiceController(myoController, spheroController, this,
-        _serviceControllerStatusChangedHandler, _serviceState);
+        changedNotifier, _serviceState);
+
     _binder = new ServiceBinder(_serviceController);
   }
 

@@ -14,39 +14,28 @@ public class ServiceController implements IServiceController
   private ISpheroController _spheroController;
   private ServiceState _state;
   private Context _context;
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ChangedNotifier _changedNotifier;
 
   public ServiceController(IMyoController myoController, ISpheroController spheroController, Context context,
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
-      ServiceState serviceState)
+      ChangedNotifier changedNotifier, ServiceState serviceState)
   {
     _context = context;
     _myoController = myoController;
     _spheroController = spheroController;
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _changedNotifier = changedNotifier;
 
     _state = serviceState;
 
-    SpheroEventHandler eventListener = new SpheroEventHandler(_serviceControllerStatusChangedHandler, _spheroController,
+    SpheroEventHandler eventListener = new SpheroEventHandler(changedNotifier, _spheroController,
         _state);
     _spheroController.setEventListener(eventListener);
 
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     ServiceControllerBroadcastReceiver serviceControllerBroadcastReceiver = new ServiceControllerBroadcastReceiver(
-        _serviceControllerStatusChangedHandler, _state, _myoController, _spheroController);
+        _changedNotifier, _state, _myoController, _spheroController);
     _context.registerReceiver(serviceControllerBroadcastReceiver, filter);
 
     _myoController.updateDisabledState();
-  }
-
-  public IMyoController get_myoController()
-  {
-    return _myoController;
-  }
-
-  public ISpheroController get_spheroController()
-  {
-    return _spheroController;
   }
 
   public ServiceState get_state()
@@ -75,7 +64,7 @@ public class ServiceController implements IServiceController
     }
 
     _state.setRunning(!_state.isRunning());
-    _serviceControllerStatusChangedHandler.onChanged();
+    _changedNotifier.onChanged();
   }
 
   public void unlinkClicked()

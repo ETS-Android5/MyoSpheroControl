@@ -11,16 +11,16 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphe
 
 public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 {
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
   public ServiceControllerBroadcastReceiver(
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler, ServiceState serviceState,
+      ChangedNotifier changedNotifier, ServiceState serviceState,
       IMyoController myoController, ISpheroController spheroController)
   {
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _changedNotifier = changedNotifier;
     _serviceState = serviceState;
     _myoController = myoController;
     _spheroController = spheroController;
@@ -53,7 +53,7 @@ public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
 
       case BluetoothAdapter.STATE_ON:
         Handler handler = new Handler();
-        handler.post(new ServiceControllerStarter(_serviceControllerStatusChangedHandler, _serviceState, _myoController,
+        handler.post(new ServiceControllerStarter(_changedNotifier, _serviceState, _myoController,
             _spheroController));
         break;
 
@@ -61,7 +61,7 @@ public class ServiceControllerBroadcastReceiver extends BroadcastReceiver
         _serviceState.setBluetoothState(BluetoothState.turningOn);
         break;
       }
-      _serviceControllerStatusChangedHandler.onChanged();
+      _changedNotifier.onChanged();
     }
   }
 }

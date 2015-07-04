@@ -1,17 +1,17 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceControllerStatusChangedHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 
 public class SpheroEventHandler implements ISpheroEvents
 {
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ChangedNotifier _changedNotifier;
   private ISpheroController _spheroController;
   private ServiceState _state;
   
-  public SpheroEventHandler(IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler, ISpheroController spheroController, ServiceState state)
+  public SpheroEventHandler(ChangedNotifier changedNotifier, ISpheroController spheroController, ServiceState state)
   {
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _changedNotifier = changedNotifier;
     _spheroController = spheroController;
     _state = state;
   }
@@ -24,7 +24,7 @@ public class SpheroEventHandler implements ISpheroEvents
     }
 
     _state.setSpheroStatus(spheroStatus);
-    _serviceControllerStatusChangedHandler.onChanged();
+    _changedNotifier.onChanged();
   }
 
   public void bluetoothDisabled()

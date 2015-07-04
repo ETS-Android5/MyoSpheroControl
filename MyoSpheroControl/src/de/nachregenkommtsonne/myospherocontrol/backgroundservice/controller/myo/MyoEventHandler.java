@@ -4,7 +4,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceControllerStatusChangedHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
@@ -15,22 +15,22 @@ public class MyoEventHandler implements IMyoEvents
   private ServiceState _state;
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
-  
-//TODO: Decompose
-  public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController,
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler)
+  private ChangedNotifier _changedNotifier;
+
+  // TODO: Decompose
+  public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator,
+      ISpheroController spheroController, ChangedNotifier changedNotifier)
   {
     _state = state;
     _mMovementCalculator = mMovementCalculator;
     _spheroController = spheroController;
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _changedNotifier = changedNotifier;
   }
 
   public void myoStateChanged(MyoStatus myoStatus)
   {
     _state.setMyoStatus(myoStatus);
-    _serviceControllerStatusChangedHandler.onChanged();
+    _changedNotifier.onChanged();
   }
 
   public void myoOrientationDataCollected(Quaternion rotation, Myo myo)

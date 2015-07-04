@@ -6,15 +6,15 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphe
 
 public class ServiceControllerStarter implements Runnable
 {
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private ChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
-  public ServiceControllerStarter(IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+  public ServiceControllerStarter(ChangedNotifier changedNotifier,
       ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
   {
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
+    _changedNotifier = changedNotifier;
     _serviceState = serviceState;
     _myoController = myoController;
     _spheroController = spheroController;
@@ -38,6 +38,6 @@ public class ServiceControllerStarter implements Runnable
       _spheroController.start();
     }
 
-    _serviceControllerStatusChangedHandler.onChanged();
+    _changedNotifier.onChanged();
   }
 }
