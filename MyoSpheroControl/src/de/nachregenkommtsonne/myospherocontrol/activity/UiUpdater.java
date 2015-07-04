@@ -1,20 +1,30 @@
 package de.nachregenkommtsonne.myospherocontrol.activity;
 
+import android.app.Activity;
+import android.view.View;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class UiUpdater implements Runnable
 {
-  private ControlFragment _controlFragment;
   private ServiceState _state;
-
-  public UiUpdater(ControlFragment controlFragment, ServiceState state)
+  private ControlFragmentUpdateUI _controlFragmentUpdateUI;
+  private View _view;
+  private Activity _activity;
+  
+  public UiUpdater(
+      ServiceState state,
+      ControlFragmentUpdateUI controlFragmentUpdateUI,
+      View view,
+      Activity activity)
   {
-    _controlFragment = controlFragment;
     _state = state;
+    _controlFragmentUpdateUI = controlFragmentUpdateUI;
+    _view = view;
+    _activity = activity;
   }
 
   public void run()
   {
-    _controlFragment.updateUI(_state);
+    _controlFragmentUpdateUI.updateUI(_state,_view, _activity);
   }
 }
