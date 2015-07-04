@@ -7,22 +7,22 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
 
 public class BackgroundServiceConnection implements ServiceConnection
 {
-  private ControlFragment _controlFragment;
+  private UiOnUiThreadUpdater _uiOnUiThreadUpdater;
   private ServiceBinder _myBinder;
 
-  public BackgroundServiceConnection(ControlFragment controlFragment)
+  public BackgroundServiceConnection(UiOnUiThreadUpdater uiOnUiThreadUpdater)
   {
-    _controlFragment = controlFragment;
+    _uiOnUiThreadUpdater = uiOnUiThreadUpdater;
   }
 
   public void onServiceConnected(ComponentName name, IBinder service)
   {
-    ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_controlFragment);
+    ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_uiOnUiThreadUpdater, this);
 
     _myBinder = (ServiceBinder) service;
     _myBinder.setChangedListener(binderEvents);
 
-    _controlFragment.updateUiOnUiThread();
+    _uiOnUiThreadUpdater.updateUiOnUiThread(_myBinder.getState());
   }
 
   public void onServiceDisconnected(ComponentName name)

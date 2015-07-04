@@ -13,22 +13,24 @@ import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class ControlFragment extends Fragment
 {
   private IGuiStateHinter _guiStateHinter;
   private BackgroundServiceConnection _myServiceConnection;
-  private ControlFragmentUpdateUI _controlFragmentUpdateUI;
-  UiOnUiThreadUpdater _uiOnUiThreadUpdater;
-  
+  ControlFragmentUpdateUI _controlFragmentUpdateUI;
+  private UiOnUiThreadUpdater _uiOnUiThreadUpdater;
+  private ViewAccessor _viewAccessor;
 
   public ControlFragment()
   {
     _guiStateHinter = new GuiStateHinter();
-    _myServiceConnection = new BackgroundServiceConnection(this);
+    _viewAccessor = new ViewAccessor(this);
+    
+    _uiOnUiThreadUpdater = new UiOnUiThreadUpdater(this);
+    _myServiceConnection = new BackgroundServiceConnection(_uiOnUiThreadUpdater);
+
     _controlFragmentUpdateUI = new ControlFragmentUpdateUI(this, _guiStateHinter);
-    _uiOnUiThreadUpdater = new UiOnUiThreadUpdater(_myServiceConnection);
   }
 
   // TODO: extract controller
@@ -71,34 +73,5 @@ public class ControlFragment extends Fragment
 
     // TODO: stop service when not running here!
     getActivity().unbindService(_myServiceConnection);
-  }
-
-  public class UiOnUiThreadUpdater
-  {
-    private BackgroundServiceConnection _myServiceConnection;
-    
-    public UiOnUiThreadUpdater(BackgroundServiceConnection myServiceConnection)
-    {
-      _myServiceConnection = myServiceConnection;
-    }
-    
-    public void updateUiOnUiThread(ControlFragment controlFragment)
-    {
-      ServiceState state = _myServiceConnection.get_myBinder().getState();
-
-      Activity activity = controlFragment.getActivity();
-
-      if (activity == null)
-        return;
-
-      UiUpdater uiUpdater = new UiUpdater(state, _controlFragmentUpdateUI, controlFragment.getView(), activity);
-      activity.runOnUiThread(uiUpdater);
-    }
-  }
-
-  // TODO: move to uiUpdater and caller
-  public void updateUiOnUiThread()
-  {
-    _uiOnUiThreadUpdater.updateUiOnUiThread(this);
   }
 }
