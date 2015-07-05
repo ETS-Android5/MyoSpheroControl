@@ -15,41 +15,7 @@ public class BackgroundService extends Service
     super();
 
     _serviceController = new ServiceControllerFactory(this).create();
-    
-    /*GuiStateHinter guiStateHinter = new GuiStateHinter();
-    ServiceState serviceState = new ServiceState(guiStateHinter);
-    INotificationUpdater notificationUpdater = new NotificationUpdater(this, serviceState);
-
-    ServiceBinder serviceBinder = new ServiceBinder(serviceState);
-    IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
-    
-    ISpheroController spheroController = new SpheroController();
-    IMovementCalculator mMovementCalculator = new MovementCalculator();
-
-    IMyoEvents myoEventHandler = new MyoEventHandler(
-        serviceState,
-        mMovementCalculator,
-        spheroController,
-        changedNotifier);
-
-    SettingsEditor settingsEditor = new SettingsEditor();
-    IMyoController myoController = new MyoController(myoEventHandler, settingsEditor);
-    ISpheroEvents spheroEventHandler = new SpheroEventHandler(changedNotifier, spheroController, serviceState);
-
-    IBluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(changedNotifier, serviceState, myoController, spheroController);
-		BroadcastReceiver serviceControllerBroadcastReceiver = new BluetoothStateBroadcastReceiver(
-    		bluetoothStateHandler,
-        changedNotifier);
-    
-		_serviceController = new ServiceController(
-        myoController,
-        spheroController,
-        changedNotifier,
-        serviceState,
-        spheroEventHandler,
-        serviceControllerBroadcastReceiver,
-        serviceBinder);*/
-}
+  }
   
   public void onCreate()
   {
