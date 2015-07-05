@@ -3,7 +3,9 @@ package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBinderEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class BackgroundServiceConnection implements ServiceConnection
 {
@@ -17,13 +19,23 @@ public class BackgroundServiceConnection implements ServiceConnection
 
   public void onServiceConnected(ComponentName name, IBinder service)
   {
-    //TODO: create factory
-    ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_uiOnUiThreadUpdater, this);
-
     _myBinder = (ServiceBinder) service;
-    _myBinder.setChangedListener(binderEvents);
 
-    _uiOnUiThreadUpdater.updateUiOnUiThread(_myBinder.getState());
+    _myBinder.setChangedListener(new IBinderEvents()
+    {
+      public void changed()
+      {
+        updateUi();
+      }
+    });
+    
+    updateUi();
+  }
+
+  public void updateUi()
+  {
+    ServiceState state = _myBinder.getState();
+    _uiOnUiThreadUpdater.updateUiOnUiThread(state);
   }
 
   public void onServiceDisconnected(ComponentName name)
