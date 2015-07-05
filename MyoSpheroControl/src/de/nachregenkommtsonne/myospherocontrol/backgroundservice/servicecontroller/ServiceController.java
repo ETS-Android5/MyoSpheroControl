@@ -52,9 +52,9 @@ public class ServiceController implements IServiceController
 
 	public void start()
   {
-    _spheroController.onCreate(_context);
-    _myoController.onCreate(_context);
-    _state.onCreate(_context);
+    _spheroController.onCreate();
+    _myoController.onCreate();
+    _state.onCreate();
     
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     _context.registerReceiver(_serviceControllerBroadcastReceiver, filter);

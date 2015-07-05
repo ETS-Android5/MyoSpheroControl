@@ -41,7 +41,7 @@ public class ServiceControllerFactory
     ServiceBinder serviceBinder = new ServiceBinder(serviceState);
     IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
     
-    ISpheroController spheroController = new SpheroController();
+    ISpheroController spheroController = new SpheroController(_context);
     IMovementCalculator mMovementCalculator = new MovementCalculator();
 
     IMyoEvents myoEventHandler = new MyoEventHandler(
@@ -51,7 +51,7 @@ public class ServiceControllerFactory
         changedNotifier);
 
     SettingsEditor settingsEditor = new SettingsEditor();
-    IMyoController myoController = new MyoController(myoEventHandler, settingsEditor);
+    IMyoController myoController = new MyoController(myoEventHandler, settingsEditor, _context);
     ISpheroEvents spheroEventHandler = new SpheroEventHandler(changedNotifier, spheroController, serviceState);
 
     IBluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(changedNotifier, serviceState, myoController, spheroController);

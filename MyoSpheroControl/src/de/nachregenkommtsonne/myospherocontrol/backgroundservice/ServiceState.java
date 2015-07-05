@@ -2,7 +2,6 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
@@ -32,7 +31,7 @@ public class ServiceState
     _bluetoothState = BluetoothState.off;
   }
 
-  public void onCreate(Context context)
+  public void onCreate()
   {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
