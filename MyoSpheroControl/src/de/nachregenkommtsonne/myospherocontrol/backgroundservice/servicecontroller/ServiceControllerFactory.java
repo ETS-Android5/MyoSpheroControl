@@ -16,6 +16,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.SettingsEditor;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroController;
@@ -35,35 +36,37 @@ public class ServiceControllerFactory
 	public ServiceController create()
 	{
 		GuiStateHinter guiStateHinter = new GuiStateHinter();
-    ServiceState serviceState = new ServiceState(guiStateHinter);
-    INotificationUpdater notificationUpdater = new NotificationUpdater(_context, serviceState);
+		ServiceState serviceState = new ServiceState(guiStateHinter);
 
+		// Connectivity
     ServiceBinder serviceBinder = new ServiceBinder(serviceState);
+    INotificationUpdater notificationUpdater = new NotificationUpdater(_context, serviceState);
     IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
     
+    // Sphero Factory
     ISpheroController spheroController = new SpheroController(_context);
-    IMovementCalculator mMovementCalculator = new MovementCalculator();
+    ISpheroEvents spheroEventHandler = new SpheroEventHandler(changedNotifier, spheroController, serviceState);
+    spheroController.setEventListener(spheroEventHandler);
 
+    // Myo Factory
+		IMovementCalculator mMovementCalculator = new MovementCalculator();
     IMyoEvents myoEventHandler = new MyoEventHandler(
         serviceState,
         mMovementCalculator,
         spheroController,
         changedNotifier);
-
     SettingsEditor settingsEditor = new SettingsEditor();
     IMyoController myoController = new MyoController(myoEventHandler, settingsEditor, _context);
-    ISpheroEvents spheroEventHandler = new SpheroEventHandler(changedNotifier, spheroController, serviceState);
 
+    // Bluetooth Factory
     IBluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(changedNotifier, serviceState, myoController, spheroController);
 		BroadcastReceiver serviceControllerBroadcastReceiver = new BluetoothStateBroadcastReceiver(
     		bluetoothStateHandler,
         changedNotifier);
 
+		// Connectivity again
 		ButtonClickHandler buttonClickHandler = new ButtonClickHandler(myoController, spheroController, changedNotifier, serviceState);
-    
 		serviceBinder.setButtonClickHandler(buttonClickHandler);
-		
-		spheroController.setEventListener(spheroEventHandler);
 
 		return new ServiceController(
         myoController,

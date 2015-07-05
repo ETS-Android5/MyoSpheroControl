@@ -7,8 +7,6 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.SettingsEditor;
-
 public class MyoDeviceListener extends AbstractDeviceListener
 {
   private MyoController _myoController;

@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
