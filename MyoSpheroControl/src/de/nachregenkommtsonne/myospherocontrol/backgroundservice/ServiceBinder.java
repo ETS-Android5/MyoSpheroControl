@@ -1,24 +1,30 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.os.Binder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ButtonClickHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 
 public class ServiceBinder extends Binder implements IServiceBinderForUI
 {
   private IBinderEvents _binderEvents;
-  private ServiceController _serviceController;
   private ServiceState _serviceState;
-
+  private ButtonClickHandler _buttonClickHandler;
+  
   public ServiceBinder(ServiceState serviceState)
   {
     _serviceState = serviceState;
   }
 
+  @Deprecated
   public void setServiceController(ServiceController serviceController)
   {
-    _serviceController = serviceController;
   }
-  
+
+	public void setButtonClickHandler(ButtonClickHandler buttonClickHandler)
+	{
+		_buttonClickHandler = buttonClickHandler;		
+	}
+	
   // Called by BackgroundService
   public void onChanged()
   {
@@ -41,12 +47,12 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   // Called by Activity
 	public void buttonClicked()
   {
-    _serviceController.buttonClicked();
+		_buttonClickHandler.buttonClicked();
   }
 
   // Called by Activity
 	public void unlinkClicked()
   {
-    _serviceController.unlinkClicked();
+		_buttonClickHandler.unlinkClicked();
   }
 }

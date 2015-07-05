@@ -58,13 +58,18 @@ public class ServiceControllerFactory
 		BroadcastReceiver serviceControllerBroadcastReceiver = new BluetoothStateBroadcastReceiver(
     		bluetoothStateHandler,
         changedNotifier);
+
+		ButtonClickHandler buttonClickHandler = new ButtonClickHandler(myoController, spheroController, changedNotifier, serviceState);
     
+		serviceBinder.setButtonClickHandler(buttonClickHandler);
+		
+		spheroController.setEventListener(spheroEventHandler);
+
 		return new ServiceController(
         myoController,
         spheroController,
         changedNotifier,
         serviceState,
-        spheroEventHandler,
         serviceControllerBroadcastReceiver,
         serviceBinder, 
         _context);

@@ -7,10 +7,8 @@ import android.content.IntentFilter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroEvents;
 
 public class ServiceController implements IServiceController
 {
@@ -27,7 +25,6 @@ public class ServiceController implements IServiceController
       ISpheroController spheroController,
       IChangedNotifier changedNotifier,
       ServiceState serviceState,
-      ISpheroEvents eventListener,
       BroadcastReceiver serviceControllerBroadcastReceiver,
       ServiceBinder serviceBinder,
       Context context)
@@ -39,10 +36,6 @@ public class ServiceController implements IServiceController
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _serviceBinder = serviceBinder;
     _context = context;
-    
-    _spheroController.setEventListener(eventListener);
-    
-		_serviceBinder.setServiceController(this);
   }
 
   public ServiceBinder get_serviceBinder()
@@ -58,35 +51,6 @@ public class ServiceController implements IServiceController
     
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     _context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
-  }
-
-  public void buttonClicked()
-  {
-    if (_state.isRunning())
-    {
-      if (_state.getBluetoothState() == BluetoothState.on)
-      {
-        _spheroController.stop();
-      }
-      _myoController.stop();
-    }
-    else
-    {
-      _myoController.start();
-      if (_state.getBluetoothState() == BluetoothState.on)
-      {
-        _myoController.startConnecting();
-        _spheroController.start();
-      }
-    }
-
-    _state.setRunning(!_state.isRunning());
-    _changedNotifier.onChanged();
-  }
-
-  public void unlinkClicked()
-  {
-    _myoController.connectAndUnlinkButtonClicked();
   }
 
   public void stop()
