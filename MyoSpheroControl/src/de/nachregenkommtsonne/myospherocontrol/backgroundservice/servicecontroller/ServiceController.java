@@ -19,8 +19,8 @@ public class ServiceController implements IServiceController
   private ServiceState _state;
   private IChangedNotifier _changedNotifier;
   private BroadcastReceiver _serviceControllerBroadcastReceiver;
-  private ServiceBinder _binder;
-
+  private ServiceBinder _serviceBinder;
+  
   public ServiceController(
       IMyoController myoController,
       ISpheroController spheroController,
@@ -28,7 +28,7 @@ public class ServiceController implements IServiceController
       ServiceState serviceState,
       ISpheroEvents eventListener,
       BroadcastReceiver serviceControllerBroadcastReceiver,
-      ServiceBinder binder)
+      ServiceBinder serviceBinder)
   {
     _myoController = myoController;
     _spheroController = spheroController;
@@ -36,12 +36,17 @@ public class ServiceController implements IServiceController
     _state = serviceState;
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _spheroController.setEventListener(eventListener);
-
-    _binder = binder;
-    _changedNotifier.setServiceBinder(_binder);
+    
+    _serviceBinder = serviceBinder;
+		_serviceBinder.setServiceController(this);
   }
 
-  public void onCreate(Context context)
+  public ServiceBinder get_serviceBinder()
+	{
+		return _serviceBinder;
+	}
+
+	public void start(Context context)
   {
     _spheroController.onCreate(context);
     _myoController.onCreate(context);
@@ -80,7 +85,7 @@ public class ServiceController implements IServiceController
     _myoController.connectAndUnlinkButtonClicked();
   }
 
-  public void serviceStopped()
+  public void stop()
   {
     _state.setRunning(false);
     _changedNotifier.onChanged();

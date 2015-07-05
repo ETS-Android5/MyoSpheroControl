@@ -17,9 +17,8 @@ public class SpheroController implements ISpheroController
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
 
-  public SpheroController(Context context)
+  public SpheroController()
   {
-    
     _connectionListener = new SpheroConnectionListener(this);
     _discoveryListener = new SpheroDiscoveryListener(this);
   }

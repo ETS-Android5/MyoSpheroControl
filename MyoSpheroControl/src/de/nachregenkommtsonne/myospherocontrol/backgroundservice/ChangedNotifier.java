@@ -6,13 +6,9 @@ public class ChangedNotifier implements IChangedNotifier
   private INotificationUpdater _notificationUpdater;
   private ServiceBinder _binder;
 
-  public ChangedNotifier(INotificationUpdater notificationUpdater)
+  public ChangedNotifier(INotificationUpdater notificationUpdater, ServiceBinder binder)
   {
     _notificationUpdater = notificationUpdater;
-  }
-
-  public void setServiceBinder(ServiceBinder binder)
-  {
     _binder = binder;
   }
 

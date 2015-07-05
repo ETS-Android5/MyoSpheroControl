@@ -21,9 +21,8 @@ public class MyoController implements IMyoController
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
 
-  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor)
+  public MyoController(IMyoEvents eventListener, SettingsEditor settingsEditor)
   {
-    _context = context;
     _settingsEditor = settingsEditor;
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
     _eventListener = eventListener;
@@ -31,6 +30,8 @@ public class MyoController implements IMyoController
 
   public void onCreate(Context context)
   {
+    _context = context;
+
     Hub hub = get_hub();
 
     hub.setSendUsageData(false);
