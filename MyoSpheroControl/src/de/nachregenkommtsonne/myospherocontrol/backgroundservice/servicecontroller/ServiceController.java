@@ -17,7 +17,6 @@ public class ServiceController implements IServiceController
   private ISpheroController _spheroController;
   private ServiceState _state;
   private IChangedNotifier _changedNotifier;
-  private INotificationUpdater _serviceControllerStatusChangedHandler;
   private BroadcastReceiver _serviceControllerBroadcastReceiver;
   private ServiceBinder _binder;
 
@@ -26,7 +25,6 @@ public class ServiceController implements IServiceController
       ISpheroController spheroController,
       IChangedNotifier changedNotifier,
       ServiceState serviceState,
-      INotificationUpdater serviceControllerStatusChangedHandler,
       ISpheroEvents eventListener,
       BroadcastReceiver serviceControllerBroadcastReceiver)
   {
@@ -34,7 +32,6 @@ public class ServiceController implements IServiceController
     _spheroController = spheroController;
     _changedNotifier = changedNotifier;
     _state = serviceState;
-    _serviceControllerStatusChangedHandler = serviceControllerStatusChangedHandler;
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _spheroController.setEventListener(eventListener);
 
@@ -94,6 +91,6 @@ public class ServiceController implements IServiceController
   public void serviceStopped()
   {
     _state.setRunning(false);
-    _serviceControllerStatusChangedHandler.updateNotification();
+    _changedNotifier.onChanged();
   }
 }

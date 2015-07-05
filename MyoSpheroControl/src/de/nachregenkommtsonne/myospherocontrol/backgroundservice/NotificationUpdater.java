@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class NotificationUpdater implements INotificationUpdater
 {

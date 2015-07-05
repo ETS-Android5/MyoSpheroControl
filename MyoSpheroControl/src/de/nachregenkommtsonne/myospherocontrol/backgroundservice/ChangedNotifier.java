@@ -1,6 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.INotificationUpdater;
 
 public class ChangedNotifier implements IChangedNotifier
 {

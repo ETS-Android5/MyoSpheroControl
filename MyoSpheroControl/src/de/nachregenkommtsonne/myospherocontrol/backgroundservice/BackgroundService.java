@@ -3,8 +3,10 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class BackgroundService extends Service
 {
@@ -16,7 +18,13 @@ public class BackgroundService extends Service
     super();
 
     _serviceControllerFactory = new ServiceControllerFactory(this);
-    _serviceController = _serviceControllerFactory.createServiceController();
+ 
+    GuiStateHinter guiStateHinter = new GuiStateHinter();
+    ServiceState serviceState = new ServiceState(guiStateHinter);
+    INotificationUpdater notificationUpdater = new NotificationUpdater(this, serviceState);
+    IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater);
+
+    _serviceController = _serviceControllerFactory.createServiceController(serviceState, changedNotifier);
   }
   
   public void onCreate()

@@ -2,8 +2,6 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontrol
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoEvents;
@@ -25,19 +23,10 @@ public class ServiceControllerFactory
     _context = context;
   }
 
-  public ServiceController createServiceController()
+  public ServiceController createServiceController(ServiceState serviceState, IChangedNotifier changedNotifier)
   {
-    GuiStateHinter guiStateHinter = new GuiStateHinter();
-    ServiceState serviceState = new ServiceState(guiStateHinter);
-
     ISpheroController spheroController = new SpheroController(_context);
     IMovementCalculator mMovementCalculator = new MovementCalculator();
-
-    INotificationUpdater serviceControllerStatusChangedHandler = new NotificationUpdater(
-        _context,
-        serviceState);
-
-    IChangedNotifier changedNotifier = new ChangedNotifier(serviceControllerStatusChangedHandler);
 
     IMyoEvents myoEventHandler = new MyoEventHandler(
         serviceState,
@@ -60,7 +49,6 @@ public class ServiceControllerFactory
         spheroController,
         changedNotifier,
         serviceState,
-        serviceControllerStatusChangedHandler,
         spheroEventHandler,
         serviceControllerBroadcastReceiver);
   }
