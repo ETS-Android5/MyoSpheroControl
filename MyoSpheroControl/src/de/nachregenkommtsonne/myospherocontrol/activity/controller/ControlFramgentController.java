@@ -10,14 +10,14 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundServi
 
 public class ControlFramgentController
 {
-  private ViewAccessor _viewAccessor;
+  private IViewAccessor _viewAccessor;
   private BackgroundServiceConnection _myServiceConnection;
 
-  public ControlFramgentController(ViewAccessor viewAccessor, BackgroundServiceConnection myServiceConnection)
+  public ControlFramgentController(IViewAccessor viewAccessor, BackgroundServiceConnection myServiceConnection)
   {
     _viewAccessor = viewAccessor;
     _myServiceConnection = myServiceConnection;
-}
+  }
 
   public void startService()
   {
@@ -42,10 +42,8 @@ public class ControlFramgentController
     activity.unbindService(_myServiceConnection);
   }
   
-
   public void startStopClick(View v)
   {
-   
     _myServiceConnection.get_myBinder().buttonClicked();
   }
 

@@ -1,22 +1,24 @@
 package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import android.app.Activity;
+import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class UiOnUiThreadUpdater
 {
-  private ControlFragmentUpdateUI _controlFragmentUpdateUI;
-  private ViewAccessor _viewAccessor;
+  private IViewAccessor _viewAccessor;
+  private IGuiStateHinter _guiStateHinter;
   
-  public UiOnUiThreadUpdater(ControlFragmentUpdateUI controlFragmentUpdateUI, ViewAccessor viewAccessor)
+  public UiOnUiThreadUpdater(
+		  IViewAccessor viewAccessor,
+		  IGuiStateHinter guiStateHinter)
   {
-    _controlFragmentUpdateUI = controlFragmentUpdateUI;
     _viewAccessor = viewAccessor;
+    _guiStateHinter = guiStateHinter;
   }
 
   public void updateUiOnUiThread(ServiceState state)
   {
-
     Activity activity = _viewAccessor.getActivity();
 
     if (activity == null)
@@ -25,9 +27,8 @@ public class UiOnUiThreadUpdater
     //TODO: create factory
     UiUpdater uiUpdater = new UiUpdater(
         state,
-        _controlFragmentUpdateUI,
-        _viewAccessor.getView(),
-        activity);
+        _viewAccessor,
+        _guiStateHinter);
     
     activity.runOnUiThread(uiUpdater);
   }

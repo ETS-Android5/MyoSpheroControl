@@ -16,10 +16,9 @@ public class ControlFramgentControllerFactory
   public ControlFramgentController create()
   {
     IGuiStateHinter guiStateHinter = new GuiStateHinter();
-    ViewAccessor viewAccessor = new ViewAccessor(_fragment);
+    IViewAccessor viewAccessor = new ViewAccessor(_fragment);
 
-    ControlFragmentUpdateUI controlFragmentUpdateUI = new ControlFragmentUpdateUI(viewAccessor, guiStateHinter);
-    UiOnUiThreadUpdater uiOnUiThreadUpdater = new UiOnUiThreadUpdater(controlFragmentUpdateUI, viewAccessor);
+    UiOnUiThreadUpdater uiOnUiThreadUpdater = new UiOnUiThreadUpdater(viewAccessor, guiStateHinter);
 
     BackgroundServiceConnection myServiceConnection = new BackgroundServiceConnection(uiOnUiThreadUpdater);
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.view.View;
 
-public class ViewAccessor
+public class ViewAccessor implements IViewAccessor
 {
   Fragment _fragment;
 
