@@ -1,15 +1,15 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.IServiceControllerStatusChangedHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.INotificationUpdater;
 
 public class ChangedNotifier implements IChangedNotifier
 {
-  private IServiceControllerStatusChangedHandler _serviceControllerNotificationUpdater;
+  private INotificationUpdater _notificationUpdater;
   private ServiceBinder _binder;
 
-  public ChangedNotifier(IServiceControllerStatusChangedHandler serviceControllerNotificationUpdater)
+  public ChangedNotifier(INotificationUpdater notificationUpdater)
   {
-    _serviceControllerNotificationUpdater = serviceControllerNotificationUpdater;
+    _notificationUpdater = notificationUpdater;
   }
 
   public void setServiceBinder(ServiceBinder binder)
@@ -22,6 +22,6 @@ public class ChangedNotifier implements IChangedNotifier
     if (_binder != null)
       _binder.onChanged();
 
-    _serviceControllerNotificationUpdater.updateNotification();
+    _notificationUpdater.updateNotification();
   }
 }

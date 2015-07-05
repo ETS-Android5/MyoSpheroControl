@@ -17,7 +17,7 @@ public class ServiceController implements IServiceController
   private ISpheroController _spheroController;
   private ServiceState _state;
   private IChangedNotifier _changedNotifier;
-  private IServiceControllerStatusChangedHandler _serviceControllerStatusChangedHandler;
+  private INotificationUpdater _serviceControllerStatusChangedHandler;
   private BroadcastReceiver _serviceControllerBroadcastReceiver;
   private ServiceBinder _binder;
 
@@ -26,7 +26,7 @@ public class ServiceController implements IServiceController
       ISpheroController spheroController,
       IChangedNotifier changedNotifier,
       ServiceState serviceState,
-      IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler,
+      INotificationUpdater serviceControllerStatusChangedHandler,
       ISpheroEvents eventListener,
       BroadcastReceiver serviceControllerBroadcastReceiver)
   {

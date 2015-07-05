@@ -24,28 +24,24 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   }
 
   // Called by Activity
-  @Override
 	public void setChangedListener(IBinderEvents binderEvents)
   {
     _binderEvents = binderEvents;
   }
 
   // Called by Activity
-  @Override
 	public ServiceState getState()
   {
     return _serviceState;
   }
 
   // Called by Activity
-  @Override
 	public void buttonClicked()
   {
     _serviceController.buttonClicked();
   }
 
   // Called by Activity
-  @Override
 	public void unlinkClicked()
   {
     _serviceController.unlinkClicked();

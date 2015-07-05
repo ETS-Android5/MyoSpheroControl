@@ -30,6 +30,7 @@ public class UiUpdater implements Runnable
     _guiStateHinter = guiStateHinter;
   }
 
+  //TODO: refactor
   @SuppressWarnings("deprecation")
   public void run()
   {

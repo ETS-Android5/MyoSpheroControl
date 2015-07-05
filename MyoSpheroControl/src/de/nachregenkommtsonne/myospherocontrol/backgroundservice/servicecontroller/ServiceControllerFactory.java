@@ -33,7 +33,7 @@ public class ServiceControllerFactory
     ISpheroController spheroController = new SpheroController(_context);
     IMovementCalculator mMovementCalculator = new MovementCalculator();
 
-    IServiceControllerStatusChangedHandler serviceControllerStatusChangedHandler = new ServiceControllerNotificationUpdater(
+    INotificationUpdater serviceControllerStatusChangedHandler = new NotificationUpdater(
         _context,
         serviceState);
 

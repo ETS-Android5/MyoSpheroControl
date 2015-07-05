@@ -8,12 +8,12 @@ import android.content.Intent;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
 
-public class ServiceControllerNotificationUpdater implements IServiceControllerStatusChangedHandler
+public class NotificationUpdater implements INotificationUpdater
 {
   private Context _context;
   private ServiceState _state;
 
-  public ServiceControllerNotificationUpdater(Context context, ServiceState state)
+  public NotificationUpdater(Context context, ServiceState state)
   {
     _context = context;
     _state = state;

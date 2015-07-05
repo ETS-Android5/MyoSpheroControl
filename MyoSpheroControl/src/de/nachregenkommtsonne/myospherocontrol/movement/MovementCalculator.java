@@ -19,6 +19,7 @@ public class MovementCalculator implements IMovementCalculator
     _resetRoll = true;
   }
 
+  //TODO: refactor
   public MovementResult calculate(Quaternion rotation, boolean towardElbow)
   {
     float roll = (float) Math.toDegrees(Quaternion.roll(rotation));
