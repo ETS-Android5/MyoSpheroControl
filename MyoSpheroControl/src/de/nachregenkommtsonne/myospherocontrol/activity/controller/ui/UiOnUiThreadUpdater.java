@@ -3,7 +3,7 @@ package de.nachregenkommtsonne.myospherocontrol.activity.controller.ui;
 import android.app.Activity;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
-public class UiOnUiThreadUpdater
+public class UiOnUiThreadUpdater implements IUiOnUiThreadUpdater
 {
 	private IUiUpdaterFactory _uiUpdaterFactory;
   private IViewAccessor _viewAccessor;
@@ -16,7 +16,7 @@ public class UiOnUiThreadUpdater
     _viewAccessor = viewAccessor;
   }
 
-  public void updateUiOnUiThread(ServiceState state)
+	public void updateUiOnUiThread(ServiceState state)
   {
     Activity activity = _viewAccessor.getActivity();
 

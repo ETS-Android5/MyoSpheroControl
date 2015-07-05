@@ -4,7 +4,7 @@ import android.os.Binder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
-public class ServiceBinder extends Binder
+public class ServiceBinder extends Binder implements IServiceBinderForUI
 {
   private IBinderEvents _binderEvents;
   private ServiceController _serviceController;
@@ -24,25 +24,29 @@ public class ServiceBinder extends Binder
   }
 
   // Called by Activity
-  public void setChangedListener(IBinderEvents binderEvents)
+  @Override
+	public void setChangedListener(IBinderEvents binderEvents)
   {
     _binderEvents = binderEvents;
   }
 
   // Called by Activity
-  public ServiceState getState()
+  @Override
+	public ServiceState getState()
   {
     return _serviceState;
   }
 
   // Called by Activity
-  public void buttonClicked()
+  @Override
+	public void buttonClicked()
   {
     _serviceController.buttonClicked();
   }
 
   // Called by Activity
-  public void unlinkClicked()
+  @Override
+	public void unlinkClicked()
   {
     _serviceController.unlinkClicked();
   }
