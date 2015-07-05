@@ -30,13 +30,13 @@ public class UiUpdater implements Runnable
     _guiStateHinter = guiStateHinter;
   }
 
+  @SuppressWarnings("deprecation")
   public void run()
   {
-    //_controlFragmentUpdateUI.updateUI(_state,_view, _activity);
-	View view = _viewAccessor.getView(); 
-	Activity activity = _viewAccessor.getActivity();
+		View view = _viewAccessor.getView(); 
+		Activity activity = _viewAccessor.getActivity();
 	  
-    ImageView myoLinkedIcon = (ImageView) view.findViewById(R.id.myoLinkedIcon);
+		ImageView myoLinkedIcon = (ImageView) view.findViewById(R.id.myoLinkedIcon);
     ImageView myoConnectedIcon = (ImageView) view.findViewById(R.id.myoConnectedIcon);
     ImageView myoSyncronizedIcon = (ImageView) view.findViewById(R.id.myoSyncronizedIcon);
     ImageView spheroDiscoveredIcon = (ImageView) view.findViewById(R.id.spheroDiscoveredIcon);
