@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
+import de.nachregenkommtsonne.myospherocontrol.activity.controller.ui.IViewAccessor;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
 
 public class ControlFramgentController implements IControlFramgentController

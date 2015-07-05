@@ -3,6 +3,7 @@ package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.activity.controller.ui.UiOnUiThreadUpdater;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBinderEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;

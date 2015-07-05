@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity.controller;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller.ui;
 
 import android.app.Activity;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
