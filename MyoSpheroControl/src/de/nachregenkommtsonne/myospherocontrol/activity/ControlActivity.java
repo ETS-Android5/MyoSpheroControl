@@ -16,12 +16,18 @@ public class ControlActivity extends Activity
     
     if (savedInstanceState == null)
     {
-      FragmentManager fragmentManager = getFragmentManager();
-      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      
-      ControlFragment controlFragment = new ControlFragment();
-      fragmentTransaction.add(R.id.container, controlFragment);
-      fragmentTransaction.commit();
+      showControlFragment();
     }
+  }
+
+  public void showControlFragment()
+  {
+    FragmentManager fragmentManager = getFragmentManager();
+    ControlFragment controlFragment = new ControlFragment();
+    
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    
+    fragmentTransaction.add(R.id.container, controlFragment);
+    fragmentTransaction.commit();
   }
 }

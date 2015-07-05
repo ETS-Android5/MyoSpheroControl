@@ -1,37 +1,27 @@
 package de.nachregenkommtsonne.myospherocontrol.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
+import de.nachregenkommtsonne.myospherocontrol.activity.controller.ControlFramgentController;
+import de.nachregenkommtsonne.myospherocontrol.activity.controller.ControlFramgentControllerFactory;
 
 public class ControlFragment extends Fragment
 {
-  private IGuiStateHinter _guiStateHinter;
-  private BackgroundServiceConnection _myServiceConnection;
-  private ViewAccessor _viewAccessor;
+  private ControlFramgentController _controlFramgentController;
 
   public ControlFragment()
   {
-    _guiStateHinter = new GuiStateHinter();
-    _viewAccessor = new ViewAccessor(this);
-
-    ControlFragmentUpdateUI controlFragmentUpdateUI = new ControlFragmentUpdateUI(_viewAccessor, _guiStateHinter);
-    UiOnUiThreadUpdater uiOnUiThreadUpdater = new UiOnUiThreadUpdater(controlFragmentUpdateUI, _viewAccessor);
-
-    _myServiceConnection = new BackgroundServiceConnection(uiOnUiThreadUpdater);
+    ControlFramgentControllerFactory controlFramgentControllerFactory = new ControlFramgentControllerFactory();
+    _controlFramgentController = controlFramgentControllerFactory.create(this);
   }
 
-  // TODO: extract controller
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -39,8 +29,21 @@ public class ControlFragment extends Fragment
     Button startStopButton = (Button) rootView.findViewById(R.id.startStopButton);
     TextView linkUnlinkButton = (TextView) rootView.findViewById(R.id.linkUnlinkButton);
 
-    startStopButton.setOnClickListener(new StartStopClickListener(_myServiceConnection));
-    linkUnlinkButton.setOnClickListener(new LinkUnlinkClickListener(_viewAccessor, _myServiceConnection));
+    startStopButton.setOnClickListener(new OnClickListener()
+    {
+      public void onClick(View v)
+      {
+        _controlFramgentController.startStopClick(v);
+      }
+    });
+
+    linkUnlinkButton.setOnClickListener(new OnClickListener()
+    {
+      public void onClick(View v)
+      {
+        _controlFramgentController.linkUnlinkClick(v);
+      }
+    });
 
     return rootView;
   }
@@ -49,27 +52,21 @@ public class ControlFragment extends Fragment
   {
     super.onCreate(savedInstanceState);
 
-    Activity activity = getActivity();
-
-    Intent intent = new Intent(activity, BackgroundService.class);
-    activity.startService(intent);
+    _controlFramgentController.startService();
   }
 
   public void onResume()
   {
     super.onResume();
 
-    Activity activity = getActivity();
-
-    Intent intent = new Intent(activity, BackgroundService.class);
-    activity.bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
+    _controlFramgentController.bindService();
   }
 
   public void onPause()
   {
     super.onPause();
 
-    // TODO: stop service when not running here!
-    getActivity().unbindService(_myServiceConnection);
+    _controlFramgentController.unbindService();
   }
+
 }
