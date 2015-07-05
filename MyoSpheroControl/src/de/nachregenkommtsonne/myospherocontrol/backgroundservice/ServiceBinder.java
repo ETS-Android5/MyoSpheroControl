@@ -2,7 +2,6 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.os.Binder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
 
 public class ServiceBinder extends Binder implements IServiceBinderForUI
 {
@@ -10,12 +9,16 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   private ServiceController _serviceController;
   private ServiceState _serviceState;
 
-  public ServiceBinder(ServiceController serviceController, ServiceState serviceState)
+  public ServiceBinder(ServiceState serviceState)
   {
-    _serviceController = serviceController;
     _serviceState = serviceState;
   }
 
+  public void setServiceController(ServiceController serviceController)
+  {
+    _serviceController = serviceController;
+  }
+  
   // Called by BackgroundService
   public void onChanged()
   {

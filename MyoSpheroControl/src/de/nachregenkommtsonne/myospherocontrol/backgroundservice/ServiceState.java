@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;

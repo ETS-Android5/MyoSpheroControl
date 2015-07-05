@@ -3,6 +3,8 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontrol
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;
@@ -44,12 +46,19 @@ public class ServiceControllerFactory
         myoController,
         spheroController);
 
-    return new ServiceController(
+    ServiceBinder serviceBinder = new ServiceBinder(serviceState);
+    
+    ServiceController serviceController =  new ServiceController(
         myoController,
         spheroController,
         changedNotifier,
         serviceState,
         spheroEventHandler,
-        serviceControllerBroadcastReceiver);
+        serviceControllerBroadcastReceiver,
+        serviceBinder);
+    
+    serviceBinder.setServiceController(serviceController);
+    
+    return serviceController;
   }
 }

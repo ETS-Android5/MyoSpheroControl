@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
@@ -26,7 +27,8 @@ public class ServiceController implements IServiceController
       IChangedNotifier changedNotifier,
       ServiceState serviceState,
       ISpheroEvents eventListener,
-      BroadcastReceiver serviceControllerBroadcastReceiver)
+      BroadcastReceiver serviceControllerBroadcastReceiver,
+      ServiceBinder binder)
   {
     _myoController = myoController;
     _spheroController = spheroController;
@@ -35,7 +37,7 @@ public class ServiceController implements IServiceController
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
     _spheroController.setEventListener(eventListener);
 
-    _binder = new ServiceBinder(this, serviceState);
+    _binder = binder;
     _changedNotifier.setServiceBinder(_binder);
   }
 
