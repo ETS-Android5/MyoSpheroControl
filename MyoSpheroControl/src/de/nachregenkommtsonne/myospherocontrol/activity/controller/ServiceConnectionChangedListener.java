@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBinderEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;

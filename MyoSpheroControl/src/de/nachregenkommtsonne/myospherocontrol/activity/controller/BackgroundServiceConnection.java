@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -17,6 +17,7 @@ public class BackgroundServiceConnection implements ServiceConnection
 
   public void onServiceConnected(ComponentName name, IBinder service)
   {
+    //TODO: create factory
     ServiceConnectionChangedListener binderEvents = new ServiceConnectionChangedListener(_uiOnUiThreadUpdater, this);
 
     _myBinder = (ServiceBinder) service;

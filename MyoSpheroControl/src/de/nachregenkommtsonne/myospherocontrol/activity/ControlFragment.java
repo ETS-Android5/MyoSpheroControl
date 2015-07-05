@@ -18,8 +18,8 @@ public class ControlFragment extends Fragment
 
   public ControlFragment()
   {
-    ControlFramgentControllerFactory controlFramgentControllerFactory = new ControlFramgentControllerFactory();
-    _controlFramgentController = controlFramgentControllerFactory.create(this);
+    ControlFramgentControllerFactory controlFramgentControllerFactory = new ControlFramgentControllerFactory(this);
+    _controlFramgentController = controlFramgentControllerFactory.create();
   }
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

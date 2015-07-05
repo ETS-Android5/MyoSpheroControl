@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import android.app.Activity;
 import android.view.View;

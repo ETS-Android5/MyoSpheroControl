@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import android.app.Activity;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceState;
@@ -22,6 +22,7 @@ public class UiOnUiThreadUpdater
     if (activity == null)
       return;
 
+    //TODO: create factory
     UiUpdater uiUpdater = new UiUpdater(
         state,
         _controlFragmentUpdateUI,

@@ -3,22 +3,20 @@ package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 import android.app.Fragment;
 import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.activity.BackgroundServiceConnection;
-import de.nachregenkommtsonne.myospherocontrol.activity.ControlFragmentUpdateUI;
-import de.nachregenkommtsonne.myospherocontrol.activity.UiOnUiThreadUpdater;
-import de.nachregenkommtsonne.myospherocontrol.activity.ViewAccessor;
 
 public class ControlFramgentControllerFactory
 {
-  public ControlFramgentControllerFactory()
+  Fragment _fragment;
+  
+  public ControlFramgentControllerFactory(Fragment fragment)
   {
-
+    _fragment = fragment;
   }
 
-  public ControlFramgentController create(Fragment fragment)
+  public ControlFramgentController create()
   {
     IGuiStateHinter guiStateHinter = new GuiStateHinter();
-    ViewAccessor viewAccessor = new ViewAccessor(fragment);
+    ViewAccessor viewAccessor = new ViewAccessor(_fragment);
 
     ControlFragmentUpdateUI controlFragmentUpdateUI = new ControlFragmentUpdateUI(viewAccessor, guiStateHinter);
     UiOnUiThreadUpdater uiOnUiThreadUpdater = new UiOnUiThreadUpdater(controlFragmentUpdateUI, viewAccessor);

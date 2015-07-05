@@ -1,28 +1,22 @@
 package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
+import com.thalmic.myo.scanner.ScanActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import de.nachregenkommtsonne.myospherocontrol.activity.BackgroundServiceConnection;
 import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
-import de.nachregenkommtsonne.myospherocontrol.activity.LinkUnlinkClickListener;
-import de.nachregenkommtsonne.myospherocontrol.activity.StartStopClickListener;
-import de.nachregenkommtsonne.myospherocontrol.activity.ViewAccessor;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BackgroundService;
 
 public class ControlFramgentController
 {
   private ViewAccessor _viewAccessor;
   private BackgroundServiceConnection _myServiceConnection;
-  private StartStopClickListener _startStopClickListener;
-  private LinkUnlinkClickListener _linkUnlinkClickListener;
 
   public ControlFramgentController(ViewAccessor viewAccessor, BackgroundServiceConnection myServiceConnection)
   {
     _viewAccessor = viewAccessor;
     _myServiceConnection = myServiceConnection;
-    _startStopClickListener = new StartStopClickListener(_myServiceConnection);
-    _linkUnlinkClickListener = new LinkUnlinkClickListener(_viewAccessor, _myServiceConnection);
 }
 
   public void startService()
@@ -51,11 +45,22 @@ public class ControlFramgentController
 
   public void startStopClick(View v)
   {
-    _startStopClickListener.onClick(v);
+   
+    _myServiceConnection.get_myBinder().buttonClicked();
   }
 
   public void linkUnlinkClick(View v)
   {
-    _linkUnlinkClickListener.onClick(v);
+    if (!_myServiceConnection.get_myBinder().getState().isRunning())
+    {
+      _myServiceConnection.get_myBinder().unlinkClicked();
+    }
+    else
+    {
+      Activity activity = _viewAccessor.getActivity();
+      Intent intent = new Intent(activity, ScanActivity.class);
+
+      activity.startActivity(intent);
+    }
   }
 }

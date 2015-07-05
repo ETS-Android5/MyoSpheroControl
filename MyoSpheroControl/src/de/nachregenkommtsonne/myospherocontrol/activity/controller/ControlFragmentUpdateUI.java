@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.activity;
+package de.nachregenkommtsonne.myospherocontrol.activity.controller;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -26,7 +26,7 @@ public class ControlFragmentUpdateUI
   }
   
   @SuppressWarnings("deprecation")
-  void updateUI(ServiceState serviceState, View view, Activity activity)
+  public void updateUI(ServiceState serviceState, View view, Activity activity)
   {
     ImageView myoLinkedIcon = (ImageView) view.findViewById(R.id.myoLinkedIcon);
     ImageView myoConnectedIcon = (ImageView) view.findViewById(R.id.myoConnectedIcon);
