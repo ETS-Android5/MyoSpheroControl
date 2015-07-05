@@ -1,23 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.IBinder;
-import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoEvents;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoEventHandler;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroEvents;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroEventHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerFactory;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.SettingsEditor;
-import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
-import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
 public class BackgroundService extends Service
 {
@@ -68,7 +55,7 @@ public class BackgroundService extends Service
   {
     super.onCreate();
 
-    _serviceController.start(this);
+    _serviceController.start();
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)

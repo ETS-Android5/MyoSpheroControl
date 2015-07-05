@@ -20,6 +20,7 @@ public class ServiceController implements IServiceController
   private IChangedNotifier _changedNotifier;
   private BroadcastReceiver _serviceControllerBroadcastReceiver;
   private ServiceBinder _serviceBinder;
+  private Context _context;
   
   public ServiceController(
       IMyoController myoController,
@@ -28,16 +29,19 @@ public class ServiceController implements IServiceController
       ServiceState serviceState,
       ISpheroEvents eventListener,
       BroadcastReceiver serviceControllerBroadcastReceiver,
-      ServiceBinder serviceBinder)
+      ServiceBinder serviceBinder,
+      Context context)
   {
     _myoController = myoController;
     _spheroController = spheroController;
     _changedNotifier = changedNotifier;
     _state = serviceState;
     _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
+    _serviceBinder = serviceBinder;
+    _context = context;
+    
     _spheroController.setEventListener(eventListener);
     
-    _serviceBinder = serviceBinder;
 		_serviceBinder.setServiceController(this);
   }
 
@@ -46,14 +50,14 @@ public class ServiceController implements IServiceController
 		return _serviceBinder;
 	}
 
-	public void start(Context context)
+	public void start()
   {
-    _spheroController.onCreate(context);
-    _myoController.onCreate(context);
-    _state.onCreate(context);
+    _spheroController.onCreate(_context);
+    _myoController.onCreate(_context);
+    _state.onCreate(_context);
     
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
+    _context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
   }
 
   public void buttonClicked()

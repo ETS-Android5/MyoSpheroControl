@@ -66,6 +66,7 @@ public class ServiceControllerFactory
         serviceState,
         spheroEventHandler,
         serviceControllerBroadcastReceiver,
-        serviceBinder);
+        serviceBinder, 
+        _context);
 	}
 }
