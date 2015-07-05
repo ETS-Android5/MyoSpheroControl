@@ -13,7 +13,7 @@ public class ControlFramgentControllerFactory
     _fragment = fragment;
   }
 
-  public ControlFramgentController create()
+  public IControlFramgentController create()
   {
     IGuiStateHinter guiStateHinter = new GuiStateHinter();
     IViewAccessor viewAccessor = new ViewAccessor(_fragment);

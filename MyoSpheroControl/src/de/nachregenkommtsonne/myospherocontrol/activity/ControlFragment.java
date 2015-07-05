@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.activity.controller.ControlFramgentController;
 import de.nachregenkommtsonne.myospherocontrol.activity.controller.ControlFramgentControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.activity.controller.IControlFramgentController;
 
 public class ControlFragment extends Fragment
 {
-  private ControlFramgentController _controlFramgentController;
+  private IControlFramgentController _controlFramgentController;
 
   public ControlFragment()
   {
