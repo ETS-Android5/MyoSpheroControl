@@ -51,16 +51,6 @@ public class ServiceController implements IServiceController
     context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
   }
 
-  public ServiceBinder get_binder()
-  {
-    return _binder;
-  }
-
-  public ServiceState get_state()
-  {
-    return _state;
-  }
-
   public void buttonClicked()
   {
     if (_state.isRunning())
