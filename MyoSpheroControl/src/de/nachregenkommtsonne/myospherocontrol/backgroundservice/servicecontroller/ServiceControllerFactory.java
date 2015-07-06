@@ -18,9 +18,9 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoEventHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.SettingsEditor;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroEvents;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroEventHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroManager;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 
@@ -44,9 +44,9 @@ public class ServiceControllerFactory
     IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
     
     // Sphero Factory
-    ISpheroController spheroController = new SpheroController(_context);
-    ISpheroEvents spheroEventHandler = new SpheroEventHandler(changedNotifier, spheroController, serviceState);
-    spheroController.setEventListener(spheroEventHandler);
+    SpheroManager spheroManager = new SpheroManager();
+    SpheroEventHandler spheroEventHandler = new SpheroEventHandler(changedNotifier, serviceState, spheroManager);
+    ISpheroController spheroController = new SpheroController(_context, spheroEventHandler, spheroManager);
 
     // Myo Factory
 		IMovementCalculator mMovementCalculator = new MovementCalculator();

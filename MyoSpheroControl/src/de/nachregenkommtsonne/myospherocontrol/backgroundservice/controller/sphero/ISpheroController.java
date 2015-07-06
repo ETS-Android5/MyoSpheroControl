@@ -12,9 +12,7 @@ public interface ISpheroController
 
   void stop();
 
-  public abstract void setEventListener(ISpheroEvents eventListener);
-
-  public abstract void stopForBluetooth();
+  void stopForBluetooth();
 
   void onCreate();
 }

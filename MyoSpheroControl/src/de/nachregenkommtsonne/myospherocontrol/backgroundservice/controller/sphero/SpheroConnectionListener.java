@@ -6,10 +6,12 @@ import orbotix.sphero.ConnectionListener;
 public class SpheroConnectionListener implements ConnectionListener
 {
   private SpheroController _spheroController;
+  private SpheroManager _spheroManager;
 
-  public SpheroConnectionListener(SpheroController spheroController)
+  public SpheroConnectionListener(SpheroController spheroController, SpheroManager spheroManager)
   {
     _spheroController = spheroController;
+    _spheroManager = spheroManager;
   }
 
   public void onDisconnected(Robot arg0)
@@ -18,7 +20,7 @@ public class SpheroConnectionListener implements ConnectionListener
     if (!_spheroController.is_running())
       return;
 
-    if (_spheroController.get_sphero() == null)
+    if (_spheroManager.get_sphero() == null)
       _spheroController.startDiscovery();
     else
     {
@@ -32,7 +34,7 @@ public class SpheroConnectionListener implements ConnectionListener
     if (!_spheroController.is_running())
       return;
 
-    if (_spheroController.get_sphero() == null)
+    if (_spheroManager.get_sphero() == null)
       _spheroController.startDiscovery();
     else
     {

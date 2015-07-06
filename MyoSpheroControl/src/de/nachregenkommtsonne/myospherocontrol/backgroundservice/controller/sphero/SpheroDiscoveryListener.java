@@ -8,15 +8,18 @@ import orbotix.sphero.Sphero;
 public class SpheroDiscoveryListener implements DiscoveryListener
 {
   private SpheroController _spheroController;
+  private SpheroManager _spheroManager;
 
-  public SpheroDiscoveryListener(SpheroController spheroController)
+  public SpheroDiscoveryListener(SpheroController spheroController, SpheroManager spheroManager)
   {
     _spheroController = spheroController;
+    _spheroManager = spheroManager;
   }
 
   public void onFound(List<Sphero> spheros)
   {
-    _spheroController.set_sphero(spheros.iterator().next());
+  	_spheroManager.setSphero(spheros.iterator().next());
+    //_spheroController.set_sphero(spheros.iterator().next());
 
     _spheroController.startConnecting();
   }

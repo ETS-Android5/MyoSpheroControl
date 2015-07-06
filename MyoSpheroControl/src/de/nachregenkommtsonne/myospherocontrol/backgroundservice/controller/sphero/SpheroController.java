@@ -11,29 +11,26 @@ public class SpheroController implements ISpheroController
 {
   private Context _context;
   private ISpheroEvents _eventListener;
-  private Sphero _sphero;
   private boolean _running;
   private boolean _connected;
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
-
-  public SpheroController(Context context)
+  private SpheroManager _spheroManager;
+  
+  public SpheroController(Context context, ISpheroEvents eventListener, SpheroManager spheroManager)
   {
-    _connectionListener = new SpheroConnectionListener(this);
-    _discoveryListener = new SpheroDiscoveryListener(this);
+    _connectionListener = new SpheroConnectionListener(this, spheroManager);
+    _discoveryListener = new SpheroDiscoveryListener(this, spheroManager);
     _context = context;
-  }
+    _eventListener = eventListener;
+    _spheroManager = spheroManager;
+ }
 
   public void onCreate()
   {
     RobotProvider robotProvider = getRobotProvider();
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
-  }
-
-  public Sphero get_sphero()
-  {
-    return _sphero;
   }
 
   public boolean is_running()
@@ -46,19 +43,9 @@ public class SpheroController implements ISpheroController
     return _connected;
   }
 
-  public void set_sphero(Sphero _sphero)
+  public void set_connected(boolean connected)
   {
-    this._sphero = _sphero;
-  }
-
-  public void set_connected(boolean _connected)
-  {
-    this._connected = _connected;
-  }
-
-  public void setEventListener(ISpheroEvents eventListener)
-  {
-    _eventListener = eventListener;
+    _connected = connected;
   }
 
   private RobotProvider getRobotProvider()
@@ -73,25 +60,32 @@ public class SpheroController implements ISpheroController
 
   public void move(float direction, float speed)
   {
-    if (!_connected && _sphero != null && _sphero.isConnected())
+  	Sphero sphero = _spheroManager.get_sphero();
+  	
+    if (!_connected && sphero != null && sphero.isConnected())
       _connected = true;
 
     // if (_connected)
-    if (_sphero != null && _sphero.isConnected())
-      _sphero.drive(direction, speed);
+    if (sphero != null && sphero.isConnected())
+      sphero.drive(direction, speed);
   }
 
+  @Deprecated
   public void changeColor(int red, int green, int blue)
   {
-    if (_sphero != null && _sphero.isConnected())
-      _sphero.setColor(red, green, blue);
+  	Sphero sphero = _spheroManager.get_sphero();
+
+  	if (sphero != null && sphero.isConnected())
+      sphero.setColor(red, green, blue);
   }
 
   public void halt()
   {
-    if (_sphero != null && _sphero.isConnected())
+  	Sphero sphero = _spheroManager.get_sphero();
+
+    if (sphero != null && sphero.isConnected())
       // if (_connected)
-      _sphero.stop();
+      sphero.stop();
   }
 
   public void start()
@@ -110,8 +104,10 @@ public class SpheroController implements ISpheroController
 
   public void startConnecting()
   {
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.connect(_sphero);
+  	Sphero sphero = _spheroManager.get_sphero();
+
+  	RobotProvider robotProvider = getRobotProvider();
+    robotProvider.connect(sphero);
     onSpheroStateChanged(SpheroStatus.connecting);
   }
 
