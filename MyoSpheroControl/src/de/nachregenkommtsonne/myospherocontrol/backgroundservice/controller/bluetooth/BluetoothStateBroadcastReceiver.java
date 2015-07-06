@@ -4,8 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBluetoothStateHandler;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 
 public class BluetoothStateBroadcastReceiver extends BroadcastReceiver
 {

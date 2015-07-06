@@ -1,6 +1,6 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.notification.INotificationUpdater;
 
 
 

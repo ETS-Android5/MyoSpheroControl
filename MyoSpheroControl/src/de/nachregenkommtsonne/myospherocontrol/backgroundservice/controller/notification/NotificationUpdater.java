@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
