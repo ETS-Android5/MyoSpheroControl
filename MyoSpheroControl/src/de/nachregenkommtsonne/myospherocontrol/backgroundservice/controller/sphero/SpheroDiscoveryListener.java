@@ -19,8 +19,6 @@ public class SpheroDiscoveryListener implements DiscoveryListener
   public void onFound(List<Sphero> spheros)
   {
   	_spheroManager.setSphero(spheros.iterator().next());
-    //_spheroController.set_sphero(spheros.iterator().next());
-
     _spheroController.startConnecting();
   }
 

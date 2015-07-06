@@ -4,18 +4,22 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 public class ChangedNotifier implements IChangedNotifier
 {
   private INotificationUpdater _notificationUpdater;
-  private ServiceBinder _binder;
+  private ServiceBinder _serviceBinder;
 
-  public ChangedNotifier(INotificationUpdater notificationUpdater, ServiceBinder binder)
+  public ChangedNotifier(INotificationUpdater notificationUpdater)
   {
     _notificationUpdater = notificationUpdater;
-    _binder = binder;
+  }
+  
+  public void setServiceBinder(ServiceBinder serviceBinder)
+  {
+  	_serviceBinder = serviceBinder;
   }
 
   public void onChanged()
   {
-    if (_binder != null)
-      _binder.onChanged();
+    if (_serviceBinder != null)
+      _serviceBinder.onChanged();
 
     _notificationUpdater.updateNotification();
   }

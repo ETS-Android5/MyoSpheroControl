@@ -9,16 +9,12 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   private ServiceState _serviceState;
   private ButtonClickHandler _buttonClickHandler;
   
-  public ServiceBinder(ServiceState serviceState)
+  public ServiceBinder(ServiceState serviceState, ButtonClickHandler buttonClickHandler)
   {
     _serviceState = serviceState;
+    _buttonClickHandler = buttonClickHandler;		
   }
 
-	public void setButtonClickHandler(ButtonClickHandler buttonClickHandler)
-	{
-		_buttonClickHandler = buttonClickHandler;		
-	}
-	
   // Called by BackgroundService
   public void onChanged()
   {

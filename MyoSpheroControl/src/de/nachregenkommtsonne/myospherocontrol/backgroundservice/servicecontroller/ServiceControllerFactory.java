@@ -7,7 +7,6 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BluetoothStateB
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.BluetoothStateHandler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBluetoothStateHandler;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.INotificationUpdater;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.NotificationUpdater;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceBinder;
@@ -39,9 +38,8 @@ public class ServiceControllerFactory
 		ServiceState serviceState = new ServiceState(guiStateHinter);
 
 		// Connectivity
-    ServiceBinder serviceBinder = new ServiceBinder(serviceState);
     INotificationUpdater notificationUpdater = new NotificationUpdater(_context, serviceState);
-    IChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
+    ChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater);
     
     // Sphero Factory
     SpheroManager spheroManager = new SpheroManager();
@@ -66,7 +64,9 @@ public class ServiceControllerFactory
 
 		// Connectivity again
 		ButtonClickHandler buttonClickHandler = new ButtonClickHandler(myoController, spheroController, serviceState);
-		serviceBinder.setButtonClickHandler(buttonClickHandler);
+		ServiceBinder serviceBinder = new ServiceBinder(serviceState, buttonClickHandler);
+		changedNotifier.setServiceBinder(serviceBinder);
+		
 
 		return new ServiceController(
         myoController,

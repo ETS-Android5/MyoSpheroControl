@@ -70,7 +70,6 @@ public class SpheroController implements ISpheroController
       sphero.drive(direction, speed);
   }
 
-  @Deprecated
   public void changeColor(int red, int green, int blue)
   {
   	Sphero sphero = _spheroManager.get_sphero();
