@@ -1,6 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
@@ -11,21 +10,18 @@ public class ButtonClickHandler
 	private IMyoController _myoController;
 	private ISpheroController _spheroController;
 	private ServiceState _state;
-	private IChangedNotifier _changedNotifier;
 
   public ButtonClickHandler(
       IMyoController myoController,
       ISpheroController spheroController,
-      IChangedNotifier changedNotifier,
       ServiceState serviceState)
   {
     _myoController = myoController;
     _spheroController = spheroController;
-    _changedNotifier = changedNotifier;
     _state = serviceState;
   }
 	
-	public void buttonClicked()
+	public void startStopButtonClicked()
 	{
 		if (_state.isRunning())
 		{
@@ -34,7 +30,8 @@ public class ButtonClickHandler
 				_spheroController.stop();
 			}
 			_myoController.stop();
-		} else
+		} 
+		else
 		{
 			_myoController.start();
 			if (_state.getBluetoothState() == BluetoothState.on)
@@ -45,10 +42,9 @@ public class ButtonClickHandler
 		}
 
 		_state.setRunning(!_state.isRunning());
-		_changedNotifier.onChanged();
 	}
 
-	public void unlinkClicked()
+	public void linkUnlinkButtonClicked()
 	{
 		_myoController.connectAndUnlinkButtonClicked();
 	}

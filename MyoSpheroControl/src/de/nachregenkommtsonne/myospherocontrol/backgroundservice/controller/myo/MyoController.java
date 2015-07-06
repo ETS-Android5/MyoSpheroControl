@@ -6,6 +6,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
 import android.content.Context;
 import android.content.Intent;
 
@@ -19,13 +20,15 @@ public class MyoController implements IMyoController
   private boolean _connecting;
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
-
-  public MyoController(IMyoEvents eventListener, SettingsEditor settingsEditor, Context context)
+  private ServiceState _state;
+  
+  public MyoController(IMyoEvents eventListener, SettingsEditor settingsEditor, Context context, ServiceState state)
   {
     _settingsEditor = settingsEditor;
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
     _eventListener = eventListener;
     _context = context;
+    _state = state;
   }
 
   public void onCreate()
@@ -121,7 +124,7 @@ public class MyoController implements IMyoController
     _connecting = false;
   }
 
-  public void connectViaDialog()
+  private void connectViaDialog()
   {
     Intent intent = new Intent(_context, ScanActivity.class);
     _context.startActivity(intent);
@@ -163,7 +166,11 @@ public class MyoController implements IMyoController
     if (!_running)
     {
       _settingsEditor.deleteMac();
-      updateDisabledState();
+      _state.setMyoStatus(MyoStatus.notLinked);
+    }
+    else
+    {
+    	connectViaDialog();
     }
   }
 }

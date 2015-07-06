@@ -45,14 +45,14 @@ public class ControlFramgentController implements IControlFramgentController
   
 	public void startStopClick(View v)
   {
-    _myServiceConnection.get_myBinder().buttonClicked();
+    _myServiceConnection.get_myBinder().startStopButtonClicked();
   }
 
 	public void linkUnlinkClick(View v)
   {
     if (!_myServiceConnection.get_myBinder().getState().isRunning())
     {
-      _myServiceConnection.get_myBinder().unlinkClicked();
+      _myServiceConnection.get_myBinder().linkUnlinkButtonClicked();
     }
     else
     {

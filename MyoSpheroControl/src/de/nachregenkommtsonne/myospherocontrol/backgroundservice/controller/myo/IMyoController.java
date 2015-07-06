@@ -14,7 +14,5 @@ public interface IMyoController
 
   void connectAndUnlinkButtonClicked();
 
-  public abstract void connectViaDialog();
-
   void onCreate();
 }

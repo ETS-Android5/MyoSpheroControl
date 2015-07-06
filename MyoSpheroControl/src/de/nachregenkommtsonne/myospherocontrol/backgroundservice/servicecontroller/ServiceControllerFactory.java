@@ -56,7 +56,7 @@ public class ServiceControllerFactory
         spheroController,
         changedNotifier);
     SettingsEditor settingsEditor = new SettingsEditor();
-    IMyoController myoController = new MyoController(myoEventHandler, settingsEditor, _context);
+    IMyoController myoController = new MyoController(myoEventHandler, settingsEditor, _context, serviceState);
 
     // Bluetooth Factory
     IBluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(changedNotifier, serviceState, myoController, spheroController);
@@ -65,7 +65,7 @@ public class ServiceControllerFactory
         changedNotifier);
 
 		// Connectivity again
-		ButtonClickHandler buttonClickHandler = new ButtonClickHandler(myoController, spheroController, changedNotifier, serviceState);
+		ButtonClickHandler buttonClickHandler = new ButtonClickHandler(myoController, spheroController, serviceState);
 		serviceBinder.setButtonClickHandler(buttonClickHandler);
 
 		return new ServiceController(

@@ -8,8 +8,8 @@ public interface IServiceBinderForUI
 
 	public abstract void setChangedListener(IBinderEvents binderEvents);
 
-	public abstract void unlinkClicked();
+	public abstract void linkUnlinkButtonClicked();
 
-	public abstract void buttonClicked();
+	public abstract void startStopButtonClicked();
 
 }

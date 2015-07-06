@@ -25,7 +25,7 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
     if (_binderEvents != null)
       _binderEvents.changed();
   }
-
+  
   // Called by Activity
 	public void setChangedListener(IBinderEvents binderEvents)
   {
@@ -39,14 +39,16 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   }
 
   // Called by Activity
-	public void buttonClicked()
+	public void startStopButtonClicked()
   {
-		_buttonClickHandler.buttonClicked();
+		_buttonClickHandler.startStopButtonClicked();
+		onChanged();
   }
 
   // Called by Activity
-	public void unlinkClicked()
+	public void linkUnlinkButtonClicked()
   {
-		_buttonClickHandler.unlinkClicked();
+		_buttonClickHandler.linkUnlinkButtonClicked();
+		onChanged();
   }
 }
