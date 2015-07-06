@@ -1,7 +1,9 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
 
 import android.os.Handler;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBluetoothStateHandler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerStarter;
@@ -27,8 +29,7 @@ public class BluetoothStateHandler implements IBluetoothStateHandler
 	{
 		//TODO: create Factory x2?
 		Handler handler = new Handler();
-		ServiceControllerStarter serviceControllerStarter = new ServiceControllerStarter(_changedNotifier, _serviceState, _myoController,
-		    _spheroController);
+		ServiceControllerStarter serviceControllerStarter = new ServiceControllerStarter(_changedNotifier, _serviceState, _myoController, _spheroController);
 		handler.post(serviceControllerStarter);
 	}
 

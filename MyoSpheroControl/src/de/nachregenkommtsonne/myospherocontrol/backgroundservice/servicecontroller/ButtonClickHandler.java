@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 

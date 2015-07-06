@@ -4,9 +4,9 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.activity.controller.ui.IUiOnUiThreadUpdater;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IBinderEvents;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IServiceBinderForUI;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IBinderEvents;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IServiceBinderForUI;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 
 public class BackgroundServiceConnection implements ServiceConnection
 {

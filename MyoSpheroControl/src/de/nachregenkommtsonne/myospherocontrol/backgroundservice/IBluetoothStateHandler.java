@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothState;
 
 public interface IBluetoothStateHandler
 {

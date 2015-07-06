@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sph
 
 import orbotix.sphero.Sphero;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 
 public class SpheroEventHandler implements ISpheroEvents
 {

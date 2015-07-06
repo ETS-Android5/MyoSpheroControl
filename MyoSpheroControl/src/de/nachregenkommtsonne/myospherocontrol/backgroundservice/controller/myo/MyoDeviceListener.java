@@ -31,7 +31,8 @@ public class MyoDeviceListener extends AbstractDeviceListener
       try
       {
         _myoController.connectToLinkedMyo(_settingsEditor.getMac());
-      } catch (Exception ex)
+      }
+      catch (Exception ex)
       {
       }
     }
@@ -50,7 +51,8 @@ public class MyoDeviceListener extends AbstractDeviceListener
       try
       {
         _myoController.onMyoControlDeactivated();
-      } catch (Exception ex)
+      }
+      catch (Exception ex)
       {
       }
     }

@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 
 public interface IGuiStateHinter
 {

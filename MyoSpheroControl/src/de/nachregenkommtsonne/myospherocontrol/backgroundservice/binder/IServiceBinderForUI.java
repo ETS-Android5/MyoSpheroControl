@@ -1,4 +1,6 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
+package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
+
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 
 
 public interface IServiceBinderForUI

@@ -6,7 +6,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import android.content.Context;
 import android.content.Intent;
 
@@ -33,7 +33,6 @@ public class MyoController implements IMyoController
 
   public void onCreate()
   {
-
     Hub hub = get_hub();
 
     hub.setSendUsageData(false);
@@ -73,6 +72,7 @@ public class MyoController implements IMyoController
   {
     _running = false;
     _connecting = false;
+    
     Hub hub = get_hub();
 
     hub.removeListener(_listenerDelegate);
