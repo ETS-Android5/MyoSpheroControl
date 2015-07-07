@@ -1,6 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
 
 import android.os.Handler;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
@@ -14,16 +15,19 @@ public class BluetoothStateHandler implements IBluetoothStateHandler
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
-  public BluetoothStateHandler(
-      IChangedNotifier changedNotifier, ServiceState serviceState,
-      IMyoController myoController, ISpheroController spheroController)
+  public BluetoothStateHandler(ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
 	{
-    _changedNotifier = changedNotifier;
     _serviceState = serviceState;
     _myoController = myoController;
     _spheroController = spheroController;
 	}
 	
+  @Override
+  public void setChangedNotifier(ChangedNotifier changedNotifier)
+  {
+    _changedNotifier = changedNotifier;
+  }
+  
 	public void activate()
 	{
 		//TODO: create Factory x2?

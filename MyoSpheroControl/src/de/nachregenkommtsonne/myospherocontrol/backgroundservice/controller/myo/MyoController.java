@@ -6,6 +6,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,11 @@ public class MyoController implements IMyoController
     _eventListener = eventListener;
     _context = context;
     _state = state;
+  }
+  
+  public void setChangedNotifier(ChangedNotifier changedNotifier)
+  {
+    _eventListener.setChangedNotifier(changedNotifier);
   }
 
   public void onCreate()

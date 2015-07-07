@@ -1,29 +1,32 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
 
 import android.content.Context;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 
 //TODO: Decompose
-public class SpheroController implements ISpheroController
+public class SpheroController implements ISpheroController, ISpheroEvents
 {
   private Context _context;
-  private ISpheroEvents _eventListener;
   private boolean _running;
   private boolean _connected;
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
   private SpheroManager _spheroManager;
+  private IChangedNotifier _changedNotifier;
+  private ServiceState _serviceState;
   
-  public SpheroController(Context context, ISpheroEvents eventListener, SpheroManager spheroManager)
+  public SpheroController(Context context, SpheroManager spheroManager, ServiceState serviceState)
   {
     _connectionListener = new SpheroConnectionListener(this, spheroManager);
     _discoveryListener = new SpheroDiscoveryListener(this, spheroManager);
     _context = context;
-    _eventListener = eventListener;
     _spheroManager = spheroManager;
+    _serviceState = serviceState;
  }
 
   public void onCreate()
@@ -31,6 +34,11 @@ public class SpheroController implements ISpheroController
     RobotProvider robotProvider = getRobotProvider();
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
+  }
+  
+  public void setChangedNotifier(IChangedNotifier changedNotifier)
+  {
+    _changedNotifier = changedNotifier;
   }
 
   public boolean is_running()
@@ -55,9 +63,24 @@ public class SpheroController implements ISpheroController
 
   public void onSpheroStateChanged(SpheroStatus spheroStatus)
   {
-    _eventListener.spheroStateChanged(spheroStatus);
+    spheroStateChanged(spheroStatus);
   }
 
+  public void spheroStateChanged(SpheroStatus spheroStatus)
+  {
+    if (spheroStatus == SpheroStatus.connected)
+    {
+      changeColor(0, 0, 255);
+    }
+
+    _serviceState.setSpheroStatus(spheroStatus);
+    _changedNotifier.onChanged();
+  }
+  
+  public void bluetoothDisabled()
+  {
+  }
+  
   public void move(float direction, float speed)
   {
   	Sphero sphero = _spheroManager.get_sphero();
@@ -65,7 +88,6 @@ public class SpheroController implements ISpheroController
     if (!_connected && sphero != null && sphero.isConnected())
       _connected = true;
 
-    // if (_connected)
     if (sphero != null && sphero.isConnected())
       sphero.drive(direction, speed);
   }
