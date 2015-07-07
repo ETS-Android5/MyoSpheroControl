@@ -7,12 +7,12 @@ import android.content.Intent;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 
-public class BluetoothStateBroadcastReceiver extends BroadcastReceiver
+public class BluetoothController extends BroadcastReceiver
 {
 	private IBluetoothStateHandler _bluetoothStateHandler;
   private IChangedNotifier _changedNotifier;
 
-  public BluetoothStateBroadcastReceiver(IBluetoothStateHandler bluetoothStateHandler)
+  public BluetoothController(IBluetoothStateHandler bluetoothStateHandler)
   {
     _bluetoothStateHandler = bluetoothStateHandler;
   }

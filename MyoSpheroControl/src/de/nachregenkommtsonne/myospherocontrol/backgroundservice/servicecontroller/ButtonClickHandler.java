@@ -12,8 +12,8 @@ public class ButtonClickHandler
 	private ServiceState _state;
 
   public ButtonClickHandler(
-      IMyoController myoController,
       ISpheroController spheroController,
+      IMyoController myoController,
       ServiceState serviceState)
   {
     _myoController = myoController;

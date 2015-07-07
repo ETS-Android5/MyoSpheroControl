@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
@@ -12,30 +11,27 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphe
 
 public class ServiceController implements IServiceController
 {
-  private IMyoController _myoController;
-  private ISpheroController _spheroController;
-  private ServiceState _state;
-  private IChangedNotifier _changedNotifier;
-  private BroadcastReceiver _serviceControllerBroadcastReceiver;
-  private ServiceBinder _serviceBinder;
   private Context _context;
+  private ServiceState _serviceState;
+  private ISpheroController _spheroController;
+  private IMyoController _myoController;
+  private BroadcastReceiver _bluetoothController;
+  private ServiceBinder _serviceBinder;
   
   public ServiceController(
-      IMyoController myoController,
-      ISpheroController spheroController,
-      IChangedNotifier changedNotifier,
+      Context context,
       ServiceState serviceState,
-      BroadcastReceiver serviceControllerBroadcastReceiver,
-      ServiceBinder serviceBinder,
-      Context context)
+      ISpheroController spheroController,
+      IMyoController myoController,
+      BroadcastReceiver bluetoothController,
+      ServiceBinder serviceBinder)
   {
-    _myoController = myoController;
-    _spheroController = spheroController;
-    _changedNotifier = changedNotifier;
-    _state = serviceState;
-    _serviceControllerBroadcastReceiver = serviceControllerBroadcastReceiver;
-    _serviceBinder = serviceBinder;
     _context = context;
+    _serviceState = serviceState;
+    _spheroController = spheroController;
+    _myoController = myoController;
+    _bluetoothController = bluetoothController;
+    _serviceBinder = serviceBinder;
   }
 
   public ServiceBinder get_serviceBinder()
@@ -47,15 +43,14 @@ public class ServiceController implements IServiceController
   {
     _spheroController.onCreate();
     _myoController.onCreate();
-    _state.onCreate();
+    _serviceState.onCreate();
     
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    _context.registerReceiver(_serviceControllerBroadcastReceiver, filter);
+    _context.registerReceiver(_bluetoothController, filter);
   }
 
   public void stop()
   {
-    _state.setRunning(false);
-    _changedNotifier.onChanged();
+    _serviceState.setRunning(false);
   }
 }

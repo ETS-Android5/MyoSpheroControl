@@ -3,6 +3,8 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerFactory;
 
@@ -14,7 +16,10 @@ public class BackgroundService extends Service
   {
     super();
 
-    _serviceController = new ServiceControllerFactory(this).create();
+    GuiStateHinter guiStateHinter = new GuiStateHinter();
+    ServiceState serviceState = new ServiceState(guiStateHinter);
+
+    _serviceController = new ServiceControllerFactory().create(this, serviceState);
   }
   
   public void onCreate()
