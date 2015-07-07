@@ -9,24 +9,26 @@ import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 
 //TODO: Decompose
-public class SpheroController implements ISpheroController, ISpheroEvents
+public class SpheroController implements ISpheroController
 {
   private Context _context;
-  private boolean _running;
-  private boolean _connected;
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
   private SpheroManager _spheroManager;
   private IChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
 
+  private boolean _running;
+  private boolean _connected;
+
   public SpheroController(Context context, SpheroManager spheroManager, ServiceState serviceState)
   {
-    _connectionListener = new SpheroConnectionListener(this, spheroManager);
-    _discoveryListener = new SpheroDiscoveryListener(this, spheroManager);
     _context = context;
     _spheroManager = spheroManager;
     _serviceState = serviceState;
+
+    _connectionListener = new SpheroConnectionListener(this, spheroManager);
+    _discoveryListener = new SpheroDiscoveryListener(this, spheroManager);
   }
 
   public void onCreate()
@@ -46,11 +48,6 @@ public class SpheroController implements ISpheroController, ISpheroEvents
     return _running;
   }
 
-  public boolean isConnected()
-  {
-    return _connected;
-  }
-
   public void setConnected(boolean connected)
   {
     _connected = connected;
@@ -63,22 +60,13 @@ public class SpheroController implements ISpheroController, ISpheroEvents
 
   public void onSpheroStateChanged(SpheroStatus spheroStatus)
   {
-    spheroStateChanged(spheroStatus);
-  }
-
-  public void spheroStateChanged(SpheroStatus spheroStatus)
-  {
     if (spheroStatus == SpheroStatus.connected)
     {
       changeColor(0, 0, 255);
     }
-
+    
     _serviceState.setSpheroStatus(spheroStatus);
     _changedNotifier.onChanged();
-  }
-
-  public void bluetoothDisabled()
-  {
   }
 
   public void move(float direction, float speed)
@@ -105,7 +93,6 @@ public class SpheroController implements ISpheroController, ISpheroEvents
     Sphero sphero = _spheroManager.getSphero();
 
     if (sphero != null && sphero.isConnected())
-      // if (_connected)
       sphero.stop();
   }
 

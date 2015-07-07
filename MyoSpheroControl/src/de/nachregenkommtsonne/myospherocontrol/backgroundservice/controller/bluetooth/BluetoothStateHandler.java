@@ -53,7 +53,7 @@ public class BluetoothStateHandler implements IBluetoothStateHandler
     }
   }
 
-  public void updateBluetoothState(BluetoothState bluetoothState)
+  public void updateBluetoothState(BluetoothStatus bluetoothState)
   {
     _serviceState.setBluetoothState(bluetoothState);
   }

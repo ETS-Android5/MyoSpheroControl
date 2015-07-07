@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol;
 
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
 
@@ -15,9 +15,9 @@ public class GuiStateHinter implements IGuiStateHinter
       return R.string.pressStart;
     }
 
-    if (guiState.getBluetoothState() != BluetoothState.on)
+    if (guiState.getBluetoothState() != BluetoothStatus.on)
     {
-      if (guiState.getBluetoothState() == BluetoothState.turningOn)
+      if (guiState.getBluetoothState() == BluetoothStatus.turningOn)
         return R.string.bluetoothTurningOn;
 
       return R.string.pleaseEnableBluetooth;

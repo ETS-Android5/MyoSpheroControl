@@ -17,19 +17,21 @@ public class MyoController implements IMyoController
 {
   private IMyoEvents _eventListener;
   private Context _context;
-  private boolean _running;
-  private boolean _connecting;
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
   private ServiceState _state;
 
-  public MyoController(IMyoEvents eventListener, SettingsEditor settingsEditor, Context context, ServiceState state)
+  private boolean _running;
+  private boolean _connecting;
+
+  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor, ServiceState state)
   {
-    _settingsEditor = settingsEditor;
-    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
-    _eventListener = eventListener;
     _context = context;
+    _eventListener = eventListener;
+    _settingsEditor = settingsEditor;
     _state = state;
+
+    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
   }
 
   public void setChangedNotifier(ChangedNotifier changedNotifier)
@@ -104,11 +106,6 @@ public class MyoController implements IMyoController
     _connecting = true;
 
     Hub hub = getHub();
-    connect(hub);
-  }
-
-  private void connect(Hub hub)
-  {
     String myoMac = _settingsEditor.getMac();
     if (myoMac == null)
     {
@@ -128,12 +125,6 @@ public class MyoController implements IMyoController
 
     updateDisabledState();
     _connecting = false;
-  }
-
-  private void connectViaDialog()
-  {
-    Intent intent = new Intent(_context, ScanActivity.class);
-    _context.startActivity(intent);
   }
 
   public void onMyoStateChanged(MyoStatus myoStatus)
@@ -176,7 +167,8 @@ public class MyoController implements IMyoController
     }
     else
     {
-      connectViaDialog();
+      Intent intent = new Intent(_context, ScanActivity.class);
+      _context.startActivity(intent);
     }
   }
 }

@@ -14,7 +14,7 @@ public class SpheroConnectionListener implements ConnectionListener
     _spheroManager = spheroManager;
   }
 
-  public void onDisconnected(Robot arg0)
+  public void onDisconnected(Robot sphero)
   {
     _spheroController.setConnected(false);
     if (!_spheroController.isRunning())

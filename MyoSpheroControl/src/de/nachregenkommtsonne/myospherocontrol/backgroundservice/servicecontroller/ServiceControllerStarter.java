@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontrol
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 
@@ -35,7 +35,7 @@ public class ServiceControllerStarter implements Runnable
     {
     }
 
-    _serviceState.setBluetoothState(BluetoothState.on);
+    _serviceState.setBluetoothState(BluetoothStatus.on);
 
     if (_serviceState.isRunning())
     {

@@ -36,6 +36,7 @@ public class MyoEventHandler implements IMyoEvents
   public void myoStateChanged(MyoStatus myoStatus)
   {
     _state.setMyoStatus(myoStatus);
+    
     _changedNotifier.onChanged();
   }
 
@@ -48,20 +49,21 @@ public class MyoEventHandler implements IMyoEvents
         .calculate(rotation, myo.getXDirection() == XDirection.TOWARD_ELBOW);
 
     _spheroController.move(movementResult.getDirection(), movementResult.getSpeed());
-
     _spheroController.changeColor(movementResult.getRed(), movementResult.getGreen(), movementResult.getBlue());
   }
 
   public void myoControlDeactivated()
   {
-    _spheroController.changeColor(0, 0, 255);
     _state.setControlMode(false);
+    
+    _spheroController.changeColor(0, 0, 255);
     _spheroController.halt();
   }
 
   public void myoControlActivated()
   {
-    _mMovementCalculator.resetRoll();
     _state.setControlMode(true);
+
+    _mMovementCalculator.resetRoll();
   }
 }

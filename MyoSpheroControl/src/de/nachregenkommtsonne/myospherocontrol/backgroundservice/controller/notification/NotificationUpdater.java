@@ -24,12 +24,12 @@ public class NotificationUpdater implements INotificationUpdater
   {
     if (_state.isRunning())
     {
-
       Intent intent = new Intent(_context, ControlActivity.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      
       PendingIntent pIntent = PendingIntent.getActivity(_context, 0, intent, 0);
 
-      Notification n = new Notification.Builder(_context)
+      Notification notification = new Notification.Builder(_context)
           .setContentTitle(_context.getString(R.string.app_name))
           .setContentText(_context.getString(_state.getHint()))
           .setSmallIcon(R.drawable.ic_launcher)
@@ -42,7 +42,7 @@ public class NotificationUpdater implements INotificationUpdater
       NotificationManager notificationManager = (NotificationManager) _context
           .getSystemService(Context.NOTIFICATION_SERVICE);
 
-      notificationManager.notify(0, n);
+      notificationManager.notify(0, notification);
     }
     else
     {

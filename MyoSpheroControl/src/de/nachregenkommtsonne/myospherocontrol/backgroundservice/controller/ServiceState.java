@@ -3,7 +3,7 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller;
 import orbotix.sphero.Sphero;
 import android.bluetooth.BluetoothAdapter;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
 
@@ -14,7 +14,8 @@ public class ServiceState
 {
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
-  private BluetoothState _bluetoothState;
+  private BluetoothStatus _bluetoothStatus;
+  
   private boolean _running;
   private Myo _myo;
   private Hub _hub;
@@ -26,16 +27,17 @@ public class ServiceState
   {
     _myoStatus = MyoStatus.notLinked;
     _spheroStatus = SpheroStatus.disconnected;
+    _bluetoothStatus = BluetoothStatus.off;
+    
     _running = false;
     _guiStateHinter = guiStateHinter;
-    _bluetoothState = BluetoothState.off;
   }
 
   public void onCreate()
   {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    _bluetoothState = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothState.on
-        : BluetoothState.off;
+    _bluetoothStatus = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothStatus.on
+        : BluetoothStatus.off;
   }
 
   public boolean isControlMode()
@@ -88,19 +90,19 @@ public class ServiceState
     return _running;
   }
 
-  public void setRunning(boolean _running)
+  public void setRunning(boolean running)
   {
-    this._running = _running;
+    _running = running;
   }
 
-  public BluetoothState getBluetoothState()
+  public BluetoothStatus getBluetoothState()
   {
-    return _bluetoothState;
+    return _bluetoothStatus;
   }
 
-  public void setBluetoothState(BluetoothState bluetoothStatus)
+  public void setBluetoothState(BluetoothStatus bluetoothStatus)
   {
-    _bluetoothState = bluetoothStatus;
+    _bluetoothStatus = bluetoothStatus;
   }
 
   public void setMyoStatus(MyoStatus myoStatus)

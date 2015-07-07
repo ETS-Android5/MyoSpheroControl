@@ -10,7 +10,6 @@ public class MyoControllerFactory
 {
   public MyoControllerFactory()
   {
-
   }
 
   public MyoController create(Context context, ServiceState serviceState, ISpheroController spheroController)
@@ -18,7 +17,7 @@ public class MyoControllerFactory
     SettingsEditor settingsEditor = new SettingsEditor();
     IMovementCalculator mMovementCalculator = new MovementCalculator();
     IMyoEvents myoEventHandler = new MyoEventHandler(serviceState, mMovementCalculator, spheroController);
-    MyoController myoController = new MyoController(myoEventHandler, settingsEditor, context, serviceState);
+    MyoController myoController = new MyoController(context, myoEventHandler, settingsEditor, serviceState);
 
     return myoController;
   }

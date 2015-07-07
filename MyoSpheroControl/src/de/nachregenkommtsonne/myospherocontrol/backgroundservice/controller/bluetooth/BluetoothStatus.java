@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
 
-public enum BluetoothState
+public enum BluetoothStatus
 {
 	off,
 	on,

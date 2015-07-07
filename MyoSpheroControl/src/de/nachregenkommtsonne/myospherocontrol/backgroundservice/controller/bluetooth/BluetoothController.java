@@ -34,21 +34,21 @@ public class BluetoothController extends BroadcastReceiver
       switch (state)
       {
       case BluetoothAdapter.STATE_OFF:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothState.off);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.off);
         break;
 
       case BluetoothAdapter.STATE_TURNING_OFF:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOff);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOff);
         _bluetoothStateHandler.deactivate();
         break;
 
       case BluetoothAdapter.STATE_ON:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothState.on);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.on);
         _bluetoothStateHandler.activate();
         break;
 
       case BluetoothAdapter.STATE_TURNING_ON:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOn);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOn);
         break;
       }
       _changedNotifier.onChanged();

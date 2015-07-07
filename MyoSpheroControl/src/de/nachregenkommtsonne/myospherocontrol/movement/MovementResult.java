@@ -4,9 +4,22 @@ public class MovementResult
 {
   private float _direction;
   private float _speed;
+  
   private int _red;
   private int _green;
   private int _blue;
+
+  public MovementResult(float direction, float speed, int red, int green, int blue)
+  {
+    super();
+    
+    _direction = direction;
+    _speed = speed;
+    
+    _red = red;
+    _green = green;
+    _blue = blue;
+  }
 
   public int getRed()
   {
@@ -21,17 +34,6 @@ public class MovementResult
   public int getBlue()
   {
     return _blue;
-  }
-
-  public MovementResult(float direction, float speed, int red, int green, int blue)
-  {
-    super();
-
-    _direction = direction;
-    _speed = speed;
-    _red = red;
-    _green = green;
-    _blue = blue;
   }
 
   public float getDirection()

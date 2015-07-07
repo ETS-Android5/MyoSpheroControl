@@ -7,7 +7,6 @@ public class SpheroControllerFactory
 {
   public SpheroControllerFactory()
   {
-
   }
 
   public SpheroController create(Context context, ServiceState serviceState)
