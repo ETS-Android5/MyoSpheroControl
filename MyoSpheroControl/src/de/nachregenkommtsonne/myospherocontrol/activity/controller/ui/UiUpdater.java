@@ -19,25 +19,22 @@ public class UiUpdater implements Runnable
   private ServiceState _serviceState;
   private IViewAccessor _viewAccessor;
   private IGuiStateHinter _guiStateHinter;
-  
-  public UiUpdater(
-      ServiceState state,
-      IViewAccessor viewAccessor,
-      IGuiStateHinter guiStateHinter)
+
+  public UiUpdater(ServiceState state, IViewAccessor viewAccessor, IGuiStateHinter guiStateHinter)
   {
     _serviceState = state;
     _viewAccessor = viewAccessor;
     _guiStateHinter = guiStateHinter;
   }
 
-  //TODO: refactor
+  // TODO: refactor
   @SuppressWarnings("deprecation")
   public void run()
   {
-		View view = _viewAccessor.getView(); 
-		Activity activity = _viewAccessor.getActivity();
-	  
-		ImageView myoLinkedIcon = (ImageView) view.findViewById(R.id.myoLinkedIcon);
+    View view = _viewAccessor.getView();
+    Activity activity = _viewAccessor.getActivity();
+
+    ImageView myoLinkedIcon = (ImageView) view.findViewById(R.id.myoLinkedIcon);
     ImageView myoConnectedIcon = (ImageView) view.findViewById(R.id.myoConnectedIcon);
     ImageView myoSyncronizedIcon = (ImageView) view.findViewById(R.id.myoSyncronizedIcon);
     ImageView spheroDiscoveredIcon = (ImageView) view.findViewById(R.id.spheroDiscoveredIcon);

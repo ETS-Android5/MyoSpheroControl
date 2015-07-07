@@ -12,7 +12,7 @@ public class ChangedNotifier implements IChangedNotifier
     _notificationUpdater = notificationUpdater;
     _serviceBinder = serviceBinder;
   }
-  
+
   public void onChanged()
   {
     if (_serviceBinder != null)

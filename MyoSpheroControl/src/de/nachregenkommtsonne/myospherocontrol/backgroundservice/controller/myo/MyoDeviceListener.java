@@ -11,7 +11,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
 {
   private MyoController _myoController;
   private SettingsEditor _settingsEditor;
-  
+
   public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor)
   {
     _myoController = myoController;
@@ -26,7 +26,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onDisconnect(Myo myo, long timestamp)
   {
-    if (_myoController.is_running() && _myoController.is_connecting())
+    if (_myoController.isRunning() && _myoController.isConnecting())
     {
       try
       {
@@ -45,7 +45,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onArmUnsync(Myo myo, long timestamp)
   {
-    if (_myoController.is_connecting())
+    if (_myoController.isConnecting())
     {
       _myoController.onMyoStateChanged(MyoStatus.notSynced);
       try

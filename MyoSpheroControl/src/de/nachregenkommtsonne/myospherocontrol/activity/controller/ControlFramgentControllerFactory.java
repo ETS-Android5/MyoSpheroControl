@@ -12,7 +12,7 @@ import de.nachregenkommtsonne.myospherocontrol.activity.controller.ui.ViewAccess
 public class ControlFramgentControllerFactory
 {
   Fragment _fragment;
-  
+
   public ControlFramgentControllerFactory(Fragment fragment)
   {
     _fragment = fragment;

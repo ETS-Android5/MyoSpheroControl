@@ -4,5 +4,5 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.Serv
 
 public interface IUiUpdaterFactory
 {
-	public abstract UiUpdater create(ServiceState state);
+  public abstract UiUpdater create(ServiceState state);
 }

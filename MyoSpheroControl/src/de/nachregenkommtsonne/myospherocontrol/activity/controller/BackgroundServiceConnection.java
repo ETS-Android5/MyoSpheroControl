@@ -29,7 +29,7 @@ public class BackgroundServiceConnection implements ServiceConnection
         updateUi();
       }
     });
-    
+
     updateUi();
   }
 
@@ -44,7 +44,7 @@ public class BackgroundServiceConnection implements ServiceConnection
     _myBinder.setChangedListener(null);
   }
 
-  //TODO: move to own interface
+  // TODO: move to own interface
   public IServiceBinderForUI get_myBinder()
   {
     return _myBinder;

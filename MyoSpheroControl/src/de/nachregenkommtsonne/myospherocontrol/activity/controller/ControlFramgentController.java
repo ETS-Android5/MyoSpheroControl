@@ -20,7 +20,7 @@ public class ControlFramgentController implements IControlFramgentController
     _myServiceConnection = myServiceConnection;
   }
 
-	public void startService()
+  public void startService()
   {
     Activity activity = _viewAccessor.getActivity();
 
@@ -28,7 +28,7 @@ public class ControlFramgentController implements IControlFramgentController
     activity.startService(intent);
   }
 
-	public void bindService()
+  public void bindService()
   {
     Activity activity = _viewAccessor.getActivity();
 
@@ -36,19 +36,19 @@ public class ControlFramgentController implements IControlFramgentController
     activity.bindService(intent, _myServiceConnection, ControlActivity.BIND_AUTO_CREATE);
   }
 
-	public void unbindService()
+  public void unbindService()
   {
     // TODO: stop service when not running here!
     Activity activity = _viewAccessor.getActivity();
     activity.unbindService(_myServiceConnection);
   }
-  
-	public void startStopClick(View v)
+
+  public void startStopClick(View v)
   {
     _myServiceConnection.get_myBinder().startStopButtonClicked();
   }
 
-	public void linkUnlinkClick(View v)
+  public void linkUnlinkClick(View v)
   {
     if (!_myServiceConnection.get_myBinder().getState().isRunning())
     {

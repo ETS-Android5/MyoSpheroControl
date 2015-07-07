@@ -13,8 +13,11 @@ public class ServiceControllerStarter implements Runnable
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
-  public ServiceControllerStarter(IChangedNotifier changedNotifier,
-      ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
+  public ServiceControllerStarter(
+      IChangedNotifier changedNotifier,
+      ServiceState serviceState,
+      IMyoController myoController,
+      ISpheroController spheroController)
   {
     _changedNotifier = changedNotifier;
     _serviceState = serviceState;

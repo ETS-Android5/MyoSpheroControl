@@ -9,10 +9,12 @@ public class ServiceBinderFactory
 {
   public ServiceBinderFactory()
   {
-
   }
 
-  public ServiceBinder create(ServiceState serviceState, ISpheroController spheroController, IMyoController myoController)
+  public ServiceBinder create(
+      ServiceState serviceState,
+      ISpheroController spheroController,
+      IMyoController myoController)
   {
     ButtonClickHandler buttonClickHandler = new ButtonClickHandler(spheroController, myoController, serviceState);
     ServiceBinder serviceBinder = new ServiceBinder(serviceState, buttonClickHandler);

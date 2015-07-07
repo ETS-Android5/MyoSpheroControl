@@ -4,11 +4,11 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedN
 
 public interface IBluetoothStateHandler
 {
-	public abstract void updateBluetoothState(BluetoothState bluetoothState);
+  public abstract void updateBluetoothState(BluetoothState bluetoothState);
 
-	public abstract void deactivate();
+  public abstract void deactivate();
 
-	public abstract void activate();
+  public abstract void activate();
 
   void setChangedNotifier(ChangedNotifier changedNotifier);
 }

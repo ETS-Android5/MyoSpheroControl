@@ -5,18 +5,16 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.Serv
 
 public class UiOnUiThreadUpdater implements IUiOnUiThreadUpdater
 {
-	private IUiUpdaterFactory _uiUpdaterFactory;
+  private IUiUpdaterFactory _uiUpdaterFactory;
   private IViewAccessor _viewAccessor;
-  
-  public UiOnUiThreadUpdater(
-  		IUiUpdaterFactory uiUpdaterFactory,
-		  IViewAccessor viewAccessor)
+
+  public UiOnUiThreadUpdater(IUiUpdaterFactory uiUpdaterFactory, IViewAccessor viewAccessor)
   {
-  	_uiUpdaterFactory = uiUpdaterFactory;
+    _uiUpdaterFactory = uiUpdaterFactory;
     _viewAccessor = viewAccessor;
   }
 
-	public void updateUiOnUiThread(ServiceState state)
+  public void updateUiOnUiThread(ServiceState state)
   {
     Activity activity = _viewAccessor.getActivity();
 
@@ -24,7 +22,7 @@ public class UiOnUiThreadUpdater implements IUiOnUiThreadUpdater
       return;
 
     UiUpdater uiUpdater = _uiUpdaterFactory.create(state);
-    
+
     activity.runOnUiThread(uiUpdater);
   }
 }

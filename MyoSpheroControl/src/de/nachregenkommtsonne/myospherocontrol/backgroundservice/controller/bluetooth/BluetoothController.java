@@ -9,7 +9,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChanged
 
 public class BluetoothController extends BroadcastReceiver
 {
-	private IBluetoothStateHandler _bluetoothStateHandler;
+  private IBluetoothStateHandler _bluetoothStateHandler;
   private IChangedNotifier _changedNotifier;
 
   public BluetoothController(IBluetoothStateHandler bluetoothStateHandler)
@@ -20,10 +20,10 @@ public class BluetoothController extends BroadcastReceiver
   public void setChangedNotifier(ChangedNotifier changedNotifier)
   {
     _changedNotifier = changedNotifier;
-    
+
     _bluetoothStateHandler.setChangedNotifier(changedNotifier);
   }
-  
+
   public void onReceive(Context context, Intent intent)
   {
     String action = intent.getAction();
@@ -34,21 +34,21 @@ public class BluetoothController extends BroadcastReceiver
       switch (state)
       {
       case BluetoothAdapter.STATE_OFF:
-      	_bluetoothStateHandler.updateBluetoothState(BluetoothState.off);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothState.off);
         break;
 
       case BluetoothAdapter.STATE_TURNING_OFF:
-      	_bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOff);
-      	_bluetoothStateHandler.deactivate();
+        _bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOff);
+        _bluetoothStateHandler.deactivate();
         break;
 
       case BluetoothAdapter.STATE_ON:
-      	_bluetoothStateHandler.updateBluetoothState(BluetoothState.on);
-      	_bluetoothStateHandler.activate();
+        _bluetoothStateHandler.updateBluetoothState(BluetoothState.on);
+        _bluetoothStateHandler.activate();
         break;
 
       case BluetoothAdapter.STATE_TURNING_ON:
-      	_bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOn);
+        _bluetoothStateHandler.updateBluetoothState(BluetoothState.turningOn);
         break;
       }
       _changedNotifier.onChanged();

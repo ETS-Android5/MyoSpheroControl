@@ -8,17 +8,17 @@ public class MovementResult
   private int _green;
   private int _blue;
 
-  public int get_red()
+  public int getRed()
   {
     return _red;
   }
 
-  public int get_green()
+  public int getGreen()
   {
     return _green;
   }
 
-  public int get_blue()
+  public int getBlue()
   {
     return _blue;
   }
@@ -26,7 +26,7 @@ public class MovementResult
   public MovementResult(float direction, float speed, int red, int green, int blue)
   {
     super();
-    
+
     _direction = direction;
     _speed = speed;
     _red = red;
@@ -34,12 +34,12 @@ public class MovementResult
     _blue = blue;
   }
 
-  public float get_direction()
+  public float getDirection()
   {
     return _direction;
   }
 
-  public float get_speed()
+  public float getSpeed()
   {
     return _speed;
   }

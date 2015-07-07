@@ -9,11 +9,11 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   private IBinderEvents _binderEvents;
   private ServiceState _serviceState;
   private ButtonClickHandler _buttonClickHandler;
-  
+
   public ServiceBinder(ServiceState serviceState, ButtonClickHandler buttonClickHandler)
   {
     _serviceState = serviceState;
-    _buttonClickHandler = buttonClickHandler;		
+    _buttonClickHandler = buttonClickHandler;
   }
 
   // Called by BackgroundService
@@ -22,30 +22,30 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
     if (_binderEvents != null)
       _binderEvents.changed();
   }
-  
+
   // Called by Activity
-	public void setChangedListener(IBinderEvents binderEvents)
+  public void setChangedListener(IBinderEvents binderEvents)
   {
     _binderEvents = binderEvents;
   }
 
   // Called by Activity
-	public ServiceState getState()
+  public ServiceState getState()
   {
     return _serviceState;
   }
 
   // Called by Activity
-	public void startStopButtonClicked()
+  public void startStopButtonClicked()
   {
-		_buttonClickHandler.startStopButtonClicked();
-		onChanged();
+    _buttonClickHandler.startStopButtonClicked();
+    onChanged();
   }
 
   // Called by Activity
-	public void linkUnlinkButtonClicked()
+  public void linkUnlinkButtonClicked()
   {
-		_buttonClickHandler.linkUnlinkButtonClicked();
-		onChanged();
+    _buttonClickHandler.linkUnlinkButtonClicked();
+    onChanged();
   }
 }

@@ -4,21 +4,20 @@ import orbotix.sphero.Sphero;
 
 public class SpheroManager
 {
-	private Sphero _sphero;
+  private Sphero _sphero;
 
-	public SpheroManager()
-	{
-		_sphero = null;
-	}
-	
-	public Sphero get_sphero()
-	{
-		return _sphero;
-	}
+  public SpheroManager()
+  {
+    _sphero = null;
+  }
 
-	public void setSphero(Sphero sphero)
-	{
-		_sphero = sphero;
-	}
+  public Sphero getSphero()
+  {
+    return _sphero;
+  }
 
+  public void setSphero(Sphero sphero)
+  {
+    _sphero = sphero;
+  }
 }

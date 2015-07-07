@@ -4,5 +4,5 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.Serv
 
 public interface IUiOnUiThreadUpdater
 {
-	public abstract void updateUiOnUiThread(ServiceState state);
+  public abstract void updateUiOnUiThread(ServiceState state);
 }

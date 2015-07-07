@@ -22,7 +22,7 @@ public class MyoController implements IMyoController
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
   private ServiceState _state;
-  
+
   public MyoController(IMyoEvents eventListener, SettingsEditor settingsEditor, Context context, ServiceState state)
   {
     _settingsEditor = settingsEditor;
@@ -31,7 +31,7 @@ public class MyoController implements IMyoController
     _context = context;
     _state = state;
   }
-  
+
   public void setChangedNotifier(ChangedNotifier changedNotifier)
   {
     _eventListener.setChangedNotifier(changedNotifier);
@@ -39,32 +39,32 @@ public class MyoController implements IMyoController
 
   public void onCreate()
   {
-    Hub hub = get_hub();
+    Hub hub = getHub();
 
     hub.setSendUsageData(false);
-    
+
     _settingsEditor.onCreate(_context);
     updateDisabledState();
   }
 
-  public boolean is_running()
+  public boolean isRunning()
   {
     return _running;
   }
 
-  public boolean is_connecting()
+  public boolean isConnecting()
   {
     return _connecting;
   }
 
-  private Hub get_hub()
+  private Hub getHub()
   {
     return Hub.getInstance();
   }
 
   public void start()
   {
-    Hub hub = get_hub();
+    Hub hub = getHub();
 
     if (!hub.init(_context, _context.getPackageName()))
     {
@@ -78,8 +78,8 @@ public class MyoController implements IMyoController
   {
     _running = false;
     _connecting = false;
-    
-    Hub hub = get_hub();
+
+    Hub hub = getHub();
 
     hub.removeListener(_listenerDelegate);
     hub.shutdown();
@@ -103,7 +103,7 @@ public class MyoController implements IMyoController
   {
     _connecting = true;
 
-    Hub hub = get_hub();
+    Hub hub = getHub();
     connect(hub);
   }
 
@@ -161,7 +161,7 @@ public class MyoController implements IMyoController
     if (!_connecting)
       return;
 
-    Hub hub = get_hub();
+    Hub hub = getHub();
     hub.attachByMacAddress(mac);
 
     onMyoStateChanged(MyoStatus.linked);
@@ -176,7 +176,7 @@ public class MyoController implements IMyoController
     }
     else
     {
-    	connectViaDialog();
+      connectViaDialog();
     }
   }
 }

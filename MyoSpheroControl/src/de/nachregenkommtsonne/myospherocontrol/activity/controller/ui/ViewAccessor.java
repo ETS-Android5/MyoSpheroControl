@@ -22,7 +22,7 @@ public class ViewAccessor implements IViewAccessor
   {
     return _fragment.getActivity();
   }
-  
+
   public String getString(int resId)
   {
     return _fragment.getString(resId);

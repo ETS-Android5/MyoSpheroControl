@@ -21,18 +21,24 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroll
 public class BackgroundService extends Service
 {
   private ServiceController _serviceController;
-  
+
   public BackgroundService()
   {
     super();
 
     GuiStateHinter guiStateHinter = new GuiStateHinter();
     ServiceState serviceState = new ServiceState(guiStateHinter);
-    
-    SpheroController spheroController = new SpheroControllerFactory().create(this, serviceState);
-    MyoController myoController = new MyoControllerFactory().create(this, serviceState, spheroController);
-    BluetoothController bluetoothController = new BluetoothControllerFactory().create(serviceState, spheroController, myoController);
-    ServiceBinder serviceBinder = new ServiceBinderFactory().create(serviceState, spheroController, myoController);
+
+    SpheroControllerFactory spheroControllerFactory = new SpheroControllerFactory();
+    MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
+    BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
+    ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
+
+    SpheroController spheroController = spheroControllerFactory.create(this, serviceState);
+    MyoController myoController = myoControllerFactory.create(this, serviceState, spheroController);
+    BluetoothController bluetoothController = bluetoothControllerFactory
+        .create(serviceState, spheroController, myoController);
+    ServiceBinder serviceBinder = serviceBinderFactory.create(serviceState, spheroController, myoController);
 
     ServiceController serviceController = new ServiceController(
         this,
@@ -41,17 +47,17 @@ public class BackgroundService extends Service
         myoController,
         bluetoothController,
         serviceBinder);
-    
+
     INotificationUpdater notificationUpdater = new NotificationUpdater(this, serviceState);
     ChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
-    
+
     spheroController.setChangedNotifier(changedNotifier);
     myoController.setChangedNotifier(changedNotifier);
     bluetoothController.setChangedNotifier(changedNotifier);
-    
+
     _serviceController = serviceController;
   }
-  
+
   public void onCreate()
   {
     super.onCreate();
@@ -66,7 +72,7 @@ public class BackgroundService extends Service
 
   public IBinder onBind(Intent intent)
   {
-    return _serviceController.get_serviceBinder();
+    return _serviceController.getServiceBinder();
   }
 
   public void onTaskRemoved(Intent rootIntent)

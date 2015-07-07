@@ -8,12 +8,17 @@ public class BluetoothControllerFactory
 {
   public BluetoothControllerFactory()
   {
-
   }
 
-  public BluetoothController create(ServiceState serviceState, ISpheroController spheroController, IMyoController myoController)
+  public BluetoothController create(
+      ServiceState serviceState,
+      ISpheroController spheroController,
+      IMyoController myoController)
   {
-    BluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(serviceState, myoController, spheroController);
+    BluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(
+        serviceState,
+        myoController,
+        spheroController);
     BluetoothController bluetoothController = new BluetoothController(bluetoothStateHandler);
 
     return bluetoothController;

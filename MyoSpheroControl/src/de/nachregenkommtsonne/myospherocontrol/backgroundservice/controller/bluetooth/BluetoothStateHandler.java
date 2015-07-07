@@ -15,40 +15,46 @@ public class BluetoothStateHandler implements IBluetoothStateHandler
   private IMyoController _myoController;
   private ISpheroController _spheroController;
 
-  public BluetoothStateHandler(ServiceState serviceState, IMyoController myoController, ISpheroController spheroController)
-	{
+  public BluetoothStateHandler(
+      ServiceState serviceState,
+      IMyoController myoController,
+      ISpheroController spheroController)
+  {
     _serviceState = serviceState;
     _myoController = myoController;
     _spheroController = spheroController;
-	}
-	
-  @Override
+  }
+
   public void setChangedNotifier(ChangedNotifier changedNotifier)
   {
     _changedNotifier = changedNotifier;
   }
-  
-	public void activate()
-	{
-		//TODO: create Factory x2?
-		Handler handler = new Handler();
-		ServiceControllerStarter serviceControllerStarter = new ServiceControllerStarter(_changedNotifier, _serviceState, _myoController, _spheroController);
-		handler.post(serviceControllerStarter);
-	}
 
-	public void deactivate()
-	{
-		_serviceState.setControlMode(false);
+  public void activate()
+  {
+    // TODO: create Factory x2?
+    Handler handler = new Handler();
+    ServiceControllerStarter serviceControllerStarter = new ServiceControllerStarter(
+        _changedNotifier,
+        _serviceState,
+        _myoController,
+        _spheroController);
+    handler.post(serviceControllerStarter);
+  }
 
-		if (_serviceState.isRunning())
-		{
-		  _myoController.stopConnecting();
-		  _spheroController.stopForBluetooth();
-		}
-	}
+  public void deactivate()
+  {
+    _serviceState.setControlMode(false);
 
-	public void updateBluetoothState(BluetoothState bluetoothState)
-	{
-		_serviceState.setBluetoothState(bluetoothState);
-	}
+    if (_serviceState.isRunning())
+    {
+      _myoController.stopConnecting();
+      _spheroController.stopForBluetooth();
+    }
+  }
+
+  public void updateBluetoothState(BluetoothState bluetoothState)
+  {
+    _serviceState.setBluetoothState(bluetoothState);
+  }
 }

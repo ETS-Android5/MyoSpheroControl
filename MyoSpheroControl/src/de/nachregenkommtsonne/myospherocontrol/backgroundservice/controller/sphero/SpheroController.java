@@ -19,7 +19,7 @@ public class SpheroController implements ISpheroController, ISpheroEvents
   private SpheroManager _spheroManager;
   private IChangedNotifier _changedNotifier;
   private ServiceState _serviceState;
-  
+
   public SpheroController(Context context, SpheroManager spheroManager, ServiceState serviceState)
   {
     _connectionListener = new SpheroConnectionListener(this, spheroManager);
@@ -27,7 +27,7 @@ public class SpheroController implements ISpheroController, ISpheroEvents
     _context = context;
     _spheroManager = spheroManager;
     _serviceState = serviceState;
- }
+  }
 
   public void onCreate()
   {
@@ -35,23 +35,23 @@ public class SpheroController implements ISpheroController, ISpheroEvents
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
   }
-  
+
   public void setChangedNotifier(IChangedNotifier changedNotifier)
   {
     _changedNotifier = changedNotifier;
   }
 
-  public boolean is_running()
+  public boolean isRunning()
   {
     return _running;
   }
 
-  public boolean is_connected()
+  public boolean isConnected()
   {
     return _connected;
   }
 
-  public void set_connected(boolean connected)
+  public void setConnected(boolean connected)
   {
     _connected = connected;
   }
@@ -76,15 +76,15 @@ public class SpheroController implements ISpheroController, ISpheroEvents
     _serviceState.setSpheroStatus(spheroStatus);
     _changedNotifier.onChanged();
   }
-  
+
   public void bluetoothDisabled()
   {
   }
-  
+
   public void move(float direction, float speed)
   {
-  	Sphero sphero = _spheroManager.get_sphero();
-  	
+    Sphero sphero = _spheroManager.getSphero();
+
     if (!_connected && sphero != null && sphero.isConnected())
       _connected = true;
 
@@ -94,15 +94,15 @@ public class SpheroController implements ISpheroController, ISpheroEvents
 
   public void changeColor(int red, int green, int blue)
   {
-  	Sphero sphero = _spheroManager.get_sphero();
+    Sphero sphero = _spheroManager.getSphero();
 
-  	if (sphero != null && sphero.isConnected())
+    if (sphero != null && sphero.isConnected())
       sphero.setColor(red, green, blue);
   }
 
   public void halt()
   {
-  	Sphero sphero = _spheroManager.get_sphero();
+    Sphero sphero = _spheroManager.getSphero();
 
     if (sphero != null && sphero.isConnected())
       // if (_connected)
@@ -125,9 +125,9 @@ public class SpheroController implements ISpheroController, ISpheroEvents
 
   public void startConnecting()
   {
-  	Sphero sphero = _spheroManager.get_sphero();
+    Sphero sphero = _spheroManager.getSphero();
 
-  	RobotProvider robotProvider = getRobotProvider();
+    RobotProvider robotProvider = getRobotProvider();
     robotProvider.connect(sphero);
     onSpheroStateChanged(SpheroStatus.connecting);
   }

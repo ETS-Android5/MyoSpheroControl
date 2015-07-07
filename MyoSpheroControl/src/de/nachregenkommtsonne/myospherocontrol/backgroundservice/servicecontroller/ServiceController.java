@@ -9,7 +9,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.Serv
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 
-public class ServiceController implements IServiceController
+public class ServiceController
 {
   private Context _context;
   private ServiceState _serviceState;
@@ -17,7 +17,7 @@ public class ServiceController implements IServiceController
   private IMyoController _myoController;
   private BroadcastReceiver _bluetoothController;
   private ServiceBinder _serviceBinder;
-  
+
   public ServiceController(
       Context context,
       ServiceState serviceState,
@@ -34,17 +34,17 @@ public class ServiceController implements IServiceController
     _serviceBinder = serviceBinder;
   }
 
-  public ServiceBinder get_serviceBinder()
-	{
-		return _serviceBinder;
-	}
+  public ServiceBinder getServiceBinder()
+  {
+    return _serviceBinder;
+  }
 
-	public void start()
+  public void start()
   {
     _spheroController.onCreate();
     _myoController.onCreate();
     _serviceState.onCreate();
-    
+
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     _context.registerReceiver(_bluetoothController, filter);
   }

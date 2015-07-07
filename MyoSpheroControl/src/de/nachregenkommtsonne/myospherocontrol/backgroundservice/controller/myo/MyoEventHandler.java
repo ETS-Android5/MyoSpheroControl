@@ -18,7 +18,10 @@ public class MyoEventHandler implements IMyoEvents
   private ISpheroController _spheroController;
   private IChangedNotifier _changedNotifier;
 
-  public MyoEventHandler(ServiceState state, IMovementCalculator mMovementCalculator, ISpheroController spheroController)
+  public MyoEventHandler(
+      ServiceState state,
+      IMovementCalculator mMovementCalculator,
+      ISpheroController spheroController)
   {
     _state = state;
     _mMovementCalculator = mMovementCalculator;
@@ -29,7 +32,7 @@ public class MyoEventHandler implements IMyoEvents
   {
     _changedNotifier = changedNotifier;
   }
-  
+
   public void myoStateChanged(MyoStatus myoStatus)
   {
     _state.setMyoStatus(myoStatus);
@@ -41,12 +44,12 @@ public class MyoEventHandler implements IMyoEvents
     if (!_state.isControlMode())
       return;
 
-    MovementResult movementResult = _mMovementCalculator.calculate(rotation,
-        myo.getXDirection() == XDirection.TOWARD_ELBOW);
+    MovementResult movementResult = _mMovementCalculator
+        .calculate(rotation, myo.getXDirection() == XDirection.TOWARD_ELBOW);
 
-    _spheroController.move(movementResult.get_direction(), movementResult.get_speed());
+    _spheroController.move(movementResult.getDirection(), movementResult.getSpeed());
 
-    _spheroController.changeColor(movementResult.get_red(), movementResult.get_green(), movementResult.get_blue());
+    _spheroController.changeColor(movementResult.getRed(), movementResult.getGreen(), movementResult.getBlue());
   }
 
   public void myoControlDeactivated()

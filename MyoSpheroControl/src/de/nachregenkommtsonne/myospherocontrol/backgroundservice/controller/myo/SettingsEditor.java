@@ -13,7 +13,7 @@ public class SettingsEditor
   public SettingsEditor()
   {
   }
-  
+
   public void onCreate(Context context)
   {
     String packageName = context.getPackageName();
