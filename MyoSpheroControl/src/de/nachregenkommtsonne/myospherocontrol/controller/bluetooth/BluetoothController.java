@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
+package de.nachregenkommtsonne.myospherocontrol.controller.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;

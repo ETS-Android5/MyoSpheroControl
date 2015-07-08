@@ -1,8 +1,8 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
+package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
 import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;

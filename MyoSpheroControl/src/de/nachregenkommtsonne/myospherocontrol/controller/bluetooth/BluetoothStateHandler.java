@@ -1,12 +1,12 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
+package de.nachregenkommtsonne.myospherocontrol.controller.bluetooth;
 
 import android.os.Handler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerStarter;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
 public class BluetoothStateHandler implements IBluetoothStateHandler
 {

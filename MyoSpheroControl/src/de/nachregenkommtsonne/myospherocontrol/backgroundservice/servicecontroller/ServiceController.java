@@ -5,9 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
 public class ServiceController
 {

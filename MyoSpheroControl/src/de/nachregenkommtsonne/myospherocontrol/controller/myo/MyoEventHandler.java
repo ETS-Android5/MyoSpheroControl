@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
+package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
@@ -6,8 +6,8 @@ import com.thalmic.myo.XDirection;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementResult;
 

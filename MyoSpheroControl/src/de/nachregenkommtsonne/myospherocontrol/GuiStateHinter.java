@@ -1,10 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothStatus;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class GuiStateHinter implements IGuiStateHinter
 {

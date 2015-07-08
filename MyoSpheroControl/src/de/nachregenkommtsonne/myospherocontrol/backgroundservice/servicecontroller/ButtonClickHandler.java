@@ -1,9 +1,9 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothStatus;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
 public class ButtonClickHandler
 {

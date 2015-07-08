@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
+package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import com.thalmic.myo.DeviceListener;
 import com.thalmic.myo.Hub;
@@ -7,7 +7,7 @@ import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 import android.content.Context;
 import android.content.Intent;
 

@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth;
+package de.nachregenkommtsonne.myospherocontrol.controller.bluetooth;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 

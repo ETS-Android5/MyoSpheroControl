@@ -1,8 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
 
 import android.os.Binder;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ButtonClickHandler;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 
 public class ServiceBinder extends Binder implements IServiceBinderForUI
 {

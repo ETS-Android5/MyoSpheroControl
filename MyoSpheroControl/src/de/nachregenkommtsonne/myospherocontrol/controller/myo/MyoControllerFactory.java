@@ -1,8 +1,8 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
+package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
 

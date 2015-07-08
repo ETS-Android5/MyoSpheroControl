@@ -7,16 +7,16 @@ import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinderFactory;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.bluetooth.BluetoothControllerFactory;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo.MyoControllerFactory;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.notification.INotificationUpdater;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.notification.NotificationUpdater;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroController;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero.SpheroControllerFactory;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothController;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoController;
+import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.controller.notification.INotificationUpdater;
+import de.nachregenkommtsonne.myospherocontrol.controller.notification.NotificationUpdater;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroControllerFactory;
 
 public class BackgroundService extends Service
 {

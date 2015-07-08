@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.activity.controller.ui;
 
 import android.app.Activity;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 
 public class UiOnUiThreadUpdater implements IUiOnUiThreadUpdater
 {

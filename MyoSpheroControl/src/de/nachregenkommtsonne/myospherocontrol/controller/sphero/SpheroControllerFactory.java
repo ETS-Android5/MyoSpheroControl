@@ -1,7 +1,7 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.sphero;
+package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 
 public class SpheroControllerFactory
 {

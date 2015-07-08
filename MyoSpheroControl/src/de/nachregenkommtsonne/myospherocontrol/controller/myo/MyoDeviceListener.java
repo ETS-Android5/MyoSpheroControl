@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.controller.myo;
+package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.Arm;
