@@ -1,10 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public interface IServiceBinderForUI
 {
-  public abstract ServiceState getState();
+  public abstract IServiceState getState();
 
   public abstract void setChangedListener(IBinderEvents binderEvents);
 

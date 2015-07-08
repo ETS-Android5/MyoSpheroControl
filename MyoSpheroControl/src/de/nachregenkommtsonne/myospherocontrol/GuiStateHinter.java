@@ -1,14 +1,14 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class GuiStateHinter implements IGuiStateHinter
 {
-  public int getHint(ServiceState guiState)
+  public int getHint(IServiceState guiState)
   {
     if (!guiState.isRunning())
     {

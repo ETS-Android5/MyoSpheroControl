@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.activity.controller.ui;
 
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public class UiUpdaterFactory implements IUiUpdaterFactory
 {
@@ -14,7 +14,7 @@ public class UiUpdaterFactory implements IUiUpdaterFactory
     _guiStateHinter = guiStateHinter;
   }
 
-  public UiUpdater create(ServiceState state)
+  public UiUpdater create(IServiceState state)
   {
     return new UiUpdater(state, _viewAccessor, _guiStateHinter);
   }

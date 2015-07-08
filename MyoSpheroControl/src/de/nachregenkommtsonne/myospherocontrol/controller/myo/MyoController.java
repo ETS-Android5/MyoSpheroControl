@@ -6,8 +6,7 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import android.content.Context;
 import android.content.Intent;
 
@@ -19,12 +18,12 @@ public class MyoController implements IMyoController
   private Context _context;
   private DeviceListener _listenerDelegate;
   private SettingsEditor _settingsEditor;
-  private ServiceState _state;
+  private IServiceState _state;
 
   private boolean _running;
   private boolean _connecting;
 
-  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor, ServiceState state)
+  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor, IServiceState state)
   {
     _context = context;
     _eventListener = eventListener;
@@ -32,11 +31,6 @@ public class MyoController implements IMyoController
     _state = state;
 
     _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
-  }
-
-  public void setChangedNotifier(ChangedNotifier changedNotifier)
-  {
-    _eventListener.setChangedNotifier(changedNotifier);
   }
 
   public void onCreate()
@@ -125,6 +119,8 @@ public class MyoController implements IMyoController
 
     updateDisabledState();
     _connecting = false;
+    
+    _eventListener.stopControlMode();
   }
 
   public void onMyoStateChanged(MyoStatus myoStatus)

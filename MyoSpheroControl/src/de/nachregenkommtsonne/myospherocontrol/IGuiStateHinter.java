@@ -1,8 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public interface IGuiStateHinter
 {
-  int getHint(ServiceState guiState);
+  int getHint(IServiceState guiState);
 }

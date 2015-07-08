@@ -4,24 +4,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 
 public class BluetoothController extends BroadcastReceiver
 {
   private IBluetoothStateHandler _bluetoothStateHandler;
-  private IChangedNotifier _changedNotifier;
 
   public BluetoothController(IBluetoothStateHandler bluetoothStateHandler)
   {
     _bluetoothStateHandler = bluetoothStateHandler;
-  }
-
-  public void setChangedNotifier(ChangedNotifier changedNotifier)
-  {
-    _changedNotifier = changedNotifier;
-
-    _bluetoothStateHandler.setChangedNotifier(changedNotifier);
   }
 
   public void onReceive(Context context, Intent intent)
@@ -51,7 +41,6 @@ public class BluetoothController extends BroadcastReceiver
         _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOn);
         break;
       }
-      _changedNotifier.onChanged();
     }
   }
 }

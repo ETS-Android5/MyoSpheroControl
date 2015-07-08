@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementCalculator;
@@ -12,7 +12,7 @@ public class MyoControllerFactory
   {
   }
 
-  public MyoController create(Context context, ServiceState serviceState, ISpheroController spheroController)
+  public MyoController create(Context context, IServiceState serviceState, ISpheroController spheroController)
   {
     SettingsEditor settingsEditor = new SettingsEditor();
     IMovementCalculator mMovementCalculator = new MovementCalculator();

@@ -1,8 +1,8 @@
 package de.nachregenkommtsonne.myospherocontrol.activity.controller.ui;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public interface IUiUpdaterFactory
 {
-  public abstract UiUpdater create(ServiceState state);
+  public abstract UiUpdater create(IServiceState state);
 }

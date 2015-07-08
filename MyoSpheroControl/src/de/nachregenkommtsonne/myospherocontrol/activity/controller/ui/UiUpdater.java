@@ -9,18 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class UiUpdater implements Runnable
 {
-  private ServiceState _serviceState;
+  private IServiceState _serviceState;
   private IViewAccessor _viewAccessor;
   private IGuiStateHinter _guiStateHinter;
 
-  public UiUpdater(ServiceState state, IViewAccessor viewAccessor, IGuiStateHinter guiStateHinter)
+  public UiUpdater(IServiceState state, IViewAccessor viewAccessor, IGuiStateHinter guiStateHinter)
   {
     _serviceState = state;
     _viewAccessor = viewAccessor;

@@ -4,45 +4,38 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 import de.nachregenkommtsonne.myospherocontrol.movement.IMovementCalculator;
 import de.nachregenkommtsonne.myospherocontrol.movement.MovementResult;
 
 public class MyoEventHandler implements IMyoEvents
 {
-  private ServiceState _state;
+  private IServiceState _serviceState;
   private IMovementCalculator _mMovementCalculator;
   private ISpheroController _spheroController;
-  private IChangedNotifier _changedNotifier;
+  private boolean _controlmode;
 
   public MyoEventHandler(
-      ServiceState state,
+      IServiceState state,
       IMovementCalculator mMovementCalculator,
       ISpheroController spheroController)
   {
-    _state = state;
+    _serviceState = state;
     _mMovementCalculator = mMovementCalculator;
     _spheroController = spheroController;
-  }
-
-  public void setChangedNotifier(ChangedNotifier changedNotifier)
-  {
-    _changedNotifier = changedNotifier;
+    
+    _controlmode = false;
   }
 
   public void myoStateChanged(MyoStatus myoStatus)
   {
-    _state.setMyoStatus(myoStatus);
-    
-    _changedNotifier.onChanged();
+    _serviceState.setMyoStatus(myoStatus);
   }
 
   public void myoOrientationDataCollected(Quaternion rotation, Myo myo)
   {
-    if (!_state.isControlMode())
+    if (!_controlmode)
       return;
 
     MovementResult movementResult = _mMovementCalculator
@@ -54,7 +47,7 @@ public class MyoEventHandler implements IMyoEvents
 
   public void myoControlDeactivated()
   {
-    _state.setControlMode(false);
+  	_controlmode = false;
     
     _spheroController.changeColor(0, 0, 255);
     _spheroController.halt();
@@ -62,8 +55,13 @@ public class MyoEventHandler implements IMyoEvents
 
   public void myoControlActivated()
   {
-    _state.setControlMode(true);
+  	_controlmode = true;
 
     _mMovementCalculator.resetRoll();
   }
+
+	public void stopControlMode()
+	{
+		_controlmode = false;
+	}
 }

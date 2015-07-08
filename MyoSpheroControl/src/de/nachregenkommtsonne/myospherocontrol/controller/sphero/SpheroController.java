@@ -1,8 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
 import android.content.Context;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import orbotix.robot.base.RobotProvider;
 import orbotix.sphero.ConnectionListener;
 import orbotix.sphero.DiscoveryListener;
@@ -15,13 +14,12 @@ public class SpheroController implements ISpheroController
   private ConnectionListener _connectionListener;
   private DiscoveryListener _discoveryListener;
   private SpheroManager _spheroManager;
-  private IChangedNotifier _changedNotifier;
-  private ServiceState _serviceState;
+  private IServiceState _serviceState;
 
   private boolean _running;
   private boolean _connected;
 
-  public SpheroController(Context context, SpheroManager spheroManager, ServiceState serviceState)
+  public SpheroController(Context context, SpheroManager spheroManager, IServiceState serviceState)
   {
     _context = context;
     _spheroManager = spheroManager;
@@ -36,11 +34,6 @@ public class SpheroController implements ISpheroController
     RobotProvider robotProvider = getRobotProvider();
     robotProvider.addConnectionListener(_connectionListener);
     robotProvider.addDiscoveryListener(_discoveryListener);
-  }
-
-  public void setChangedNotifier(IChangedNotifier changedNotifier)
-  {
-    _changedNotifier = changedNotifier;
   }
 
   public boolean isRunning()
@@ -66,7 +59,6 @@ public class SpheroController implements ISpheroController
     }
     
     _serviceState.setSpheroStatus(spheroStatus);
-    _changedNotifier.onChanged();
   }
 
   public void move(float direction, float speed)

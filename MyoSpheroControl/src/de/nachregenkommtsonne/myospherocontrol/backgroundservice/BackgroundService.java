@@ -8,6 +8,7 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedN
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinderFactory;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
+import de.nachregenkommtsonne.myospherocontrol.controller.NotifyingServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothController;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothControllerFactory;
@@ -26,35 +27,28 @@ public class BackgroundService extends Service
   {
     super();
 
-    GuiStateHinter guiStateHinter = new GuiStateHinter();
-    ServiceState serviceState = new ServiceState(guiStateHinter);
-
+    ServiceState serviceState = new ServiceState();
+    NotifyingServiceState notifyingServiceState = new NotifyingServiceState(serviceState);
+    
+    
     SpheroControllerFactory spheroControllerFactory = new SpheroControllerFactory();
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
     BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
 
-    SpheroController spheroController = spheroControllerFactory.create(this, serviceState);
-    MyoController myoController = myoControllerFactory.create(this, serviceState, spheroController);
-    BluetoothController bluetoothController = bluetoothControllerFactory
-        .create(serviceState, spheroController, myoController);
+    SpheroController spheroController = spheroControllerFactory.create(this, notifyingServiceState);
+    MyoController myoController = myoControllerFactory.create(this, notifyingServiceState, spheroController);
+    BluetoothController bluetoothController = bluetoothControllerFactory.create(notifyingServiceState, spheroController, myoController);
     ServiceBinder serviceBinder = serviceBinderFactory.create(serviceState, spheroController, myoController);
 
-    ServiceController serviceController = new ServiceController(
-        this,
-        serviceState,
-        spheroController,
-        myoController,
-        bluetoothController,
-        serviceBinder);
+    ServiceController serviceController = new ServiceController(this, serviceState, spheroController, myoController, bluetoothController, serviceBinder);
 
-    INotificationUpdater notificationUpdater = new NotificationUpdater(this, serviceState);
+    GuiStateHinter guiStateHinter = new GuiStateHinter();
+    INotificationUpdater notificationUpdater = new NotificationUpdater(this, notifyingServiceState, guiStateHinter);
     ChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
 
-    spheroController.setChangedNotifier(changedNotifier);
-    myoController.setChangedNotifier(changedNotifier);
-    bluetoothController.setChangedNotifier(changedNotifier);
-
+    notifyingServiceState.setChangedNotifier(changedNotifier);
+       
     _serviceController = serviceController;
   }
 
