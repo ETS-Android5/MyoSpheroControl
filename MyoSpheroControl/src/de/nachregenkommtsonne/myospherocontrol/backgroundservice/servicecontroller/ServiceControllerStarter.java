@@ -5,6 +5,7 @@ import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothSta
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
+//TODO: move away
 public class ServiceControllerStarter implements Runnable
 {
   private IServiceState _serviceState;

@@ -1,13 +1,14 @@
 package de.nachregenkommtsonne.myospherocontrol.backgroundservice;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinder;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinderFactory;
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceController;
 import de.nachregenkommtsonne.myospherocontrol.controller.NotifyingServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothController;
@@ -21,42 +22,48 @@ import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroControlle
 
 public class BackgroundService extends Service
 {
-  private ServiceController _serviceController;
-
+	private ServiceState _serviceState;
+  private NotifyingServiceState _notifyingServiceState;
+  private ServiceBinder _serviceBinder;
+  private SpheroController _spheroController;
+  private MyoController _myoController;
+  private BluetoothController _bluetoothController;
+  
   public BackgroundService()
   {
     super();
 
-    ServiceState serviceState = new ServiceState();
-    NotifyingServiceState notifyingServiceState = new NotifyingServiceState(serviceState);
-    
+    _serviceState = new ServiceState();
+    _notifyingServiceState = new NotifyingServiceState(_serviceState);
     
     SpheroControllerFactory spheroControllerFactory = new SpheroControllerFactory();
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
     BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
 
-    SpheroController spheroController = spheroControllerFactory.create(this, notifyingServiceState);
-    MyoController myoController = myoControllerFactory.create(this, notifyingServiceState, spheroController);
-    BluetoothController bluetoothController = bluetoothControllerFactory.create(notifyingServiceState, spheroController, myoController);
-    ServiceBinder serviceBinder = serviceBinderFactory.create(serviceState, spheroController, myoController);
-
-    ServiceController serviceController = new ServiceController(this, serviceState, spheroController, myoController, bluetoothController, serviceBinder);
+    _spheroController = spheroControllerFactory.create(this, _notifyingServiceState);
+    _myoController = myoControllerFactory.create(this, _notifyingServiceState, _spheroController);
+    _bluetoothController = bluetoothControllerFactory.create(_notifyingServiceState, _spheroController, _myoController);
+    
+    _serviceBinder = serviceBinderFactory.create(_serviceState, _spheroController, _myoController);
 
     GuiStateHinter guiStateHinter = new GuiStateHinter();
-    INotificationUpdater notificationUpdater = new NotificationUpdater(this, notifyingServiceState, guiStateHinter);
-    ChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, serviceBinder);
+    INotificationUpdater notificationUpdater = new NotificationUpdater(this, _notifyingServiceState, guiStateHinter);
+    ChangedNotifier changedNotifier = new ChangedNotifier(notificationUpdater, _serviceBinder);
 
-    notifyingServiceState.setChangedNotifier(changedNotifier);
-       
-    _serviceController = serviceController;
+    _notifyingServiceState.setChangedNotifier(changedNotifier);
   }
 
   public void onCreate()
   {
     super.onCreate();
 
-    _serviceController.start();
+    _spheroController.onCreate();
+    _myoController.onCreate();
+    _serviceState.onCreate();
+
+    IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+    this.registerReceiver(_bluetoothController, filter);
   }
 
   public int onStartCommand(Intent intent, int flags, int startId)
@@ -66,13 +73,13 @@ public class BackgroundService extends Service
 
   public IBinder onBind(Intent intent)
   {
-    return _serviceController.getServiceBinder();
+    return _serviceBinder;
   }
 
   public void onTaskRemoved(Intent rootIntent)
   {
     super.onTaskRemoved(rootIntent);
 
-    _serviceController.stop();
+    _notifyingServiceState.setRunning(false);
   }
 }
