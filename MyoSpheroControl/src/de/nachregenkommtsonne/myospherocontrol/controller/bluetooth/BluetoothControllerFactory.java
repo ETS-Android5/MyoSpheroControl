@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.controller.bluetooth;
 
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroStartStopController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroConnectionController;
 
 public class BluetoothControllerFactory
 {
@@ -12,7 +12,7 @@ public class BluetoothControllerFactory
 
   public BluetoothController create(
       IServiceState serviceState,
-      ISpheroStartStopController spheroController,
+      ISpheroConnectionController spheroController,
       IMyoController myoController)
   {
     BluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(

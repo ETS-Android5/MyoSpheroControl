@@ -4,18 +4,18 @@ import android.os.Handler;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller.ServiceControllerStarter;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroStartStopController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroConnectionController;
 
 public class BluetoothStateHandler implements IBluetoothStateHandler
 {
   private IServiceState _serviceState;
   private IMyoController _myoController;
-  private ISpheroStartStopController _spheroController;
+  private ISpheroConnectionController _spheroController;
 
   public BluetoothStateHandler(
       IServiceState serviceState,
       IMyoController myoController,
-      ISpheroStartStopController spheroController)
+      ISpheroConnectionController spheroController)
   {
     _serviceState = serviceState;
     _myoController = myoController;

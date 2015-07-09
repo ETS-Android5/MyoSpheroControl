@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
 
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroStartStopController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroConnectionController;
 
 public class ServiceBinderFactory
 {
@@ -13,7 +13,7 @@ public class ServiceBinderFactory
   public ServiceBinder create(
       IServiceState serviceState,
       IServiceState notifyingServiceState,
-      ISpheroStartStopController spheroController,
+      ISpheroConnectionController spheroController,
       IMyoController myoController)
   {
     ButtonClickHandler buttonClickHandler = new ButtonClickHandler(spheroController, myoController, notifyingServiceState);

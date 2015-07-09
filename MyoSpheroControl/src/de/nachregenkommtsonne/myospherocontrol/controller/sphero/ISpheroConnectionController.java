@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
-public interface ISpheroStartStopController
+public interface ISpheroConnectionController
 {
 	public abstract void stopForBluetooth();
 
