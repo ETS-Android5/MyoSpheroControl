@@ -5,10 +5,12 @@ import orbotix.sphero.Sphero;
 public class SpheroManager
 {
   private Sphero _sphero;
+  private boolean _connected;
 
   public SpheroManager()
   {
     _sphero = null;
+    _connected = false;
   }
 
   public Sphero getSphero()
@@ -20,4 +22,14 @@ public class SpheroManager
   {
     _sphero = sphero;
   }
+
+	public boolean isConnected()
+	{
+		return _connected;
+	}
+
+	public void setConnected(boolean connected)
+	{
+		_connected = connected;
+	}
 }

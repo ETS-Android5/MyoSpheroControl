@@ -5,7 +5,7 @@ import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public class ServiceBinder extends Binder implements IServiceBinderForUI
 {
-  private IBinderEvents _binderEvents;
+  private IServiceStateChangedListener _binderEvents;
   private IServiceState _serviceState;
   private ButtonClickHandler _buttonClickHandler;
 
@@ -16,14 +16,14 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   }
 
   // Called by BackgroundService
-  public void onChanged()
+  public void onServiceStateChanged()
   {
     if (_binderEvents != null)
       _binderEvents.changed();
   }
 
   // Called by Activity
-  public void setChangedListener(IBinderEvents binderEvents)
+  public void setServiceStateChangedListener(IServiceStateChangedListener binderEvents)
   {
     _binderEvents = binderEvents;
   }
@@ -38,13 +38,11 @@ public class ServiceBinder extends Binder implements IServiceBinderForUI
   public void startStopButtonClicked()
   {
     _buttonClickHandler.startStopButtonClicked();
-    onChanged();
   }
 
   // Called by Activity
   public void linkUnlinkButtonClicked()
   {
     _buttonClickHandler.linkUnlinkButtonClicked();
-    onChanged();
   }
 }

@@ -24,7 +24,7 @@ public class SpheroDiscoveryListener implements DiscoveryListener
 
   public void onBluetoothDisabled()
   {
-    _spheroController.setConnected(false);
+  	_spheroManager.setConnected(false);
   }
 
   public void discoveryComplete(List<Sphero> spheros)

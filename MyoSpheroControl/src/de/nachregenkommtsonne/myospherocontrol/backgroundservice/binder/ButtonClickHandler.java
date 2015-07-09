@@ -3,15 +3,15 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroStartStopController;
 
 public class ButtonClickHandler
 {
-  private ISpheroController _spheroController;
+  private ISpheroStartStopController _spheroController;
   private IMyoController _myoController;
   private IServiceState _state;
 
-  public ButtonClickHandler(ISpheroController spheroController, IMyoController myoController, IServiceState serviceState)
+  public ButtonClickHandler(ISpheroStartStopController spheroController, IMyoController myoController, IServiceState serviceState)
   {
     _spheroController = spheroController;
     _myoController = myoController;

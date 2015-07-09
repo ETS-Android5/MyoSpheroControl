@@ -3,19 +3,19 @@ package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontrol
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroStartStopController;
 
 //TODO: move away
 public class ServiceControllerStarter implements Runnable
 {
   private IServiceState _serviceState;
   private IMyoController _myoController;
-  private ISpheroController _spheroController;
+  private ISpheroStartStopController _spheroController;
 
   public ServiceControllerStarter(
       IServiceState serviceState,
       IMyoController myoController,
-      ISpheroController spheroController)
+      ISpheroStartStopController spheroController)
   {
     _serviceState = serviceState;
     _myoController = myoController;

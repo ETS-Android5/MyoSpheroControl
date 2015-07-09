@@ -18,7 +18,8 @@ import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoControllerFacto
 import de.nachregenkommtsonne.myospherocontrol.controller.notification.INotificationUpdater;
 import de.nachregenkommtsonne.myospherocontrol.controller.notification.NotificationUpdater;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroManager;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroMovementController;
 
 public class BackgroundService extends Service
 {
@@ -36,16 +37,20 @@ public class BackgroundService extends Service
     _serviceState = new ServiceState();
     _notifyingServiceState = new NotifyingServiceState(_serviceState);
     
-    SpheroControllerFactory spheroControllerFactory = new SpheroControllerFactory();
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
     BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
 
-    _spheroController = spheroControllerFactory.create(this, _notifyingServiceState);
-    _myoController = myoControllerFactory.create(this, _notifyingServiceState, _spheroController);
+    
+    SpheroManager spheroManager = new SpheroManager();
+    _spheroController = new SpheroController(this, spheroManager, _notifyingServiceState);
+    SpheroMovementController spheroMovementController = new SpheroMovementController(spheroManager);
+    
+    
+    _myoController = myoControllerFactory.create(this, _notifyingServiceState, spheroMovementController);
     _bluetoothController = bluetoothControllerFactory.create(_notifyingServiceState, _spheroController, _myoController);
     
-    _serviceBinder = serviceBinderFactory.create(_serviceState, _spheroController, _myoController);
+    _serviceBinder = serviceBinderFactory.create(_serviceState, _notifyingServiceState, _spheroController, _myoController);
 
     GuiStateHinter guiStateHinter = new GuiStateHinter();
     INotificationUpdater notificationUpdater = new NotificationUpdater(this, _notifyingServiceState, guiStateHinter);

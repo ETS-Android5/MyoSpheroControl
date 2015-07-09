@@ -16,7 +16,7 @@ public class ChangedNotifier implements IChangedNotifier
   public void onChanged()
   {
     if (_serviceBinder != null)
-      _serviceBinder.onChanged();
+      _serviceBinder.onServiceStateChanged();
 
     _notificationUpdater.updateNotification();
   }

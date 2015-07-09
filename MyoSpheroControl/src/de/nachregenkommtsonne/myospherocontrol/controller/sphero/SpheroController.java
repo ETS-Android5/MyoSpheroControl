@@ -8,7 +8,7 @@ import orbotix.sphero.DiscoveryListener;
 import orbotix.sphero.Sphero;
 
 //TODO: Decompose
-public class SpheroController implements ISpheroController
+public class SpheroController implements ISpheroStartStopController
 {
   private Context _context;
   private ConnectionListener _connectionListener;
@@ -17,7 +17,6 @@ public class SpheroController implements ISpheroController
   private IServiceState _serviceState;
 
   private boolean _running;
-  private boolean _connected;
 
   public SpheroController(Context context, SpheroManager spheroManager, IServiceState serviceState)
   {
@@ -41,11 +40,6 @@ public class SpheroController implements ISpheroController
     return _running;
   }
 
-  public void setConnected(boolean connected)
-  {
-    _connected = connected;
-  }
-
   private RobotProvider getRobotProvider()
   {
     return RobotProvider.getDefaultProvider();
@@ -55,24 +49,29 @@ public class SpheroController implements ISpheroController
   {
     if (spheroStatus == SpheroStatus.connected)
     {
-      changeColor(0, 0, 255);
+      Sphero sphero = _spheroManager.getSphero();
+
+      if (sphero != null && sphero.isConnected())
+        sphero.setColor(0, 0, 255);
+      
+      //changeColor(0, 0, 255);
     }
     
     _serviceState.setSpheroStatus(spheroStatus);
   }
 
-  public void move(float direction, float speed)
+/*	public void move(float direction, float speed)
   {
     Sphero sphero = _spheroManager.getSphero();
 
-    if (!_connected && sphero != null && sphero.isConnected())
-      _connected = true;
+    if (!_spheroManager.isConnected() && sphero != null && sphero.isConnected())
+    	_spheroManager.setConnected(true);
 
     if (sphero != null && sphero.isConnected())
       sphero.drive(direction, speed);
   }
 
-  public void changeColor(int red, int green, int blue)
+	public void changeColor(int red, int green, int blue)
   {
     Sphero sphero = _spheroManager.getSphero();
 
@@ -80,21 +79,24 @@ public class SpheroController implements ISpheroController
       sphero.setColor(red, green, blue);
   }
 
-  public void halt()
+	public void halt()
   {
     Sphero sphero = _spheroManager.getSphero();
 
     if (sphero != null && sphero.isConnected())
       sphero.stop();
   }
-
-  public void start()
+*/
+  
+  @Override
+	public void start()
   {
     startDiscovery();
     _running = true;
   }
 
-  public void startDiscovery()
+  @Override
+	public void startDiscovery()
   {
     RobotProvider robotProvider = getRobotProvider();
     robotProvider.startDiscovery(_context);
@@ -102,7 +104,8 @@ public class SpheroController implements ISpheroController
     onSpheroStateChanged(SpheroStatus.discovering);
   }
 
-  public void startConnecting()
+  @Override
+	public void startConnecting()
   {
     Sphero sphero = _spheroManager.getSphero();
 
@@ -111,7 +114,8 @@ public class SpheroController implements ISpheroController
     onSpheroStateChanged(SpheroStatus.connecting);
   }
 
-  public void stop()
+  @Override
+	public void stop()
   {
     _running = false;
     RobotProvider robotProvider = getRobotProvider();
@@ -120,7 +124,8 @@ public class SpheroController implements ISpheroController
     onSpheroStateChanged(SpheroStatus.disconnected);
   }
 
-  public void stopForBluetooth()
+  @Override
+	public void stopForBluetooth()
   {
     _running = false;
     RobotProvider robotProvider = getRobotProvider();
