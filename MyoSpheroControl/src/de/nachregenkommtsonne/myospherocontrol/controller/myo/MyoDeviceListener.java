@@ -7,20 +7,26 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 
+import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
+
 public class MyoDeviceListener extends AbstractDeviceListener
 {
   private MyoController _myoController;
   private SettingsEditor _settingsEditor;
+  private IMyoEvents _eventListener;
+  private IServiceState _state;
 
-  public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor)
+  public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor, IMyoEvents eventListener, IServiceState state)
   {
     _myoController = myoController;
     _settingsEditor = settingsEditor;
+    _eventListener = eventListener;
+    _state = state;
   }
 
   public void onConnect(Myo myo, long timestamp)
   {
-    _myoController.onMyoStateChanged(MyoStatus.notSynced);
+  	_state.setMyoStatus(MyoStatus.notSynced);
     _settingsEditor.saveMac(myo.getMacAddress());
   }
 
@@ -40,17 +46,17 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection)
   {
-    _myoController.onMyoStateChanged(MyoStatus.connected);
+  	_state.setMyoStatus(MyoStatus.connected);
   }
 
   public void onArmUnsync(Myo myo, long timestamp)
   {
     if (_myoController.isConnecting())
     {
-      _myoController.onMyoStateChanged(MyoStatus.notSynced);
+    	_state.setMyoStatus(MyoStatus.notSynced);
       try
       {
-        _myoController.onMyoControlDeactivated();
+      	_eventListener.myoControlDeactivated();
       }
       catch (Exception ex)
       {
@@ -68,10 +74,10 @@ public class MyoDeviceListener extends AbstractDeviceListener
     {
     case FIST:
       myo.unlock(Myo.UnlockType.HOLD);
-      _myoController.onMyoControlActivated();
+      _eventListener.myoControlActivated();
       break;
     case FINGERS_SPREAD:
-      _myoController.onMyoControlDeactivated();
+    	_eventListener.myoControlDeactivated();
       myo.lock();
       break;
     default:
@@ -81,6 +87,6 @@ public class MyoDeviceListener extends AbstractDeviceListener
 
   public void onOrientationData(Myo myo, long timestamp, Quaternion rotation)
   {
-    _myoController.onMyoOrientationDataCollected(myo, timestamp, rotation);
+  	_eventListener.myoOrientationDataCollected(rotation, myo);
   }
 }

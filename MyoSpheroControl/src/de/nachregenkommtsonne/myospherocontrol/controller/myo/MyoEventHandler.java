@@ -28,6 +28,7 @@ public class MyoEventHandler implements IMyoEvents
     _controlmode = false;
   }
 
+  @Deprecated
   public void myoStateChanged(MyoStatus myoStatus)
   {
     _serviceState.setMyoStatus(myoStatus);

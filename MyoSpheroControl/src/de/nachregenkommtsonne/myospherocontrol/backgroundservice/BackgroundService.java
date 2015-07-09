@@ -49,7 +49,6 @@ public class BackgroundService extends Service
     
     _myoController = myoControllerFactory.create(this, _notifyingServiceState, spheroMovementController);
     _bluetoothController = bluetoothControllerFactory.create(_notifyingServiceState, _spheroController, _myoController);
-    
     _serviceBinder = serviceBinderFactory.create(_serviceState, _notifyingServiceState, _spheroController, _myoController);
 
     GuiStateHinter guiStateHinter = new GuiStateHinter();

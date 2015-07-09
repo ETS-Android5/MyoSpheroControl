@@ -2,8 +2,6 @@ package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
 import com.thalmic.myo.DeviceListener;
 import com.thalmic.myo.Hub;
-import com.thalmic.myo.Myo;
-import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.scanner.ScanActivity;
 
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
@@ -30,7 +28,7 @@ public class MyoController implements IMyoController
     _settingsEditor = settingsEditor;
     _state = state;
 
-    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor);
+    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor, _eventListener, _state);
   }
 
   public void onCreate()
@@ -87,11 +85,11 @@ public class MyoController implements IMyoController
     String myoMac = _settingsEditor.getMac();
     if (myoMac == null)
     {
-      onMyoStateChanged(MyoStatus.notLinked);
+      _state.setMyoStatus(MyoStatus.notLinked);
     }
     else
     {
-      onMyoStateChanged(MyoStatus.linked);
+      _state.setMyoStatus(MyoStatus.linked);
     }
   }
 
@@ -103,7 +101,7 @@ public class MyoController implements IMyoController
     String myoMac = _settingsEditor.getMac();
     if (myoMac == null)
     {
-      onMyoStateChanged(MyoStatus.notLinked);
+      _state.setMyoStatus(MyoStatus.notLinked);
       hub.attachToAdjacentMyo();
     }
     else
@@ -123,26 +121,6 @@ public class MyoController implements IMyoController
     _eventListener.stopControlMode();
   }
 
-  public void onMyoStateChanged(MyoStatus myoStatus)
-  {
-    _eventListener.myoStateChanged(myoStatus);
-  }
-
-  public void onMyoControlActivated()
-  {
-    _eventListener.myoControlActivated();
-  }
-
-  public void onMyoControlDeactivated()
-  {
-    _eventListener.myoControlDeactivated();
-  }
-
-  public void onMyoOrientationDataCollected(Myo myo, long timestamp, Quaternion rotation)
-  {
-    _eventListener.myoOrientationDataCollected(rotation, myo);
-  }
-
   public void connectToLinkedMyo(String mac)
   {
     if (!_connecting)
@@ -151,7 +129,7 @@ public class MyoController implements IMyoController
     Hub hub = getHub();
     hub.attachByMacAddress(mac);
 
-    onMyoStateChanged(MyoStatus.linked);
+    _state.setMyoStatus(MyoStatus.linked);
   }
 
   public void connectAndUnlinkButtonClicked()

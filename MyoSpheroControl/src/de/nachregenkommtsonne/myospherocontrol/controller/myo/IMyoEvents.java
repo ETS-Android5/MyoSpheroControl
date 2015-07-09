@@ -11,6 +11,7 @@ public interface IMyoEvents
 
   void myoOrientationDataCollected(Quaternion rotation, Myo myo);
 
+  @Deprecated
   void myoStateChanged(MyoStatus myoStatus);
 
 	void stopControlMode();
