@@ -96,14 +96,12 @@ public class SpheroConnectionController implements ISpheroConnectionController
     return RobotProvider.getDefaultProvider();
   }
 
-  @Override
 	public void start()
   {
     startDiscovery();
     _enabled = true;
   }
 
-  @Override
 	public void startDiscovery()
   {
     RobotProvider robotProvider = getRobotProvider();
@@ -112,7 +110,6 @@ public class SpheroConnectionController implements ISpheroConnectionController
     _serviceState.setSpheroStatus(SpheroStatus.discovering);
   }
 
-  @Override
 	public void startConnecting()
   {
     Sphero sphero = _spheroManager.getSphero();
@@ -123,7 +120,6 @@ public class SpheroConnectionController implements ISpheroConnectionController
     _serviceState.setSpheroStatus(SpheroStatus.connecting);
   }
 
-  @Override
 	public void stop()
   {
     _enabled = false;
@@ -134,7 +130,6 @@ public class SpheroConnectionController implements ISpheroConnectionController
     _serviceState.setSpheroStatus(SpheroStatus.disconnected);
   }
 
-  @Override
 	public void stopForBluetooth()
   {
     _enabled = false;
