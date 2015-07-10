@@ -1,5 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.myo;
 
+import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.DeviceListener;
 import com.thalmic.myo.Hub;
 import com.thalmic.myo.scanner.ScanActivity;
@@ -28,7 +29,9 @@ public class MyoController implements IMyoController
     _settingsEditor = settingsEditor;
     _state = state;
 
-    _listenerDelegate = new MyoDeviceListener(this, _settingsEditor, _eventListener, _state);
+    _listenerDelegate = new AbstractDeviceListener()
+		{
+		};
   }
 
   public void onCreate()
