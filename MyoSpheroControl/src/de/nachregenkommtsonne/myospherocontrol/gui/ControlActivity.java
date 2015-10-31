@@ -130,6 +130,7 @@ public class ControlActivity extends Activity {
 			});
 		}
 
+		@SuppressWarnings("deprecation")
 		private void updateUI(ServiceState serviceState) {
 			ImageView myoLinkedIcon = (ImageView) getView().findViewById(R.id.myoLinkedIcon);
 			ImageView myoConnectedIcon = (ImageView) getView().findViewById(R.id.myoConnectedIcon);
