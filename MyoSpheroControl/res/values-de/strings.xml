@@ -34,7 +34,7 @@
 		
 	<string name="spheroConnectedIcon">Sphero verbunden Symbol</string>
 	
-	<string name="pressStart">Drücke start um die Gräete zu verbinden.</string>
+	<string name="pressStart">Drücke Start um die Geräte zu verbinden.</string>
 	<string name="bluetoothTurningOn" tools:ignore="TypographyEllipsis">Bluetooth wird aktiviert. Bitte Warten...</string>
 	<string name="pleaseEnableBluetooth">Bitte aktiviere Bluetooth.</string>
 	<string name="myoNotSynced">Myo ist nicht synchronisiert. Please führe die Synchronisierungsgeste durch.</string>
