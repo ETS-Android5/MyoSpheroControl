@@ -120,7 +120,6 @@ public class SpheroConnectionController implements ISpheroConnectionController {
 		_enabled = false;
 		
 		DualStackDiscoveryAgent robotProvider = getDiscoveryAgent();
-		robotProvider.disconnectAll();
 
 		if (robotProvider.isDiscovering())
 			robotProvider.stopDiscovery();
