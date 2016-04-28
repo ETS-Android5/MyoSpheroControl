@@ -69,6 +69,6 @@ public class MovementCalculator implements IMovementCalculator
     if (_speed < 0.0f)
       _speed = 0.0f;
 
-    return new MovementResult(direction, _speed, (int) (_speed * 255), (int) (255 - (_speed * 255)), 0);
+    return new MovementResult(direction, _speed, _speed, 1.0f - _speed, 0.0f);
   }
 }

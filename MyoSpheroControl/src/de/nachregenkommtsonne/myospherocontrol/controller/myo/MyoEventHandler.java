@@ -34,7 +34,7 @@ public class MyoEventHandler implements IMyoEvents {
 	public void myoControlDeactivated() {
 		_controlmode = false;
 
-		_spheroController.changeColor(0, 0, 255);
+		_spheroController.changeColor(0, 0, 1.0f);
 		_spheroController.halt();
 	}
 

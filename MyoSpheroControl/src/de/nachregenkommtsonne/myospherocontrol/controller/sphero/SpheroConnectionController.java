@@ -1,140 +1,130 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
-import java.util.List;
+import com.orbotix.ConvenienceRobot;
+import com.orbotix.DualStackDiscoveryAgent;
+import com.orbotix.common.DiscoveryException;
+import com.orbotix.common.Robot;
+import com.orbotix.common.RobotChangedStateListener;
+import com.orbotix.common.stat.StatRecorder;
 
 import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
-import orbotix.robot.base.Robot;
-import orbotix.robot.base.RobotProvider;
-import orbotix.sphero.ConnectionListener;
-import orbotix.sphero.DiscoveryListener;
-import orbotix.sphero.Sphero;
 
-public class SpheroConnectionController implements ISpheroConnectionController
-{
-  private Context _context;
-  private SpheroManager _spheroManager;
-  private IServiceState _serviceState;
+public class SpheroConnectionController implements ISpheroConnectionController {
+	private Context _context;
+	private SpheroManager _spheroManager;
+	private IServiceState _serviceState;
 
-  private boolean _enabled;
+	private boolean _enabled;
 
-  public SpheroConnectionController(Context context, SpheroManager spheroManager, IServiceState serviceState)
-  {
-    _context = context;
-    _spheroManager = spheroManager;
-    _serviceState = serviceState;
-  }
+	public SpheroConnectionController(Context context, SpheroManager spheroManager, IServiceState serviceState) {
+		_context = context;
+		_spheroManager = spheroManager;
+		_serviceState = serviceState;
+	}
 
-  public void onCreate()
-  {
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.addConnectionListener(new ConnectionListener()
-		{
-    	public void onDisconnected(Robot sphero)
-      {
-      	_spheroManager.setConnected(false);
-        if (!_enabled)
-          return;
+	public void onCreate() {
+		DualStackDiscoveryAgent discoveryAgent = getDiscoveryAgent();
+		
+		discoveryAgent.addRobotStateListener(new RobotChangedStateListener() {
+			
+			@Override
+			public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type) {
 
-        if (_spheroManager.getSphero() == null)
-          startDiscovery();
-        else
-        {
-          startConnecting();
-        }
-      }
+				switch( type ) {
+					case Connecting:
+						_spheroManager.setConnected(false);
+						startConnecting();
+						break;
+					case Connected:
+						_spheroManager.setConnected(false);
+						break;
+		            case Online: {
+		            	_spheroManager.setConnected(true);
+		            	
+		            	ConvenienceRobot convenienceRobot = new ConvenienceRobot( robot );
 
-      public void onConnectionFailed(Robot sphero)
-      {
-      	_spheroManager.setConnected(false);
-        if (!_enabled)
-          return;
-
-        if (_spheroManager.getSphero() == null)
-          startDiscovery();
-        else
-        {
-          startConnecting();
-        }
-      }
-
-      public void onConnected(Robot arg0)
-      {
-        SpheroStatus spheroStatus = SpheroStatus.connected;
-				if (spheroStatus == SpheroStatus.connected)
-				{
-				  Sphero sphero = _spheroManager.getSphero();
-				
-				  if (sphero != null && sphero.isConnected())
-				    sphero.setColor(0, 0, 255);
-				}
-				
-				_serviceState.setSpheroStatus(spheroStatus);
-        _spheroManager.setConnected(true);
-      }
+		            	convenienceRobot.setBackLedBrightness(1.0f);
+		            	convenienceRobot.setLed(0.0f, 0.0f, 1.0f);
+		            	
+		            	_spheroManager.setSphero(convenienceRobot);
+		            	
+		            	_serviceState.setSpheroStatus(SpheroStatus.connected);
+		                break;
+		            }
+					case Disconnected:
+						_spheroManager.setConnected(false);
+						
+						if (_enabled)
+							startDiscovery();
+						
+						break;
+					case FailedConnect:
+						_spheroManager.setConnected(false);
+						
+						if (_enabled)
+							startDiscovery();
+						
+						break;
+					case Offline:
+						_spheroManager.setConnected(false);
+						
+						if (_enabled)
+							startDiscovery();
+						
+						break;
+					default:
+						break;
+		        }
+			}	
 		});
-    
-    robotProvider.addDiscoveryListener(new DiscoveryListener()
-		{
-      public void onFound(List<Sphero> spheros)
-      {
-        _spheroManager.setSphero(spheros.iterator().next());
-        startConnecting();
-      }
+	}
 
-      public void onBluetoothDisabled()
-      {
-      	_spheroManager.setConnected(false);
-      }
+	private DualStackDiscoveryAgent getDiscoveryAgent() {
+		return DualStackDiscoveryAgent.getInstance();
+	}
 
-      public void discoveryComplete(List<Sphero> spheros){}
-		});
-  }
+	public void start() {
+		startDiscovery();
+		_enabled = true;
+	}
 
-  private RobotProvider getRobotProvider()
-  {
-    return RobotProvider.getDefaultProvider();
-  }
+	public void startDiscovery() {
+		DualStackDiscoveryAgent discoveryAgent = getDiscoveryAgent();
+		try {
+			discoveryAgent.startDiscovery(_context);
+			StatRecorder.getInstance().stop();
+		} catch (DiscoveryException e) {
+		}
 
-	public void start()
-  {
-    startDiscovery();
-    _enabled = true;
-  }
+		_serviceState.setSpheroStatus(SpheroStatus.discovering);
+	}
 
-	public void startDiscovery()
-  {
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.startDiscovery(_context);
+	public void startConnecting() {
+		_serviceState.setSpheroStatus(SpheroStatus.connecting);
+	}
 
-    _serviceState.setSpheroStatus(SpheroStatus.discovering);
-  }
+	public void stop() {
+		_enabled = false;
+		
+		DualStackDiscoveryAgent robotProvider = getDiscoveryAgent();
+		robotProvider.disconnectAll();
 
-	public void startConnecting()
-  {
-    Sphero sphero = _spheroManager.getSphero();
+		if (robotProvider.isDiscovering())
+			robotProvider.stopDiscovery();
 
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.connect(sphero);
+		_serviceState.setSpheroStatus(SpheroStatus.disconnected);
+	}
 
-    _serviceState.setSpheroStatus(SpheroStatus.connecting);
-  }
+	public void stopForBluetooth() {
+		_enabled = false;
+		
+		DualStackDiscoveryAgent robotProvider = getDiscoveryAgent();
+		robotProvider.disconnectAll();
 
-	public void stop()
-  {
-    _enabled = false;
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.disconnectControlledRobots();
-    robotProvider.shutdown();
-    
-    _serviceState.setSpheroStatus(SpheroStatus.disconnected);
-  }
-
-	public void stopForBluetooth()
-  {
-    _enabled = false;
-    RobotProvider robotProvider = getRobotProvider();
-    robotProvider.shutdown();
-    _serviceState.setSpheroStatus(SpheroStatus.disconnected);
-  }
+		if (robotProvider.isDiscovering())
+			robotProvider.stopDiscovery();
+		
+		_serviceState.setSpheroStatus(SpheroStatus.disconnected);
+	}
 }

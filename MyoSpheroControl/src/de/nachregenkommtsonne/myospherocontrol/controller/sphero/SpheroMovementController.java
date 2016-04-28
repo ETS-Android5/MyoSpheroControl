@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
-import orbotix.sphero.Sphero;
+import com.orbotix.ConvenienceRobot;
 
 public class SpheroMovementController implements ISpheroMovementController
 {
@@ -13,23 +13,23 @@ public class SpheroMovementController implements ISpheroMovementController
 
 	public void halt()
 	{
-    Sphero sphero = _spheroManager.getSphero();
+		ConvenienceRobot sphero = _spheroManager.getSphero();
 
     if (sphero != null && sphero.isConnected())
       sphero.stop();
 	}
 
-	public void changeColor(int red, int green, int blue)
+	public void changeColor(float red, float green, float blue)
 	{
-		Sphero sphero = _spheroManager.getSphero();
+		ConvenienceRobot sphero = _spheroManager.getSphero();
 
     if (sphero != null && sphero.isConnected())
-      sphero.setColor(red, green, blue);
+        sphero.setLed(red, green, blue);
 	}
 
 	public void move(float direction, float speed)
 	{
-    Sphero sphero = _spheroManager.getSphero();
+		ConvenienceRobot sphero = _spheroManager.getSphero();
 
     if (!_spheroManager.isConnected() && sphero != null && sphero.isConnected())
     	_spheroManager.setConnected(true);

@@ -1,10 +1,11 @@
 package de.nachregenkommtsonne.myospherocontrol.controller.sphero;
 
-import orbotix.sphero.Sphero;
+import com.orbotix.ConvenienceRobot;
+
 
 public class SpheroManager
 {
-  private Sphero _sphero;
+  private ConvenienceRobot _sphero;
   private boolean _connected;
 
   public SpheroManager()
@@ -13,12 +14,12 @@ public class SpheroManager
     _connected = false;
   }
 
-  public Sphero getSphero()
+  public ConvenienceRobot getSphero()
   {
     return _sphero;
   }
 
-  public void setSphero(Sphero sphero)
+  public void setSphero(ConvenienceRobot sphero)
   {
     _sphero = sphero;
   }
