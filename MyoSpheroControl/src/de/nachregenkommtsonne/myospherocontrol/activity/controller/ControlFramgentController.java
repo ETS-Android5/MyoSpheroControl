@@ -53,8 +53,7 @@ public class ControlFramgentController implements IControlFramgentController
     if (!_myServiceConnection.get_myBinder().getState().isRunning())
     {
       _myServiceConnection.get_myBinder().linkUnlinkButtonClicked();
-    }
-    else
+    } else
     {
       Activity activity = _viewAccessor.getActivity();
       Intent intent = new Intent(activity, ScanActivity.class);

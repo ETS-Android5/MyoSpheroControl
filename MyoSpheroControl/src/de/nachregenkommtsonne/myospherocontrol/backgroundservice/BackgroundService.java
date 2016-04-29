@@ -23,30 +23,28 @@ import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroMovementC
 
 public class BackgroundService extends Service
 {
-	private ServiceState _serviceState;
+  private ServiceState _serviceState;
   private NotifyingServiceState _notifyingServiceState;
   private ServiceBinder _serviceBinder;
   private SpheroConnectionController _spheroController;
   private MyoController _myoController;
   private BluetoothController _bluetoothController;
-  
+
   public BackgroundService()
   {
     super();
 
     _serviceState = new ServiceState();
     _notifyingServiceState = new NotifyingServiceState(_serviceState);
-    
+
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
     BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
 
-    
     SpheroManager spheroManager = new SpheroManager();
     _spheroController = new SpheroConnectionController(this, spheroManager, _notifyingServiceState);
     SpheroMovementController spheroMovementController = new SpheroMovementController(spheroManager);
-    
-    
+
     _myoController = myoControllerFactory.create(this, _notifyingServiceState, spheroMovementController);
     _bluetoothController = bluetoothControllerFactory.create(_notifyingServiceState, _spheroController, _myoController);
     _serviceBinder = serviceBinderFactory.create(_serviceState, _notifyingServiceState, _spheroController, _myoController);

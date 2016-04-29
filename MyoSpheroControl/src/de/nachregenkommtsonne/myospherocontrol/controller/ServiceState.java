@@ -10,7 +10,7 @@ public class ServiceState implements IServiceState
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
   private BluetoothStatus _bluetoothStatus;
-  
+
   private boolean _running;
 
   public ServiceState()
@@ -18,7 +18,7 @@ public class ServiceState implements IServiceState
     _myoStatus = MyoStatus.notLinked;
     _spheroStatus = SpheroStatus.disconnected;
     _bluetoothStatus = BluetoothStatus.off;
-    
+
     _running = false;
   }
 
@@ -29,48 +29,48 @@ public class ServiceState implements IServiceState
         : BluetoothStatus.off;
   }
 
-	public boolean isRunning()
+  public boolean isRunning()
   {
     return _running;
   }
 
-	public void setRunning(boolean running)
+  public void setRunning(boolean running)
   {
     _running = running;
   }
 
   @Override
-	public BluetoothStatus getBluetoothState()
+  public BluetoothStatus getBluetoothState()
   {
     return _bluetoothStatus;
   }
 
   @Override
-	public void setBluetoothState(BluetoothStatus bluetoothStatus)
+  public void setBluetoothState(BluetoothStatus bluetoothStatus)
   {
     _bluetoothStatus = bluetoothStatus;
   }
 
   @Override
-	public void setMyoStatus(MyoStatus myoStatus)
+  public void setMyoStatus(MyoStatus myoStatus)
   {
     _myoStatus = myoStatus;
   }
 
   @Override
-	public void setSpheroStatus(SpheroStatus spheroStatus)
+  public void setSpheroStatus(SpheroStatus spheroStatus)
   {
     _spheroStatus = spheroStatus;
   }
 
   @Override
-	public MyoStatus getMyoStatus()
+  public MyoStatus getMyoStatus()
   {
     return _myoStatus;
   }
 
   @Override
-	public SpheroStatus getSpheroStatus()
+  public SpheroStatus getSpheroStatus()
   {
     return _spheroStatus;
   }

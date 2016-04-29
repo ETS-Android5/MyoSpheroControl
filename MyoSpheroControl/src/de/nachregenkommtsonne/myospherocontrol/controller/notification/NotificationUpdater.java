@@ -29,7 +29,7 @@ public class NotificationUpdater implements INotificationUpdater
     {
       Intent intent = new Intent(_context, ControlActivity.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      
+
       PendingIntent pIntent = PendingIntent.getActivity(_context, 0, intent, 0);
 
       Notification notification = new Notification.Builder(_context)
@@ -46,8 +46,7 @@ public class NotificationUpdater implements INotificationUpdater
           .getSystemService(Context.NOTIFICATION_SERVICE);
 
       notificationManager.notify(0, notification);
-    }
-    else
+    } else
     {
       NotificationManager notificationManager = (NotificationManager) _context
           .getSystemService(Context.NOTIFICATION_SERVICE);

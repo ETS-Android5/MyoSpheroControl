@@ -27,8 +27,7 @@ public class ButtonClickHandler
         _spheroController.stop();
       }
       _myoController.stop();
-    }
-    else
+    } else
     {
       _myoController.start();
       if (_state.getBluetoothState() == BluetoothStatus.on)

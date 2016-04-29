@@ -4,7 +4,7 @@ public class MovementResult
 {
   private float _direction;
   private float _speed;
-  
+
   private float _red;
   private float _green;
   private float _blue;
@@ -12,10 +12,10 @@ public class MovementResult
   public MovementResult(float direction, float speed, float red, float green, float blue)
   {
     super();
-    
+
     _direction = direction;
     _speed = speed;
-    
+
     _red = red;
     _green = green;
     _blue = blue;

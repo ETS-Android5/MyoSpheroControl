@@ -11,5 +11,5 @@ public interface IMyoEvents
 
   void myoOrientationDataCollected(Quaternion rotation, Myo myo);
 
-	void stopControlMode();
+  void stopControlMode();
 }

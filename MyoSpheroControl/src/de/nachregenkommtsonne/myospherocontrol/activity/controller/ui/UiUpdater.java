@@ -87,14 +87,12 @@ public class UiUpdater implements Runnable
       String linkLabel = _viewAccessor.getString(R.string.clickToLink);
       linkUnlinkButton.setText(linkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
-    }
-    else if (myoStatus != MyoStatus.notLinked && !_serviceState.isRunning())
+    } else if (myoStatus != MyoStatus.notLinked && !_serviceState.isRunning())
     {
       String unlinkLabel = _viewAccessor.getString(R.string.clickToUnlink);
       linkUnlinkButton.setText(unlinkLabel);
       linkUnlinkButton.setVisibility(View.VISIBLE);
-    }
-    else
+    } else
     {
       linkUnlinkButton.setVisibility(View.GONE);
     }

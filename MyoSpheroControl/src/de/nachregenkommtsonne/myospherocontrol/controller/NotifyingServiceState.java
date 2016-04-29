@@ -7,60 +7,60 @@ import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class NotifyingServiceState implements IServiceState
 {
-	private IServiceState _serviceState;
-	private IChangedNotifier _changedNotifier;
+  private IServiceState _serviceState;
+  private IChangedNotifier _changedNotifier;
 
-	public NotifyingServiceState(IServiceState serviceState)
-	{
-		_serviceState = serviceState;
-	}
+  public NotifyingServiceState(IServiceState serviceState)
+  {
+    _serviceState = serviceState;
+  }
 
-	public void setChangedNotifier(IChangedNotifier changedNotifier)
-	{
-		_changedNotifier = changedNotifier;
-	}
+  public void setChangedNotifier(IChangedNotifier changedNotifier)
+  {
+    _changedNotifier = changedNotifier;
+  }
 
-	public void setSpheroStatus(SpheroStatus spheroStatus)
-	{
-		_serviceState.setSpheroStatus(spheroStatus);
-		_changedNotifier.onChanged();
-	}
+  public void setSpheroStatus(SpheroStatus spheroStatus)
+  {
+    _serviceState.setSpheroStatus(spheroStatus);
+    _changedNotifier.onChanged();
+  }
 
-	public SpheroStatus getSpheroStatus()
-	{
-		return _serviceState.getSpheroStatus();
-	}
+  public SpheroStatus getSpheroStatus()
+  {
+    return _serviceState.getSpheroStatus();
+  }
 
-	public void setMyoStatus(MyoStatus myoStatus)
-	{
-		_serviceState.setMyoStatus(myoStatus);
-		_changedNotifier.onChanged();
-	}
+  public void setMyoStatus(MyoStatus myoStatus)
+  {
+    _serviceState.setMyoStatus(myoStatus);
+    _changedNotifier.onChanged();
+  }
 
-	public MyoStatus getMyoStatus()
-	{
-		return _serviceState.getMyoStatus();
-	}
+  public MyoStatus getMyoStatus()
+  {
+    return _serviceState.getMyoStatus();
+  }
 
-	public void setBluetoothState(BluetoothStatus bluetoothStatus)
-	{
-		_serviceState.setBluetoothState(bluetoothStatus);
-		_changedNotifier.onChanged();
-	}
+  public void setBluetoothState(BluetoothStatus bluetoothStatus)
+  {
+    _serviceState.setBluetoothState(bluetoothStatus);
+    _changedNotifier.onChanged();
+  }
 
-	public BluetoothStatus getBluetoothState()
-	{
-		return _serviceState.getBluetoothState();
-	}
+  public BluetoothStatus getBluetoothState()
+  {
+    return _serviceState.getBluetoothState();
+  }
 
-	public void setRunning(boolean running)
-	{
-		_serviceState.setRunning(running);
-		_changedNotifier.onChanged();
-	}
+  public void setRunning(boolean running)
+  {
+    _serviceState.setRunning(running);
+    _changedNotifier.onChanged();
+  }
 
-	public boolean isRunning()
-	{
-		return _serviceState.isRunning();
-	}
+  public boolean isRunning()
+  {
+    return _serviceState.isRunning();
+  }
 }

@@ -8,119 +8,140 @@ import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import android.content.Context;
 import android.content.Intent;
 
-public class MyoController implements IMyoController {
-	private IMyoEvents _eventListener;
-	private Context _context;
-	private DeviceListener _deviceListener;
-	private SettingsEditor _settingsEditor;
-	private IServiceState _state;
+public class MyoController implements IMyoController
+{
+  private IMyoEvents _eventListener;
+  private Context _context;
+  private DeviceListener _deviceListener;
+  private SettingsEditor _settingsEditor;
+  private IServiceState _state;
 
-	private boolean _running;
-	private boolean _connecting;
+  private boolean _running;
+  private boolean _connecting;
 
-	public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor,
-			IServiceState state) {
-		_context = context;
-		_eventListener = eventListener;
-		_settingsEditor = settingsEditor;
-		_state = state;
-	}
+  public MyoController(Context context, IMyoEvents eventListener, SettingsEditor settingsEditor,
+      IServiceState state)
+  {
+    _context = context;
+    _eventListener = eventListener;
+    _settingsEditor = settingsEditor;
+    _state = state;
+  }
 
-	public void setDeviceListener(DeviceListener deviceListener) {
-		_deviceListener = deviceListener;
-	}
+  public void setDeviceListener(DeviceListener deviceListener)
+  {
+    _deviceListener = deviceListener;
+  }
 
-	public void onCreate() {
-		Hub hub = getHub();
+  public void onCreate()
+  {
+    Hub hub = getHub();
 
-		hub.setSendUsageData(false);
+    hub.setSendUsageData(false);
 
-		_settingsEditor.onCreate(_context);
-		updateDisabledState();
-	}
+    _settingsEditor.onCreate(_context);
+    updateDisabledState();
+  }
 
-	public boolean isRunning() {
-		return _running;
-	}
+  public boolean isRunning()
+  {
+    return _running;
+  }
 
-	public boolean isConnecting() {
-		return _connecting;
-	}
+  public boolean isConnecting()
+  {
+    return _connecting;
+  }
 
-	private Hub getHub() {
-		return Hub.getInstance();
-	}
+  private Hub getHub()
+  {
+    return Hub.getInstance();
+  }
 
-	public void start() {
-		Hub hub = getHub();
+  public void start()
+  {
+    Hub hub = getHub();
 
-		if (!hub.init(_context, _context.getPackageName())) {
-			throw new RuntimeException("Error initializing Myo hub");
-		}
-		hub.addListener(_deviceListener);
-		_running = true;
-	}
+    if (!hub.init(_context, _context.getPackageName()))
+    {
+      throw new RuntimeException("Error initializing Myo hub");
+    }
+    hub.addListener(_deviceListener);
+    _running = true;
+  }
 
-	public void stop() {
-		_running = false;
-		_connecting = false;
+  public void stop()
+  {
+    _running = false;
+    _connecting = false;
 
-		Hub hub = getHub();
+    Hub hub = getHub();
 
-		hub.removeListener(_deviceListener);
-		hub.shutdown();
-		updateDisabledState();
-	}
+    hub.removeListener(_deviceListener);
+    hub.shutdown();
+    updateDisabledState();
+  }
 
-	public void updateDisabledState() {
-		String myoMac = _settingsEditor.getMac();
-		if (myoMac == null) {
-			_state.setMyoStatus(MyoStatus.notLinked);
-		} else {
-			_state.setMyoStatus(MyoStatus.linked);
-		}
-	}
+  public void updateDisabledState()
+  {
+    String myoMac = _settingsEditor.getMac();
+    if (myoMac == null)
+    {
+      _state.setMyoStatus(MyoStatus.notLinked);
+    } else
+    {
+      _state.setMyoStatus(MyoStatus.linked);
+    }
+  }
 
-	public void startConnecting() {
-		_connecting = true;
+  public void startConnecting()
+  {
+    _connecting = true;
 
-		Hub hub = getHub();
-		String myoMac = _settingsEditor.getMac();
-		if (myoMac == null) {
-			_state.setMyoStatus(MyoStatus.notLinked);
-			hub.attachToAdjacentMyo();
-		} else {
-			connectToLinkedMyo(myoMac);
-		}
-	}
+    Hub hub = getHub();
+    String myoMac = _settingsEditor.getMac();
+    if (myoMac == null)
+    {
+      _state.setMyoStatus(MyoStatus.notLinked);
+      hub.attachToAdjacentMyo();
+    } else
+    {
+      connectToLinkedMyo(myoMac);
+    }
+  }
 
-	public void stopConnecting() {
-		stop();
-		start();
+  public void stopConnecting()
+  {
+    stop();
+    start();
 
-		updateDisabledState();
-		_connecting = false;
+    updateDisabledState();
+    _connecting = false;
 
-		_eventListener.stopControlMode();
-	}
+    _eventListener.stopControlMode();
+  }
 
-	public void connectToLinkedMyo(String mac) {
-		if (!_connecting)
-			return;
+  public void connectToLinkedMyo(String mac)
+  {
+    if (!_connecting)
+      return;
 
-		Hub hub = getHub();
-		hub.attachByMacAddress(mac);
+    Hub hub = getHub();
+    hub.attachByMacAddress(mac);
 
-		_state.setMyoStatus(MyoStatus.linked);
-	}
+    _state.setMyoStatus(MyoStatus.linked);
+  }
 
-	public void connectAndUnlinkButtonClicked() {
-		if (!_running) {
-			_settingsEditor.deleteMac();
-			_state.setMyoStatus(MyoStatus.notLinked);
-		} else {
-			Intent intent = new Intent(_context, ScanActivity.class);
-			_context.startActivity(intent);
-		}
-	}
+  public void connectAndUnlinkButtonClicked()
+  {
+    if (!_running)
+    {
+      _settingsEditor.deleteMac();
+      _state.setMyoStatus(MyoStatus.notLinked);
+    } else
+    {
+      Intent intent = new Intent(_context, ScanActivity.class);
+      _context.startActivity(intent);
+    }
+  }
 }

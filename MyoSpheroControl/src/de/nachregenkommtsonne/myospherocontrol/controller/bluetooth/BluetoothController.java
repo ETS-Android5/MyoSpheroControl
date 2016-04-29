@@ -22,25 +22,25 @@ public class BluetoothController extends BroadcastReceiver
     {
       int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
       switch (state)
-      {
-      case BluetoothAdapter.STATE_OFF:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.off);
-        break;
+        {
+        case BluetoothAdapter.STATE_OFF:
+          _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.off);
+          break;
 
-      case BluetoothAdapter.STATE_TURNING_OFF:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOff);
-        _bluetoothStateHandler.deactivate();
-        break;
+        case BluetoothAdapter.STATE_TURNING_OFF:
+          _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOff);
+          _bluetoothStateHandler.deactivate();
+          break;
 
-      case BluetoothAdapter.STATE_ON:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.on);
-        _bluetoothStateHandler.activate();
-        break;
+        case BluetoothAdapter.STATE_ON:
+          _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.on);
+          _bluetoothStateHandler.activate();
+          break;
 
-      case BluetoothAdapter.STATE_TURNING_ON:
-        _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOn);
-        break;
-      }
+        case BluetoothAdapter.STATE_TURNING_ON:
+          _bluetoothStateHandler.updateBluetoothState(BluetoothStatus.turningOn);
+          break;
+        }
     }
   }
 }

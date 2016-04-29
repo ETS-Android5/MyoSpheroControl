@@ -19,7 +19,7 @@ public class MovementCalculator implements IMovementCalculator
     _resetRoll = true;
   }
 
-  //TODO: refactor
+  // TODO: refactor
   public MovementResult calculate(Quaternion rotation, boolean towardElbow)
   {
     float roll = (float) Math.toDegrees(Quaternion.roll(rotation));
@@ -57,8 +57,7 @@ public class MovementCalculator implements IMovementCalculator
     if (pitch < 0.0f)
     {
       _speed = (pitch + 40.f) / 200.f;
-    }
-    else
+    } else
     {
       _speed = 0.2f + pitch / 45.f * 0.8f;
     }

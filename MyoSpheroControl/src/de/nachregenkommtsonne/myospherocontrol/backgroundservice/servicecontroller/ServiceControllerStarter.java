@@ -27,8 +27,7 @@ public class ServiceControllerStarter implements Runnable
     try
     {
       Thread.sleep(1400);
-    }
-    catch (InterruptedException e)
+    } catch (InterruptedException e)
     {
     }
 
