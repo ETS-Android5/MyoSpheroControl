@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
-public class BluetoothController extends BroadcastReceiver
+public class BluetoothStateReceiver extends BroadcastReceiver
 {
   private IBluetoothStateHandler _bluetoothStateHandler;
   private IServiceState _serviceState;
 
-  public BluetoothController(IBluetoothStateHandler bluetoothStateHandler, IServiceState serviceState)
+  public BluetoothStateReceiver(IBluetoothStateHandler bluetoothStateHandler, IServiceState serviceState)
   {
     _bluetoothStateHandler = bluetoothStateHandler;
     _serviceState = serviceState;
@@ -28,25 +28,25 @@ public class BluetoothController extends BroadcastReceiver
       switch (state)
         {
         case BluetoothAdapter.STATE_OFF:
-          _serviceState.setBluetoothState(BluetoothStatus.off);
+          _serviceState.setBluetoothState(BluetoothState.off);
           break;
 
         case BluetoothAdapter.STATE_TURNING_OFF:
-          _serviceState.setBluetoothState(BluetoothStatus.turningOff);
+          _serviceState.setBluetoothState(BluetoothState.turningOff);
 
           if (_serviceState.isRunning())
-            _bluetoothStateHandler.deactivate();
+            _bluetoothStateHandler.stop();
           break;
 
         case BluetoothAdapter.STATE_ON:
-          _serviceState.setBluetoothState(BluetoothStatus.on);
+          _serviceState.setBluetoothState(BluetoothState.on);
 
           if (_serviceState.isRunning())
-            _bluetoothStateHandler.activate();
+            _bluetoothStateHandler.start();
           break;
 
         case BluetoothAdapter.STATE_TURNING_ON:
-          _serviceState.setBluetoothState(BluetoothStatus.turningOn);
+          _serviceState.setBluetoothState(BluetoothState.turningOn);
           break;
         }
     }

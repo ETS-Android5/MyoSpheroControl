@@ -4,16 +4,16 @@ import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
 
-public class BluetoothControllerFactory
+public class BluetoothStateReceiverFactory
 {
-  public BluetoothControllerFactory()
+  public BluetoothStateReceiverFactory()
   {
   }
 
-  public BluetoothController create(IServiceState serviceState, ISpheroController spheroController, IMyoController myoController)
+  public BluetoothStateReceiver create(IServiceState serviceState, ISpheroController spheroController, IMyoController myoController)
   {
     BluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(myoController, spheroController);
-    BluetoothController bluetoothController = new BluetoothController(bluetoothStateHandler, serviceState);
-    return bluetoothController;
+
+    return new BluetoothStateReceiver(bluetoothStateHandler, serviceState);
   }
 }

@@ -5,7 +5,7 @@ import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 import static org.junit.Assert.*;
@@ -38,7 +38,7 @@ public class GuiStateHinterTest
   public void getHint_BluetoothOff()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.off);
+    _serviceState.setBluetoothState(BluetoothState.off);
 
     int hint = _guiStateHinter.getHint(_serviceState);
 
@@ -49,7 +49,7 @@ public class GuiStateHinterTest
   public void getHint_BluetoothTurningOff()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.turningOff);
+    _serviceState.setBluetoothState(BluetoothState.turningOff);
 
     int hint = _guiStateHinter.getHint(_serviceState);
 
@@ -60,7 +60,7 @@ public class GuiStateHinterTest
   public void getHint_BluetoothTurningOn()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.turningOn);
+    _serviceState.setBluetoothState(BluetoothState.turningOn);
 
     int hint = _guiStateHinter.getHint(_serviceState);
 
@@ -71,7 +71,7 @@ public class GuiStateHinterTest
   public void getHint_MyoNotLinked()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.notLinked);
 
     int hint = _guiStateHinter.getHint(_serviceState);
@@ -83,7 +83,7 @@ public class GuiStateHinterTest
   public void getHint_MyoConnecting()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.linked);
 
     int hint = _guiStateHinter.getHint(_serviceState);
@@ -95,7 +95,7 @@ public class GuiStateHinterTest
   public void getHint_MyoNotSynced()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.notSynced);
 
     int hint = _guiStateHinter.getHint(_serviceState);
@@ -107,7 +107,7 @@ public class GuiStateHinterTest
   public void getHint_SpheroDiscovering()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
     _serviceState.setSpheroStatus(SpheroStatus.discovering);
 
@@ -120,7 +120,7 @@ public class GuiStateHinterTest
   public void getHint_SpheroConnecting()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
     _serviceState.setSpheroStatus(SpheroStatus.connecting);
 
@@ -133,7 +133,7 @@ public class GuiStateHinterTest
   public void getHint()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
     _serviceState.setSpheroStatus(SpheroStatus.connected);
 
@@ -146,7 +146,7 @@ public class GuiStateHinterTest
   public void getHint_Error()
   {
     _serviceState.setRunning(true);
-    _serviceState.setBluetoothState(BluetoothStatus.on);
+    _serviceState.setBluetoothState(BluetoothState.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
     _serviceState.setSpheroStatus(SpheroStatus.disconnected);
 

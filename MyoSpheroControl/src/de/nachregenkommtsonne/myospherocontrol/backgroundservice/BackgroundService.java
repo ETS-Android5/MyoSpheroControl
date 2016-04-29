@@ -11,8 +11,8 @@ import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceB
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.ServiceBinderFactory;
 import de.nachregenkommtsonne.myospherocontrol.controller.NotifyingServiceState;
 import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothController;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothControllerFactory;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStateReceiver;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStateReceiverFactory;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoController;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoControllerFactory;
 import de.nachregenkommtsonne.myospherocontrol.controller.notification.INotificationUpdater;
@@ -28,7 +28,7 @@ public class BackgroundService extends Service
   private ServiceBinder _serviceBinder;
   private SpheroController _spheroController;
   private MyoController _myoController;
-  private BluetoothController _bluetoothController;
+  private BluetoothStateReceiver _bluetoothController;
 
   public BackgroundService()
   {
@@ -38,7 +38,7 @@ public class BackgroundService extends Service
     _notifyingServiceState = new NotifyingServiceState(_serviceState);
 
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
-    BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
+    BluetoothStateReceiverFactory bluetoothControllerFactory = new BluetoothStateReceiverFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
     SpheroManager spheroManager = new SpheroManager();
     SpheroMovementController spheroMovementController = new SpheroMovementController(spheroManager);

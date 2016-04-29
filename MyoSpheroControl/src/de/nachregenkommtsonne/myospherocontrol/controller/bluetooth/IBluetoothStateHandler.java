@@ -2,7 +2,7 @@ package de.nachregenkommtsonne.myospherocontrol.controller.bluetooth;
 
 public interface IBluetoothStateHandler
 {
-  public abstract void deactivate();
+  public abstract void stop();
 
-  public abstract void activate();
+  public abstract void start();
 }

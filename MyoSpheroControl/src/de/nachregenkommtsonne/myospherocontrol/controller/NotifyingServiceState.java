@@ -1,7 +1,7 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -42,13 +42,13 @@ public class NotifyingServiceState implements IServiceState
     return _serviceState.getMyoStatus();
   }
 
-  public void setBluetoothState(BluetoothStatus bluetoothStatus)
+  public void setBluetoothState(BluetoothState bluetoothStatus)
   {
     _serviceState.setBluetoothState(bluetoothStatus);
     _changedNotifier.onChanged();
   }
 
-  public BluetoothStatus getBluetoothState()
+  public BluetoothState getBluetoothState()
   {
     return _serviceState.getBluetoothState();
   }

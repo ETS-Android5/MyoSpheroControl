@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -19,7 +19,7 @@ public class ServiceStateTest
     assertFalse(serviceState.isRunning());
     assertEquals(MyoStatus.notLinked, serviceState.getMyoStatus());
     assertEquals(SpheroStatus.disconnected, serviceState.getSpheroStatus());
-    assertEquals(BluetoothStatus.off, serviceState.getBluetoothState());
+    assertEquals(BluetoothState.off, serviceState.getBluetoothState());
   }
   
   @Test
@@ -31,6 +31,6 @@ public class ServiceStateTest
     assertFalse(serviceState.isRunning());
     assertEquals(MyoStatus.notLinked, serviceState.getMyoStatus());
     assertEquals(SpheroStatus.disconnected, serviceState.getSpheroStatus());
-    assertEquals(BluetoothStatus.on, serviceState.getBluetoothState());
+    assertEquals(BluetoothState.on, serviceState.getBluetoothState());
   }
 }

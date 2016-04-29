@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -68,19 +68,19 @@ public class NotifyingServiceStateTest
   @Test
   public void getBluetoothState()
   {
-    when(_serviceState.getBluetoothState()).thenReturn(BluetoothStatus.turningOff);
+    when(_serviceState.getBluetoothState()).thenReturn(BluetoothState.turningOff);
     
-    BluetoothStatus bluetoothState = _notifyingServiceState.getBluetoothState();
+    BluetoothState bluetoothState = _notifyingServiceState.getBluetoothState();
 
-    assertEquals(BluetoothStatus.turningOff, bluetoothState);
+    assertEquals(BluetoothState.turningOff, bluetoothState);
   }
   
   @Test
   public void setBluetoothState()
   {
-    _notifyingServiceState.setBluetoothState(BluetoothStatus.turningOff);
+    _notifyingServiceState.setBluetoothState(BluetoothState.turningOff);
 
-    verify(_serviceState).setBluetoothState(BluetoothStatus.turningOff);
+    verify(_serviceState).setBluetoothState(BluetoothState.turningOff);
     verify(_changedNotifier).onChanged();
   }
   

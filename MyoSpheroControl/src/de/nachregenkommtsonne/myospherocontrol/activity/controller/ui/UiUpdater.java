@@ -10,7 +10,7 @@ import android.widget.TextView;
 import de.nachregenkommtsonne.myospherocontrol.IGuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -45,7 +45,7 @@ public class UiUpdater implements Runnable
 
     MyoStatus myoStatus = _serviceState.getMyoStatus();
     SpheroStatus spheroStatus = _serviceState.getSpheroStatus();
-    BluetoothStatus bluetoothStatus = _serviceState.getBluetoothState();
+    BluetoothState bluetoothStatus = _serviceState.getBluetoothState();
 
     int hintResource = _guiStateHinter.getHint(_serviceState);
     String hint = activity.getString(hintResource);
@@ -82,7 +82,7 @@ public class UiUpdater implements Runnable
 
     hintText.setText(hint);
 
-    if (myoStatus == MyoStatus.notLinked && _serviceState.isRunning() && bluetoothStatus == BluetoothStatus.on)
+    if (myoStatus == MyoStatus.notLinked && _serviceState.isRunning() && bluetoothStatus == BluetoothState.on)
     {
       String linkLabel = _viewAccessor.getString(R.string.clickToLink);
       linkUnlinkButton.setText(linkLabel);

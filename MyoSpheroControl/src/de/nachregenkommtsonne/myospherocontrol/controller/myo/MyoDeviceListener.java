@@ -16,8 +16,7 @@ public class MyoDeviceListener extends AbstractDeviceListener
   private IMyoEvents _eventListener;
   private IServiceState _state;
 
-  public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor, IMyoEvents eventListener,
-      IServiceState state)
+  public MyoDeviceListener(MyoController myoController, SettingsEditor settingsEditor, IMyoEvents eventListener, IServiceState state)
   {
     _myoController = myoController;
     _settingsEditor = settingsEditor;

@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -8,7 +8,7 @@ public class ServiceState implements IServiceState
 {
   private MyoStatus _myoStatus;
   private SpheroStatus _spheroStatus;
-  private BluetoothStatus _bluetoothStatus;
+  private BluetoothState _bluetoothState;
 
   private boolean _running;
 
@@ -16,14 +16,14 @@ public class ServiceState implements IServiceState
   {
     _myoStatus = MyoStatus.notLinked;
     _spheroStatus = SpheroStatus.disconnected;
-    _bluetoothStatus = BluetoothStatus.off;
+    _bluetoothState = BluetoothState.off;
 
     _running = false;
   }
 
   public void onCreate(boolean isBluetoothEnabled)
   {
-    _bluetoothStatus = isBluetoothEnabled ? BluetoothStatus.on : BluetoothStatus.off;
+    _bluetoothState = isBluetoothEnabled ? BluetoothState.on : BluetoothState.off;
   }
 
   public boolean isRunning()
@@ -37,15 +37,15 @@ public class ServiceState implements IServiceState
   }
 
   @Override
-  public BluetoothStatus getBluetoothState()
+  public BluetoothState getBluetoothState()
   {
-    return _bluetoothStatus;
+    return _bluetoothState;
   }
 
   @Override
-  public void setBluetoothState(BluetoothStatus bluetoothStatus)
+  public void setBluetoothState(BluetoothState bluetoothStatus)
   {
-    _bluetoothStatus = bluetoothStatus;
+    _bluetoothState = bluetoothStatus;
   }
 
   @Override

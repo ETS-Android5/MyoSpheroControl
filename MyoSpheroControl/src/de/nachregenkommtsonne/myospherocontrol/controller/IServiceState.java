@@ -1,6 +1,6 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
@@ -14,9 +14,9 @@ public interface IServiceState
 
   public abstract MyoStatus getMyoStatus();
 
-  public abstract void setBluetoothState(BluetoothStatus bluetoothStatus);
+  public abstract void setBluetoothState(BluetoothState bluetoothStatus);
 
-  public abstract BluetoothStatus getBluetoothState();
+  public abstract BluetoothState getBluetoothState();
 
   public abstract void setRunning(boolean running);
 

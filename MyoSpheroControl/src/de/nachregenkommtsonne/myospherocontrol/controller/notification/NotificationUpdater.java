@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
 import de.nachregenkommtsonne.myospherocontrol.R;
 import de.nachregenkommtsonne.myospherocontrol.activity.ControlActivity;
@@ -35,8 +37,9 @@ public class NotificationUpdater implements INotificationUpdater
       Notification notification = new Notification.Builder(_context)
           .setContentTitle(_context.getString(R.string.app_name))
           .setContentText(_context.getString(_guiStateHinter.getHint(_state)))
-          .setSmallIcon(R.drawable.ic_launcher)
-          .setContentIntent(pIntent)
+          .setSmallIcon(getNotificationIcon())
+
+      .setContentIntent(pIntent)
           .setAutoCancel(false)
           .setWhen(0)
           .setOngoing(true)
@@ -53,5 +56,11 @@ public class NotificationUpdater implements INotificationUpdater
 
       notificationManager.cancel(0);
     }
+  }
+
+  private int getNotificationIcon()
+  {
+    boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+    return useWhiteIcon ? R.drawable.icon_silhouette : R.drawable.ic_launcher;
   }
 }
