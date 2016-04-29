@@ -1,6 +1,5 @@
 package de.nachregenkommtsonne.myospherocontrol.controller;
 
-import android.bluetooth.BluetoothAdapter;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
@@ -22,11 +21,9 @@ public class ServiceState implements IServiceState
     _running = false;
   }
 
-  public void onCreate()
+  public void onCreate(boolean isBluetoothEnabled)
   {
-    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    _bluetoothStatus = (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) ? BluetoothStatus.on
-        : BluetoothStatus.off;
+    _bluetoothStatus = isBluetoothEnabled ? BluetoothStatus.on : BluetoothStatus.off;
   }
 
   public boolean isRunning()

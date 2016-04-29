@@ -9,6 +9,7 @@ import org.junit.Test;
 import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
 import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothStatus;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
 
 public class NotifyingServiceStateTest
 {
@@ -24,6 +25,25 @@ public class NotifyingServiceStateTest
     
     _changedNotifier = mock(IChangedNotifier.class);
     _notifyingServiceState.setChangedNotifier(_changedNotifier);
+  }
+  
+  @Test
+  public void getSpheroStatus()
+  {
+    when(_serviceState.getSpheroStatus()).thenReturn(SpheroStatus.discovering);
+    
+    SpheroStatus spheroStatus = _notifyingServiceState.getSpheroStatus();
+
+    assertEquals(SpheroStatus.discovering, spheroStatus);
+  }
+  
+  @Test
+  public void setSpheroStatus()
+  {
+    _notifyingServiceState.setSpheroStatus(SpheroStatus.discovering);
+
+    verify(_serviceState).setSpheroStatus(SpheroStatus.discovering);
+    verify(_changedNotifier).onChanged();
   }
   
   @Test

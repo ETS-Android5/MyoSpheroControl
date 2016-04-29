@@ -10,7 +10,7 @@ import com.orbotix.common.stat.StatRecorder;
 import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
-public class SpheroConnectionController implements ISpheroConnectionController
+public class SpheroController implements ISpheroController
 {
   private Context _context;
   private SpheroManager _spheroManager;
@@ -18,7 +18,7 @@ public class SpheroConnectionController implements ISpheroConnectionController
 
   private boolean _enabled;
 
-  public SpheroConnectionController(Context context, SpheroManager spheroManager, IServiceState serviceState)
+  public SpheroController(Context context, SpheroManager spheroManager, IServiceState serviceState)
   {
     _context = context;
     _spheroManager = spheroManager;

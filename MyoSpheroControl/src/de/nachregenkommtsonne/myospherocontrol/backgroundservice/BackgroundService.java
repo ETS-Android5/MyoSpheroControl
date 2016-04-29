@@ -17,7 +17,7 @@ import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoController;
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoControllerFactory;
 import de.nachregenkommtsonne.myospherocontrol.controller.notification.INotificationUpdater;
 import de.nachregenkommtsonne.myospherocontrol.controller.notification.NotificationUpdater;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroConnectionController;
+import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroController;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroManager;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroMovementController;
 
@@ -26,7 +26,7 @@ public class BackgroundService extends Service
   private ServiceState _serviceState;
   private NotifyingServiceState _notifyingServiceState;
   private ServiceBinder _serviceBinder;
-  private SpheroConnectionController _spheroController;
+  private SpheroController _spheroController;
   private MyoController _myoController;
   private BluetoothController _bluetoothController;
 
@@ -40,11 +40,10 @@ public class BackgroundService extends Service
     MyoControllerFactory myoControllerFactory = new MyoControllerFactory();
     BluetoothControllerFactory bluetoothControllerFactory = new BluetoothControllerFactory();
     ServiceBinderFactory serviceBinderFactory = new ServiceBinderFactory();
-
     SpheroManager spheroManager = new SpheroManager();
-    _spheroController = new SpheroConnectionController(this, spheroManager, _notifyingServiceState);
     SpheroMovementController spheroMovementController = new SpheroMovementController(spheroManager);
 
+    _spheroController = new SpheroController(this, spheroManager, _notifyingServiceState);
     _myoController = myoControllerFactory.create(this, _notifyingServiceState, spheroMovementController);
     _bluetoothController = bluetoothControllerFactory.create(_notifyingServiceState, _spheroController, _myoController);
     _serviceBinder = serviceBinderFactory.create(_serviceState, _notifyingServiceState, _spheroController, _myoController);
@@ -62,7 +61,11 @@ public class BackgroundService extends Service
 
     _spheroController.onCreate();
     _myoController.onCreate();
-    _serviceState.onCreate();
+    
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    boolean isBluetoothEnabled = bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+    
+    _serviceState.onCreate(isBluetoothEnabled);
 
     IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     this.registerReceiver(_bluetoothController, filter);
