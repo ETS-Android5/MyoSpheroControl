@@ -14,14 +14,12 @@ import org.junit.Before;
 
 public class GuiStateHinterTest
 {
-
-  GuiStateHinter _guiStateHinter;
-  IServiceState _serviceState;
+  private GuiStateHinter _guiStateHinter;
+  private IServiceState _serviceState;
 
   @Before
   public void setUp()
   {
-
     _guiStateHinter = new GuiStateHinter();
     _serviceState = new ServiceState();
   }
@@ -29,7 +27,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_NotRunning()
   {
-
     _serviceState.setRunning(false);
 
     int hint = _guiStateHinter.getHint(_serviceState);
@@ -40,7 +37,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_BluetoothOff()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.off);
 
@@ -52,7 +48,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_BluetoothTurningOff()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.turningOff);
 
@@ -64,7 +59,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_BluetoothTurningOn()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.turningOn);
 
@@ -76,7 +70,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_MyoNotLinked()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.notLinked);
@@ -89,7 +82,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_MyoConnecting()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.linked);
@@ -102,7 +94,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_MyoNotSynced()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.notSynced);
@@ -115,7 +106,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_SpheroDiscovering()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
@@ -129,7 +119,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_SpheroConnecting()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
@@ -143,7 +132,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
@@ -157,7 +145,6 @@ public class GuiStateHinterTest
   @Test
   public void getHint_Error()
   {
-
     _serviceState.setRunning(true);
     _serviceState.setBluetoothState(BluetoothStatus.on);
     _serviceState.setMyoStatus(MyoStatus.connected);
