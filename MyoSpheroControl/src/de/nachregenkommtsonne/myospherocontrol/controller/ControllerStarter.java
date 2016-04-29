@@ -1,4 +1,4 @@
-package de.nachregenkommtsonne.myospherocontrol.backgroundservice.servicecontroller;
+package de.nachregenkommtsonne.myospherocontrol.controller;
 
 import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
 import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
