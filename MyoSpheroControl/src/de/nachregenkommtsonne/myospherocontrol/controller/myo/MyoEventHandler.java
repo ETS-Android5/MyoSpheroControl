@@ -12,19 +12,19 @@ public class MyoEventHandler implements IMyoEvents
 {
   private IMovementCalculator _mMovementCalculator;
   private ISpheroMovementController _spheroController;
-  private boolean _controlmode;
+  private boolean _isControlmodeActive;
 
   public MyoEventHandler(IMovementCalculator mMovementCalculator, ISpheroMovementController spheroController)
   {
     _mMovementCalculator = mMovementCalculator;
     _spheroController = spheroController;
 
-    _controlmode = false;
+    _isControlmodeActive = false;
   }
 
   public void myoOrientationDataCollected(Quaternion rotation, Myo myo)
   {
-    if (!_controlmode)
+    if (!_isControlmodeActive)
       return;
 
     MovementResult movementResult = _mMovementCalculator.calculate(rotation,
@@ -36,7 +36,7 @@ public class MyoEventHandler implements IMyoEvents
 
   public void myoControlDeactivated()
   {
-    _controlmode = false;
+    _isControlmodeActive = false;
 
     _spheroController.changeColor(0, 0, 1.0f);
     _spheroController.halt();
@@ -44,13 +44,13 @@ public class MyoEventHandler implements IMyoEvents
 
   public void myoControlActivated()
   {
-    _controlmode = true;
+    _isControlmodeActive = true;
 
     _mMovementCalculator.resetRoll();
   }
 
   public void stopControlMode()
   {
-    _controlmode = false;
+    _isControlmodeActive = false;
   }
 }

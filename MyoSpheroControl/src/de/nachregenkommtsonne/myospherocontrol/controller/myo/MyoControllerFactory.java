@@ -14,16 +14,14 @@ public class MyoControllerFactory
   {
   }
 
-  public MyoController create(Context context, IServiceState serviceState,
-      ISpheroMovementController spheroController)
+  public MyoController create(Context context, IServiceState serviceState, ISpheroMovementController spheroController)
   {
     SettingsEditor settingsEditor = new SettingsEditor();
     IMovementCalculator mMovementCalculator = new MovementCalculator();
     IMyoEvents myoEventHandler = new MyoEventHandler(mMovementCalculator, spheroController);
     MyoController myoController = new MyoController(context, myoEventHandler, settingsEditor, serviceState);
 
-    DeviceListener deviceListener = new MyoDeviceListener(myoController, settingsEditor, myoEventHandler,
-        serviceState);
+    DeviceListener deviceListener = new MyoDeviceListener(myoController, settingsEditor, myoEventHandler, serviceState);
     myoController.setDeviceListener(deviceListener);
 
     return myoController;

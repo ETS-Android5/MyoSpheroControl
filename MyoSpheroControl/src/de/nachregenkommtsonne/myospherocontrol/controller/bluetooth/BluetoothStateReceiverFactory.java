@@ -6,14 +6,10 @@ import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroControll
 
 public class BluetoothStateReceiverFactory
 {
-  public BluetoothStateReceiverFactory()
-  {
-  }
-
   public BluetoothStateReceiver create(IServiceState serviceState, ISpheroController spheroController, IMyoController myoController)
   {
-    BluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(myoController, spheroController);
+    IBluetoothStateHandler bluetoothStateHandler = new BluetoothStateHandler(serviceState, myoController, spheroController);
 
-    return new BluetoothStateReceiver(bluetoothStateHandler, serviceState);
+    return new BluetoothStateReceiver(bluetoothStateHandler);
   }
 }

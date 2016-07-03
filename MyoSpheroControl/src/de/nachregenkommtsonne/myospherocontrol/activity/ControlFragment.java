@@ -1,6 +1,10 @@
 package de.nachregenkommtsonne.myospherocontrol.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +55,7 @@ public class ControlFragment extends Fragment
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-
+    
     _controlFramgentController.startService();
   }
 

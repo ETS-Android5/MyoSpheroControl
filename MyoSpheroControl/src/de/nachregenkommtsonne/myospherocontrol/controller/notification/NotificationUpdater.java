@@ -12,6 +12,8 @@ import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
 public class NotificationUpdater implements INotificationUpdater
 {
+  private static final int NOTIFICATION_ID = 0;
+  
   private Context _context;
   private IServiceState _state;
   private GuiStateHinter _guiStateHinter;
@@ -46,13 +48,13 @@ public class NotificationUpdater implements INotificationUpdater
       NotificationManager notificationManager = (NotificationManager) _context
           .getSystemService(Context.NOTIFICATION_SERVICE);
 
-      notificationManager.notify(0, notification);
+      notificationManager.notify(NOTIFICATION_ID, notification);
     } else
     {
       NotificationManager notificationManager = (NotificationManager) _context
           .getSystemService(Context.NOTIFICATION_SERVICE);
 
-      notificationManager.cancel(0);
+      notificationManager.cancel(NOTIFICATION_ID);
     }
   }
 

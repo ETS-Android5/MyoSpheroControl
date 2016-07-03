@@ -50,8 +50,7 @@ public class MovementCalculator implements IMovementCalculator
 
   private float calculateDirection(float roll, float yaw)
   {
-    // TODO: remove -180.f constant. irrelevant
-    return roll * _rollFactor - yaw - 180.f;
+    return roll * _rollFactor - yaw;
   }
 
   private float normalizeAngle(float val)

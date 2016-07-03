@@ -5,8 +5,6 @@ import com.orbotix.DualStackDiscoveryAgent;
 import com.orbotix.common.DiscoveryException;
 import com.orbotix.common.Robot;
 import com.orbotix.common.RobotChangedStateListener;
-import com.orbotix.common.stat.StatRecorder;
-
 import android.content.Context;
 import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
 
@@ -29,9 +27,8 @@ public class SpheroController implements ISpheroController
   {
     DualStackDiscoveryAgent discoveryAgent = getDiscoveryAgent();
 
-    discoveryAgent.addRobotStateListener(new RobotChangedStateListener()
+    RobotChangedStateListener robotChangedStateListener = new RobotChangedStateListener()
     {
-
       @Override
       public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type)
       {
@@ -84,7 +81,9 @@ public class SpheroController implements ISpheroController
             break;
           }
       }
-    });
+    };
+    
+    discoveryAgent.addRobotStateListener(robotChangedStateListener);
   }
 
   private DualStackDiscoveryAgent getDiscoveryAgent()
@@ -104,7 +103,7 @@ public class SpheroController implements ISpheroController
     try
     {
       discoveryAgent.startDiscovery(_context);
-      StatRecorder.getInstance().stop();
+      //StatRecorder.getInstance().stop();
     } catch (DiscoveryException e)
     {
     }
