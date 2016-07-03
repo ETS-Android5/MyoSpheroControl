@@ -13,6 +13,10 @@ import org.junit.runners.Parameterized.Parameters;
 
 import com.thalmic.myo.Quaternion;
 
+import de.nachregenkommtsonne.myospherocontrolC.movement.IMovementCalculator;
+import de.nachregenkommtsonne.myospherocontrolC.movement.MovementCalculator;
+import de.nachregenkommtsonne.myospherocontrolC.movement.MovementResult;
+
 @RunWith(Parameterized.class)
 public class MovementCalculatorTest
 {

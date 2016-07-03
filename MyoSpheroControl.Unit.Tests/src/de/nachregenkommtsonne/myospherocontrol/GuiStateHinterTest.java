@@ -1,13 +1,15 @@
 package de.nachregenkommtsonne.myospherocontrol;
 
 import org.junit.Test;
-import de.nachregenkommtsonne.myospherocontrol.GuiStateHinter;
-import de.nachregenkommtsonne.myospherocontrol.R;
-import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.ServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
+
+import de.nachregenkommtsonne.myospherocontrolC.GuiStateHinter;
+import de.nachregenkommtsonne.myospherocontrolC.R;
+import de.nachregenkommtsonne.myospherocontrolC.controller.IServiceState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.ServiceState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrolC.controller.sphero.SpheroStatus;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;

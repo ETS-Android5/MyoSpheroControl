@@ -8,9 +8,11 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nachregenkommtsonne.myospherocontrol.controller.IServiceState;
-import de.nachregenkommtsonne.myospherocontrol.controller.myo.IMyoController;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.ISpheroController;
+import de.nachregenkommtsonne.myospherocontrolC.controller.IServiceState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.bluetooth.BluetoothStateHandler;
+import de.nachregenkommtsonne.myospherocontrolC.controller.myo.IMyoController;
+import de.nachregenkommtsonne.myospherocontrolC.controller.sphero.ISpheroController;
 
 public class BluetoothStateHandlerTest
 {

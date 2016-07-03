@@ -6,10 +6,12 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nachregenkommtsonne.myospherocontrol.backgroundservice.binder.IChangedNotifier;
-import de.nachregenkommtsonne.myospherocontrol.controller.bluetooth.BluetoothState;
-import de.nachregenkommtsonne.myospherocontrol.controller.myo.MyoStatus;
-import de.nachregenkommtsonne.myospherocontrol.controller.sphero.SpheroStatus;
+import de.nachregenkommtsonne.myospherocontrolC.backgroundservice.binder.IChangedNotifier;
+import de.nachregenkommtsonne.myospherocontrolC.controller.IServiceState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.NotifyingServiceState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.bluetooth.BluetoothState;
+import de.nachregenkommtsonne.myospherocontrolC.controller.myo.MyoStatus;
+import de.nachregenkommtsonne.myospherocontrolC.controller.sphero.SpheroStatus;
 
 public class NotifyingServiceStateTest
 {
